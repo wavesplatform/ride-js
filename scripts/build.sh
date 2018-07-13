@@ -1,5 +1,5 @@
 #!/bin/bash
-# cd /opt/src
+cd /opt/src
 npm i
 npm version $VERSION
 npm run build

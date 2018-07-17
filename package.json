@@ -1,7 +1,7 @@
 {
-  "name": "@waves/ride",
-  "version": "0.0.4",
-  "description": "Js compiler for Ride - waves smart contract language.",
+  "name": "@waves/ride-js",
+  "version": "0.0.1",
+  "description": "Js compiler for Ride - Waves smart contract language.",
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",

@@ -1,5 +1,5 @@
 require('./interop')
-const mainnet = require('../../Waves/lang/js/target/lang-opt')
+const mainnet = require('./mainnet')
 
 module.exports = {
   compile: function (code) {

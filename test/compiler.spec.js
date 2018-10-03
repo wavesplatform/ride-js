@@ -1,5 +1,5 @@
 const compiler = require('../src');
-const {expect} = require('chai')
+const {expect} = require('chai');
 
 describe('Compiler', () => {
     it('Should compile contract', () => {
@@ -19,7 +19,7 @@ describe('Compiler', () => {
             
             #sum up every valid proof to get at least 2
             aliceSigned + bobSigned + cooperSigned >= 2
-            `
+            `;
         const result = compiler.compile(contract);
         expect(result.error).to.be.undefined
     });
@@ -30,9 +30,18 @@ describe('Compiler', () => {
                 let x = 1
                 1
             }
-            x`
+            x`;
         const result = compiler.compile(contract);
         expect(result.error).to.eql('Compilation failed: A definition of \'x\' is not found in 93-94')
+    })
+
+    it('Should give sensible error on nulls and undefined', () => {
+        const contract1 = null;
+        const contract2 = undefined;
+        const result1 = compiler.compile(contract1);
+        const result2 = compiler.compile(contract2);
+        expect(result1.error).to.eql('Type error: contract should be string')
+        expect(result2.error).to.eql('Type error: contract should be string')
     })
 });
 

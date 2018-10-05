@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Js compiler for Ride - Waves smart contract language.",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
     "publish": "npm publish dist --access public",

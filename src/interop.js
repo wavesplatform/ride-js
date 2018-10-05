@@ -1,6 +1,6 @@
 const Base58 = require('./base58')
 const Base64 = require('./base64')
-const keccak256 = require('./sha3').keccak256
+const keccak256module = require('./sha3').keccak256
 const blake = require('./blake2b')
 
 global.base58Encode = function (bytes) {
@@ -27,6 +27,6 @@ function blake2b(input) {
 }
 
 function keccak(input) {
-  return keccak256.array(input)
+  return keccak256module.array(input)
 }
 

@@ -4,12 +4,11 @@ function encode(bytes){
 }
 
 function decode(base64string){
-    const result = Buffer.from(base64string, 'base64')
+    const result = Buffer.from(base64string, 'base64');
     if (encode(result) !== base64string)
-        throw `Illegal base64 string "${base64string}"`
+        throw `Illegal base64 string "${base64string}"`;
     return result
 }
 
-exports = {
-    encode, decode
-}
+exports.decode = decode;
+exports.encode = encode;

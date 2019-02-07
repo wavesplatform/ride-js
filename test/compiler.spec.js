@@ -68,5 +68,13 @@ x
         expect(result2.error).to.eql('Type error: contract should be string')
     });
 
+    it('Should compile contract with base64 literals', () => {
+        const contract = `
+let a = base64'AAA=' 
+true`;
+
+        const result = compiler.compile(contract);
+        expect(result.error).to.be.undefined
+    });
 });
 

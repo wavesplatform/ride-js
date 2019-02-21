@@ -1,6 +1,14 @@
 export interface ICompilationResult {
-    ast?: object,
-    result?: ArrayBuffer,
-    error?: string
+    result: {
+        ast: object
+        base64: string
+        bytes: Uint8Array
+        size: number
+    }
 }
-export function compile(code:string): ICompilationResult;
+
+export interface ICompilationError {
+    error: string
+}
+
+export function compile(code: string): ICompilationResult | ICompilationError;

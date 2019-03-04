@@ -11,7 +11,6 @@ export interface ICompilationError {
     error: string
 }
 
-
 export interface IType {
     name: string
     type: any
@@ -31,7 +30,18 @@ export interface IFuncDoc {
 
 }
 export function compile(code: string): ICompilationResult | ICompilationError;
-
+export function scriptInfo(code: string): any;
 export function getTypes(): IType[];
 export function getVarsDoc(): IVarDoc[];
 export function getFunctionsDoc(): IFuncDoc[];
+
+export const contractLimits: {
+    MaxExprComplexity: number,
+    MaxExprSizeInBytes: number,
+    MaxContractComplexity: number,
+    MaxContractSizeInBytes: number,
+    MaxContractInvocationArgs: number,
+    MaxContractInvocationSizeInBytes: number,
+    MaxWriteSetSizeInBytes: number,
+    MaxPaymentAmount: number
+};

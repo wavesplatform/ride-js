@@ -35,9 +35,14 @@ const api = {
 
         }
     },
+    get contractLimits(){
+        return scalaJsCompiler.contractLimits()
+    },
+    scriptInfo: scalaJsCompiler.scriptInfo,
     getTypes: scalaJsCompiler.getTypes,
     getVarsDoc: scalaJsCompiler.getVarsDoc,
     getFunctionsDoc: scalaJsCompiler.getFunctionsDoc,
+
 }
 
 global.RideJS = api;

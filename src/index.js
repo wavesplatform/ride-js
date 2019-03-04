@@ -34,7 +34,10 @@ const api = {
                 {error: e}
 
         }
-    }
+    },
+    getTypes: scalaJsCompiler.getTypes,
+    getVarsDoc: scalaJsCompiler.getVarsDoc,
+    getFunctionsDoc: scalaJsCompiler.getFunctionsDoc,
 }
 
 global.RideJS = api;

@@ -12,7 +12,7 @@ export interface ICompilationError {
 }
 
 
-export interface ITypes {
+export interface IType {
     name: string
     type: any
 }
@@ -32,6 +32,6 @@ export interface IFunctionsDoc {
 }
 export function compile(code: string): ICompilationResult | ICompilationError;
 
-export function getTypes(): [ITypes];
-export function getVarsDoc(): [IVarsDoc];
-export function getFunctionsDoc(): [IFunctionsDoc];
+export function getTypes(): IType[];
+export function getVarsDoc(): IVarsDoc[];
+export function getFunctionsDoc(): IFunctionsDoc[];

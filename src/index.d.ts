@@ -11,4 +11,27 @@ export interface ICompilationError {
     error: string
 }
 
+
+export interface ITypes {
+    name: string
+    type: any
+}
+
+export interface IVarsDoc {
+    name: string
+    type: any
+    doc: string
+}
+
+export interface IFunctionsDoc {
+    name: string
+    doc: string
+    resultType: string
+    args: any
+
+}
 export function compile(code: string): ICompilationResult | ICompilationError;
+
+export function getTypes(): [ITypes];
+export function getVarsDoc(): [IVarsDoc];
+export function getFunctionsDoc(): [IFunctionsDoc];

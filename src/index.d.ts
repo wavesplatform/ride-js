@@ -23,7 +23,7 @@ export interface IVarDoc {
     doc: string
 }
 
-export interface IFunctionDoc {
+export interface IFuncDoc {
     name: string
     doc: string
     resultType: string
@@ -34,4 +34,4 @@ export function compile(code: string): ICompilationResult | ICompilationError;
 
 export function getTypes(): IType[];
 export function getVarsDoc(): IVarDoc[];
-export function getFunctionsDoc(): IFunctionDoc[];
+export function getFunctionsDoc(): IFuncDoc[];

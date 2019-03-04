@@ -17,13 +17,13 @@ export interface IType {
     type: any
 }
 
-export interface IVarsDoc {
+export interface IVarDoc {
     name: string
     type: any
     doc: string
 }
 
-export interface IFunctionsDoc {
+export interface IFunctionDoc {
     name: string
     doc: string
     resultType: string
@@ -33,5 +33,5 @@ export interface IFunctionsDoc {
 export function compile(code: string): ICompilationResult | ICompilationError;
 
 export function getTypes(): IType[];
-export function getVarsDoc(): IVarsDoc[];
-export function getFunctionsDoc(): IFunctionsDoc[];
+export function getVarsDoc(): IVarDoc[];
+export function getFunctionsDoc(): IFunctionDoc[];

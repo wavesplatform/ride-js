@@ -30,10 +30,10 @@ export interface IFuncDoc {
 
 }
 export function compile(code: string): ICompilationResult | ICompilationError;
-export function scriptInfo(code: string): any;
-export function getTypes(): IType[];
-export function getVarsDoc(): IVarDoc[];
-export function getFunctionsDoc(): IFuncDoc[];
+export function scriptInfo(code: string): { stdLibVersion: number, contentType: number, scriptType: number };
+export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): IType[];
+export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IVarDoc[];
+export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): IFuncDoc[];
 
 export const contractLimits: {
     MaxExprComplexity: number,

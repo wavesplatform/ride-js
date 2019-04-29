@@ -76,5 +76,24 @@ true`;
         const result = compiler.compile(contract);
         expect(result.error).to.be.undefined
     });
+
+    it('Should return estimate', () => {
+        const contract = `
+let a = base64'AAA=' 
+true`;
+        const result = compiler.compile(contract);
+        expect(result.result.complexity).to.be.a('number')
+
+    });
+
+
+    it('Should decompile code', () => {
+        const contract = `
+let a = base64'AAA=' 
+true`;
+        const contractBase64 = compiler.compile(contract).result.base64;
+        expect(compiler.decompile(contractBase64).result).to.be.a('string')
+
+    });
 });
 

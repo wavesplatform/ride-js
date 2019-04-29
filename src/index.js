@@ -23,7 +23,8 @@ const api = {
                         bytes,
                         base64: base64.fromByteArray(bytes),
                         size: bytes.byteLength,
-                        ast: result.ast
+                        ast: result.ast,
+                        complexity: result.complexity
                     }
                 }
             }
@@ -42,7 +43,7 @@ const api = {
     getTypes: scalaJsCompiler.getTypes,
     getVarsDoc: scalaJsCompiler.getVarsDoc,
     getFunctionsDoc: scalaJsCompiler.getFunctionsDoc,
-
+    decompile: scalaJsCompiler.decompile
 }
 
 global.RideJS = api;

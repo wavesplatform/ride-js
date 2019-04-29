@@ -4,11 +4,20 @@ export interface ICompilationResult {
         base64: string
         bytes: Uint8Array
         size: number
+        complexity: number
     }
 }
 
 export interface ICompilationError {
     error: string
+}
+
+export interface IDecompilationResult {
+    result: string
+}
+
+export interface IDecompilationError {
+    error: any
 }
 
 export type TType = TList | TStruct | TUnion | TPrimitive
@@ -54,6 +63,7 @@ export function scriptInfo(code: string): { stdLibVersion: number, contentType: 
 export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): TStructField[];
 export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IVarDoc[];
 export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): TFunction[];
+export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
 
 export const contractLimits: {
     MaxExprComplexity: number,
@@ -65,3 +75,4 @@ export const contractLimits: {
     MaxWriteSetSizeInBytes: number,
     MaxPaymentAmount: number
 };
+

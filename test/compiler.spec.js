@@ -95,5 +95,23 @@ true`;
         expect(compiler.decompile(contractBase64).result).to.be.a('string')
 
     });
+
+    it('Should compile dApp', () => {
+        const contract = `{-# STDLIB_VERSION 3 #-}
+{-# CONTENT_TYPE DAPP #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+
+func foo() = 3
+
+@Callable(i)
+func bar() = WriteSet([])`;
+        const compiled = compiler.compile(contract);
+        expect(compiled.error).to.be.undefined
+    });
+
+    it('Should get MaxComplexityByVersion', () => {
+        expect(compiler.contractLimits.MaxComplexityByVersion(2)).to.eq(2000);
+        expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000)
+    })
 });
 

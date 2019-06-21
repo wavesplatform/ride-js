@@ -18,13 +18,14 @@ const api = {
             } else {
                 const bytes = new Uint8Array(result.result);
 
+
                 return {
                     result: {
                         bytes,
                         base64: base64.fromByteArray(bytes),
                         size: bytes.byteLength,
                         ast: result.ast,
-                        complexity: result.complexity
+                        complexity: result.complexity,
                     }
                 }
             }

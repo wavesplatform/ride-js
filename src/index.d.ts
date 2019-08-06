@@ -69,7 +69,9 @@ export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): TStr
 export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IVarDoc[];
 export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): TFunction[];
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
+export function repl(expr: string): IDecompilationResult | IDecompilationError;
 
+export const version: string;
 export const contractLimits: {
     MaxComplexityByVersion: (v:number) => number,
     MaxExprSizeInBytes: number,

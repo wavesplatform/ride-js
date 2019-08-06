@@ -113,5 +113,26 @@ func bar() = WriteSet([])`;
         expect(compiler.contractLimits.MaxComplexityByVersion(2)).to.eq(2000);
         expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000)
     })
+
+    it('1234', () => {
+        // let a  = compiler.getVarsDoc(3)
+        let expr = "base16'00ff00ff00'"
+        let expr2 = "base58'17X4BGT'";
+        let res = compiler.repl(expr)
+        let res2 = compiler.repl(expr2)
+        let res3 = compiler.repl('2 + 2')
+        let res4 = compiler.repl('2 + "2"')
+        let res5 = compiler.repl("this")
+        let res6 = compiler.repl("match tx { case t: TransferTransaction => 1\ncase _ => 8}")
+        // let res7 = compiler.repl("let a = -if true then 1 else 2")
+        let res8 = compiler.repl("let d = \"some string\"")
+        let res9 = compiler.repl("d + \"ckm\"")
+        let res10 =compiler.repl("Address(base58'17X4BGT')")
+        let res11 = compiler.version
+        let res12 = compiler.repl('func main() = {\n   3\n}')
+        let res13 = compiler.repl('main()')
+        let res14 = compiler.repl('main()')
+        console.log(res)
+    })
 });
 

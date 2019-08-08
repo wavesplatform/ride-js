@@ -116,22 +116,23 @@ func bar() = WriteSet([])`;
 
     it('1234', () => {
         // let a  = compiler.getVarsDoc(3)
-        let expr = "base16'00ff00ff00'"
+        let expr = "base16'00ff00ff00'";
         let expr2 = "base58'17X4BGT'";
-        let res = compiler.repl(expr)
-        let res2 = compiler.repl(expr2)
-        let res3 = compiler.repl('2 + 2')
-        let res4 = compiler.repl('2 + "2"')
-        let res5 = compiler.repl("this")
-        let res6 = compiler.repl("match tx { case t: TransferTransaction => 1\ncase _ => 8}")
-        // let res7 = compiler.repl("let a = -if true then 1 else 2")
-        let res8 = compiler.repl("let d = \"some string\"")
-        let res9 = compiler.repl("d + \"ckm\"")
-        let res10 =compiler.repl("Address(base58'17X4BGT')")
-        let res11 = compiler.version
-        let res12 = compiler.repl('func main() = {\n   3\n}')
-        let res13 = compiler.repl('main()')
-        let res14 = compiler.repl('main()')
+        const repl = compiler.repl();
+        let res = repl.evaluate(expr);
+        let res2 = repl.evaluate(expr2);
+        let res3 = repl.evaluate('2 + 2');
+        let res4 = repl.evaluate('2 + "2"');
+        let res5 = repl.evaluate("this");
+        let res6 = repl.evaluate("match tx { case t: TransferTransaction => 1\ncase _ => 8}");
+        let res7 = repl.evaluate("let a = -if true then 1 else 2");
+        let res8 = repl.evaluate("let d = \"some string\"");
+        let res9 = repl.evaluate("d + \"ckm\"");
+        let res10 =repl.evaluate("Address(base58'17X4BGT')");
+        let res11 = compiler.version;
+        let res12 = repl.evaluate('func main() = {\n   3\n}');
+        let res13 = repl.evaluate('main()');
+        let res14 = repl.evaluate('main()');
         console.log(res)
     })
 });

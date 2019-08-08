@@ -24,7 +24,7 @@ export type TType = TList | TStruct | TUnion | TPrimitive
 
 export type TPrimitive = string;
 
-export type TStructField = {name: string, type: TType};
+export type TStructField = { name: string, type: TType };
 
 export type TStruct = {
     typeName: string
@@ -64,16 +64,25 @@ export interface IScriptInfo {
 }
 
 export function compile(code: string): ICompilationResult | ICompilationError;
-export function scriptInfo(code: string):  IScriptInfo;
+
+export function scriptInfo(code: string): IScriptInfo;
+
 export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): TStructField[];
+
 export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IVarDoc[];
+
 export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): TFunction[];
+
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
-export function repl(expr: string): IDecompilationResult | IDecompilationError;
+
+export function repl(): {
+    evaluate: (expr: string) => IDecompilationResult | IDecompilationError,
+    clear: () => void
+};
 
 export const version: string;
 export const contractLimits: {
-    MaxComplexityByVersion: (v:number) => number,
+    MaxComplexityByVersion: (v: number) => number,
     MaxExprSizeInBytes: number,
     MaxContractSizeInBytes: number,
     MaxContractInvocationArgs: number,

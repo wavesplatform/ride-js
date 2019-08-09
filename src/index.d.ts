@@ -63,7 +63,7 @@ export interface IScriptInfo {
     scriptType: number
 }
 
-export function compile(code: string): ICompilationResult | ICompilationError;
+export function compile(code: string, libraries?: {[key: string]: string}): ICompilationResult | ICompilationError;
 
 export function scriptInfo(code: string): IScriptInfo;
 

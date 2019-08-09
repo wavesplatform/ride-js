@@ -2,14 +2,14 @@ require('./interop');
 const base64 = require('base64-js');
 const scalaJsCompiler = require('./lang-opt.js');
 
-function wrappedCompile(code) {
+function wrappedCompile(code, libraries) {
     if (typeof code !== 'string') {
         return {
             error: 'Type error: contract should be string'
         }
     }
     try {
-        const result = scalaJsCompiler.compile(code);
+        const result = scalaJsCompiler.compile(code, libraries);
         if (result.error) {
             return result;
         } else {
@@ -33,10 +33,10 @@ function wrappedCompile(code) {
 
 const api = {
     compile: wrappedCompile,
-    get contractLimits(){
+    get contractLimits() {
         return scalaJsCompiler.contractLimits()
     },
-    get version(){
+    get version() {
         const version = scalaJsCompiler.nodeVersion();
         return version && version.version
     },

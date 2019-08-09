@@ -115,25 +115,42 @@ func bar() = WriteSet([])`;
     })
 
     it('1234', () => {
-        // let a  = compiler.getVarsDoc(3)
-        let expr = "base16'00ff00ff00'";
-        let expr2 = "base58'17X4BGT'";
-        const repl = compiler.repl();
-        let res = repl.evaluate(expr);
-        let res2 = repl.evaluate(expr2);
-        let res3 = repl.evaluate('2 + 2');
-        let res4 = repl.evaluate('2 + "2"');
-        let res5 = repl.evaluate("this");
-        let res6 = repl.evaluate("match tx { case t: TransferTransaction => 1\ncase _ => 8}");
-        let res7 = repl.evaluate("let a = -if true then 1 else 2");
-        let res8 = repl.evaluate("let d = \"some string\"");
-        let res9 = repl.evaluate("d + \"ckm\"");
-        let res10 =repl.evaluate("Address(base58'17X4BGT')");
-        let res11 = compiler.version;
-        let res12 = repl.evaluate('func main() = {\n   3\n}');
-        let res13 = repl.evaluate('main()');
-        let res14 = repl.evaluate('main()');
-        console.log(res)
+        console.log(compiler.version);
+
+        const script = `
+            {-# STDLIB_VERSION 3 #-}
+            {-# SCRIPT_TYPE ACCOUNT #-}
+            {-# IMPORT lib1,lib2,lib3 #-}
+            let a = 5
+            multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
+            `;
+
+        const librariesObj = {
+
+            "lib1":
+                `
+             {-# SCRIPT_TYPE  ACCOUNT #-}
+             {-# CONTENT_TYPE LIBRARY #-}
+             func inc(a: Int) = a + 1
+             `,
+            "lib2":
+                `
+             {-# SCRIPT_TYPE  ACCOUNT #-}
+             {-# CONTENT_TYPE LIBRARY #-}
+             func dec(a: Int) = a - 1
+             `,
+            "lib3":
+                `
+             {-# SCRIPT_TYPE  ACCOUNT #-}
+             {-# CONTENT_TYPE LIBRARY #-}
+             func multiply(a: Int, b: Int) = a * b
+             `
+        };
+
+        let res = compiler.compile(script, librariesObj);
+        if (res.error) console.error(res.error);
+        if (res.result) console.log('\x1b[32msuccess');
     })
+
 });
 

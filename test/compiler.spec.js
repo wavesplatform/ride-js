@@ -113,6 +113,15 @@ func bar() = WriteSet([])`;
         expect(compiler.contractLimits.MaxComplexityByVersion(2)).to.eq(2000);
         expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000)
     })
+    it(' ba.sha256 is not a function', () => {
+        try {
+            const ans = compiler.repl().evaluate("sha256(base58'qwe')")
+            console.log(ans)
+        } catch (e) {
+            // console.error('running error', e)
+        }
+
+    })
 
     it('1234', () => {
         console.log(compiler.version);
@@ -120,10 +129,18 @@ func bar() = WriteSet([])`;
         const script = `
             {-# STDLIB_VERSION 3 #-}
             {-# SCRIPT_TYPE ACCOUNT #-}
-            {-# IMPORT lib1,lib2,lib3 #-}
+            {-# IMPORT lib2,lib1,lib3 #-}
             let a = 5
             multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
             `;
+
+        const info = compiler.scriptInfo(script);
+        if ('error' in info) console.error(info.error);
+        else info.imports && console.log(info.imports());
+
+
+        return;
+
 
         const librariesObj = {
 

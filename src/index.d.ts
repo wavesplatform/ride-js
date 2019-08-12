@@ -61,11 +61,12 @@ export interface IScriptInfo {
     stdLibVersion: number,
     contentType: number,
     scriptType: number
+    imports: () => string
 }
 
 export function compile(code: string, libraries?: {[key: string]: string}): ICompilationResult | ICompilationError;
 
-export function scriptInfo(code: string): IScriptInfo;
+export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 
 export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): TStructField[];
 

@@ -2,6 +2,7 @@ const Base58 = require('./base58');
 const base64 = require('base64-js');
 const keccak256module = require('./sha3').keccak256;
 const blake = require('./blake2b');
+const sha256 = require('./sha256').sha256;
 
 global.base58Encode = function (bytes) {
     return Base58.encode(new Uint8Array(bytes))
@@ -17,6 +18,9 @@ global.base64Decode = function (data) {
 };
 global.keccak256 = function (bytes) {
     return Uint8Array.from(keccak(new Uint8Array(bytes))).buffer
+};
+global.sha256 = function (bytes) {
+      return  Uint8Array.from(sha256(bytes)).buffer
 };
 global.blake2b256 = function (bytes) {
     return blake2b(new Uint8Array(bytes)).buffer

@@ -61,7 +61,7 @@ export interface IScriptInfo {
     stdLibVersion: number,
     contentType: number,
     scriptType: number
-    imports: () => string
+    imports: string[]
 }
 
 export function compile(code: string, libraries?: {[key: string]: string}): ICompilationResult | ICompilationError;

@@ -135,36 +135,52 @@ func bar() = WriteSet([])`;
             `;
 
         const info = compiler.scriptInfo(script);
-        if ('error' in info) console.error(info.error);
-        else info.imports && console.log(info.imports());
+        console.log(info.imports)
+        const files = [
 
-
-        return;
-
-
-        const librariesObj = {
-
-            "lib1":
-                `
+            {
+                name: "lib1",
+                content: `
              {-# SCRIPT_TYPE  ACCOUNT #-}
              {-# CONTENT_TYPE LIBRARY #-}
              func inc(a: Int) = a + 1
-             `,
-            "lib2":
-                `
+             `
+            },
+            {
+                name: "lib2",
+                content: `
              {-# SCRIPT_TYPE  ACCOUNT #-}
              {-# CONTENT_TYPE LIBRARY #-}
              func dec(a: Int) = a - 1
-             `,
-            "lib3":
-                `
+             `
+            },
+            {
+                name: "lib3",
+                content: `
              {-# SCRIPT_TYPE  ACCOUNT #-}
              {-# CONTENT_TYPE LIBRARY #-}
              func multiply(a: Int, b: Int) = a * b
              `
-        };
+            },
+            {
+                name: "lib4",
+                content: `
+             {-# SCRIPT_TYPE  ACCOUNT #-}
+             {-# CONTENT_TYPE LIBRARY #-}
+             func dec(a: Int) = a - 1
+             `
+            },
+            {
+                name: "lib5",
+                content: `
+             {-# SCRIPT_TYPE  ACCOUNT #-}
+             {-# CONTENT_TYPE LIBRARY #-}
+             func multiply(a: Int, b: Int) = a * b
+             }`
+            }];
 
-        let res = compiler.compile(script, librariesObj);
+        const libs = files.filter(({name}) => info.imports.includes(name)).reduce((acc, val) => ({...acc, [val.name]: val.content}), {})
+        let res = compiler.compile(script,libs);
         if (res.error) console.error(res.error);
         if (res.result) console.log('\x1b[32msuccess');
     })

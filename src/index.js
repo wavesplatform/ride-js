@@ -40,6 +40,10 @@ const api = {
     get contractLimits(){
         return scalaJsCompiler.contractLimits()
     },
+    get version() {
+        const version = scalaJsCompiler.nodeVersion();
+        return version && version.version
+    },
     scriptInfo: scalaJsCompiler.scriptInfo,
     getTypes: scalaJsCompiler.getTypes,
     getVarsDoc: scalaJsCompiler.getVarsDoc,

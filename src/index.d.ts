@@ -24,7 +24,7 @@ export type TType = TList | TStruct | TUnion | TPrimitive
 
 export type TPrimitive = string;
 
-export type TStructField = {name: string, type: TType};
+export type TStructField = { name: string, type: TType };
 
 export type TStruct = {
     typeName: string
@@ -70,6 +70,7 @@ export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IV
 export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): TFunction[];
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
 
+export const version: string;
 export const contractLimits: {
     MaxComplexityByVersion: (v:number) => number,
     MaxExprSizeInBytes: number,

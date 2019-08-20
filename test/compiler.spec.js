@@ -1,5 +1,8 @@
 const compiler = require('../src');
 const {expect} = require('chai');
+const crypto = require('crypto');
+const axlsign = require('curve25519-js');
+
 
 describe('Compiler', () => {
     it('Should compile multisig contract', () => {
@@ -115,12 +118,17 @@ func bar() = WriteSet([])`;
     })
     it(' ba.sha256 is not a function', () => {
         try {
-            const ans = compiler.repl().evaluate("sha256(base58'qwe')")
-            console.log(ans)
-        } catch (e) {
-            // console.error('running error', e)
-        }
 
+            const {evaluate} = compiler.repl();
+
+            const keys = 'base64\'hell\'';
+            const msg = 'base64\'hell\'';
+            const sig = 'base64\'hell\'';
+            console.log(evaluate(`sigVerify(${keys}, ${msg}, ${sig}  )`))
+
+        } catch (e) {
+            console.error('running error', e)
+        }
     })
 
     it('1234', () => {
@@ -179,11 +187,23 @@ func bar() = WriteSet([])`;
              }`
             }];
 
-        const libs = files.filter(({name}) => info.imports.includes(name)).reduce((acc, val) => ({...acc, [val.name]: val.content}), {})
-        let res = compiler.compile(script,libs);
+        const libs = files.filter(({name}) => info.imports.includes(name)).reduce((acc, val) => ({
+            ...acc,
+            [val.name]: val.content
+        }), {})
+        let res = compiler.compile(script, libs);
         if (res.error) console.error(res.error);
         if (res.result) console.log('\x1b[32msuccess');
     })
+
+    it('should sign and verify', function () {
+        compiler.repl().evaluate(`sigVerify(
+       base58'D6HmGZqpXCyAqpz8mCAfWijYDWsPKncKe5v3jq1nTpf5',
+       base58'59Su1K4KSU',
+       base58'CGNGZ6G4tuYsW9AbBZPvhTvtVQYAnE8w22UMWLpLM8bGMiys4psATG7sX58p2aFe9uysYyrwnuP2GwT7NAJe737'
+       )`)
+    });
+
 
 });
 

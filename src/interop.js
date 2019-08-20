@@ -5,8 +5,6 @@ const sha256 = require('./sha256').sha256;
 const blake = require('./blake2b');
 const verify = require('curve25519-js').verify;
 
-// import crypto from 'crypto';
-
 global.base58Encode = function (bytes) {
     return Base58.encode(new Uint8Array(bytes))
 };

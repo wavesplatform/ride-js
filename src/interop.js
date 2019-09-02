@@ -22,8 +22,8 @@ global.sha256 = function (bytes) {
 global.blake2b256 = function (bytes) {
     return crypto.blake2b(new Uint8Array(bytes)).buffer
 };
-global.curve25519verify = function (bytes1, bytes2, bytes3) {
-    return verify(new Uint8Array(bytes1), new Uint8Array(bytes2), new Uint8Array(bytes3))
+global.curve25519verify = function (key, msg, sig) {
+    return crypto.verifySignature(new Uint8Array(key), new Uint8Array(msg), new Uint8Array(sig))
 };
 global.merkleVerify = function (rootHash, merkleProof, leafData) {//fixme
     throw new Error('merkleVerify not implemented')

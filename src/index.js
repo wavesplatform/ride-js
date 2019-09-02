@@ -1,5 +1,5 @@
 require('./interop');
-const base64 = require('base64-js');
+const crypto = require('@waves/ts-lib-crypto');
 const scalaJsCompiler = require('./lang-opt.js');
 
 function wrappedCompile(code, libraries) {
@@ -17,7 +17,7 @@ function wrappedCompile(code, libraries) {
             return {
                 result: {
                     bytes,
-                    base64: base64.fromByteArray(bytes),
+                    base64: crypto.base64Encode(bytes),
                     size: bytes.byteLength,
                     ast: result.ast,
                     complexity: result.complexity,

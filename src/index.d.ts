@@ -79,8 +79,9 @@ export function decompile(compiledCode: string): IDecompilationResult | IDecompi
 export function repl(): {
     evaluate: (expr: string) => IDecompilationResult | IDecompilationError,
     clear: () => void
+    info: (s: string) => string,
+    totalInfo: () => string,
 };
-
 export const version: string;
 export const contractLimits: {
     MaxComplexityByVersion: (v: number) => number,

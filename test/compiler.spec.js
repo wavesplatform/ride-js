@@ -2,7 +2,7 @@ const compiler = require('../src');
 const {expect} = require('chai');
 const crypto = require('crypto');
 const axlsign = require('curve25519-js');
-
+const base64 = require('base64-js');
 
 describe('Compiler', () => {
     it('Should compile multisig contract', () => {
@@ -117,18 +117,8 @@ func bar() = WriteSet([])`;
         expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000)
     })
     it(' ba.sha256 is not a function', () => {
-        try {
-
-            const {evaluate} = compiler.repl();
-
-            const keys = 'base64\'hell\'';
-            const msg = 'base64\'hell\'';
-            const sig = 'base64\'hell\'';
-            console.log(evaluate(`sigVerify(${keys}, ${msg}, ${sig}  )`))
-
-        } catch (e) {
-            console.error('running error', e)
-        }
+        const eval = (s) => console.log(compiler.repl().evaluate(s));
+        eval("sha256(base58'qwe')")
     })
 
     it('1234', () => {
@@ -197,13 +187,76 @@ func bar() = WriteSet([])`;
     })
 
     it('should sign and verify', function () {
-        compiler.repl().evaluate(`sigVerify(
+        const res = compiler.repl().evaluate(`sigVerify(
        base58'D6HmGZqpXCyAqpz8mCAfWijYDWsPKncKe5v3jq1nTpf5',
        base58'59Su1K4KSU',
        base58'CGNGZ6G4tuYsW9AbBZPvhTvtVQYAnE8w22UMWLpLM8bGMiys4psATG7sX58p2aFe9uysYyrwnuP2GwT7NAJe737'
        )`)
+        console.log(res)
     });
 
+    it('rsa verify', function () {
+        const eval = (s) => console.log(compiler.repl().evaluate(s));
+        const {evaluate} = compiler.repl();
+
+        const pk = `let pk = fromBase64String("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkDg8m0bCDX7fTbBlHZm+BZIHVOfC2I4klRbjSqwFi/eCdfhGjYRYvu/frpSO0LIm0beKOUvwat6DY4dEhNt2PW3UeQvT2udRQ9VBcpwaJlLreCr837sn4fa9UG9FQFaGofSww1O9eBBjwMXeZr1jOzR9RBIwoL1TQkIkZGaDXRltEaMxtNnzotPfF3vGIZZuZX4CjiitHaSC0zlmQrEL3BDqqoLwo3jq8U3Zz8XUMyQElwufGRbZqdFCeiIs/EoHiJm8q8CVExRoxB0H/vE2uDFK/OXLGTgfwnDlrCa/qGt9Zsb8raUSz9IIHx72XB+kOXTt/GOuW7x2dJvTJIqKTwIDAQAB")`
+        const msg = `let msg = fromBase64String("REIiN2hDQUxIJVQzdk1zQSpXclRRelExVWd+YGQoOyx0KHduPzFmcU8zUWosWiA7aFloOWplclAxPCU=")`
+        const sig = `let sig = fromBase64String("OXVKJwtSoenRmwizPtpjh3sCNmOpU1tnXUnyzl+PEI1P9Rx20GkxkIXlysFT2WdbPn/HsfGMwGJW7YhrVkDXy4uAQxUxSgQouvfZoqGSPp1NtM8iVJOGyKiepgB3GxRzQsev2G8Ik47eNkEDVQa47ct9j198Wvnkf88yjSkK0KxR057MWAi20ipNLirW4ZHDAf1giv68mniKfKxsPWahOA/7JYkv18sxcsISQqRXM8nGI1UuSLt9ER7kIzyAk2mgPCiVlj0hoPGUytmbiUqvEM4QaJfCpR0wVO4f/fob6jwKkGT6wbtia+5xCD7bESIHH8ISDrdexZ01QyNP2r4enw==")`
+        const rsaVerify = `rsaVerify(NOALG, msg, sig, pk)`
+        const algs = ['NOALG', 'MD5', 'SHA1', 'SHA224', 'SHA256', 'SHA384', 'SHA512', 'SHA3224', 'SHA3256', 'SHA3384', 'SHA3512']
+        evaluate(pk)
+        evaluate(msg)
+        evaluate(sig)
+        algs.forEach(alg => {
+            const rsaVerify = `rsaVerify(${alg}, msg, sig, pk)`
+            const res = evaluate(rsaVerify)
+            console.log(res)
+        })
+    });
+
+    it('log', function () {
+        const eval = compiler.repl().evaluate;
+        console.log(eval("pow(12, 1, 3456, 3, 2, DOWN)"));
+        console.log(eval("pow(12, 1, 3456, 3, 2, UP)"));
+        console.log(eval("pow(0, 1, 3456, 3, 2, UP)"));
+        console.log(eval("pow(20, 1, -1, 0, 4, DOWN)"));
+        console.log(eval("pow(-20, 1, -1, 0, 4, DOWN)"));
+        console.log(eval("pow(0, 1, -1, 0, 4, DOWN)"));
+        console.log(eval("log(16, 0, 2, 0, 0, CEILING)"));
+        console.log(eval("log(16, 0, -2, 0, 0, CEILING)"));
+        console.log(eval("log(-16, 0, 2, 0, 0, CEILING)"));
+
+        console.log(eval("pow(2,  0, 2, 9, 0, UP)"));
+        console.log(eval("log(2,  0, 2, 9, 0, UP)"));
+        console.log(eval("pow(2, -2, 2, 0, 5, UP)"));
+        console.log(eval("log(2, -2, 2, 0, 5, UP)"));
+        console.log(eval("pow(2, 0, 62, 0, 0, UP)"));
+        console.log(eval("pow(2, 0, 63, 0, 0, UP)"));
+        console.log(eval("pow(10, 0, -8, 0, 8, HALFUP)"));
+        console.log(eval("pow(10, 0, -9, 0, 8, HALFUP)"));
+    });
+
+    it('checkMerkleProof', () => {
+        const eval = compiler.repl().evaluate;
+        console.log(eval('let rootHash = base64\'eh9fm3HeHZ3XA/UfMpC9HSwLVMyBLgkAJL0MIVBIoYk=\'\n' +
+            'let leafData = base64\'AAAm+w==\'\n' +
+            'let merkleProof = base64\'ACBSs2di6rY+9N3mrpQVRNZLGAdRX2WBD6XkrOXuhh42XwEgKhB3Aiij6jqLRuQhrwqv6e05kr89tyxkuFYwUuMCQB8AIKLhp/AFQkokTe/NMQnKFL5eTMvDlFejApmJxPY6Rp8XACAWrdgB8DwvPA8D04E9HgUjhKghAn5aqtZnuKcmpLHztQAgd2OG15WYz90r1WipgXwjdq9WhvMIAtvGlm6E3WYY12oAIJXPPVIdbwOTdUJvCgMI4iape2gvR55vsrO2OmJJtZUNASAya23YyBl+EpKytL9+7cPdkeMMWSjk0Bc0GNnqIisofQ==\'\n' +
+            ' \n' +
+            'checkMerkleProof(rootHash, merkleProof, leafData)'))
+    })
+
+    it('12', () => {
+        const {evaluate} = compiler.repl();
+
+        const eval = (s) => console.log(compiler.repl().evaluate(s));
+        eval(`blake2b256(base58'qwe')`)
+    })
+
+    it('info', () => {
+        const repl = compiler.repl();
+        // console.log(repl.totalInfo())
+        console.log(repl.info('fromBase64String'))
+    })
 
 });
 

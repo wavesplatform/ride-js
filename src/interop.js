@@ -1,4 +1,3 @@
-const verify = require('curve25519-js').verify;
 const crypto = require('@waves/ts-lib-crypto');
 
 global.base58Encode = function (bytes) {

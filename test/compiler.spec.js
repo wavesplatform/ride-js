@@ -165,9 +165,8 @@ func multiply(a: Int, b: Int) = a * b
             [val.name]: val.content
         }), {});
         let res = compiler.compile(script, libs);
-        console.log(script);
-        Object.values(libs).map(l => console.log(l));
-        console.log(res);
+        if('error' in res) console.log(res.error);
+        expect(res.error).to.be.undefined
     })
 
     it('Should sign and verify via global curve25519verify', function () {

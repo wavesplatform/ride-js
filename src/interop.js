@@ -24,8 +24,8 @@ global.blake2b256 = function (bytes) {
 global.curve25519verify = function (key, msg, sig) {
     return crypto.verifySignature(new Uint8Array(key), new Uint8Array(msg), new Uint8Array(sig))
 };
-global.merkleVerify = function (rootHash, merkleProof, leafData) {//fixme
-    throw new Error('merkleVerify not implemented')
+global.merkleVerify = function (rootHash, merkleProof, leafData) {
+    return crypto.merkleVerify(new Uint8Array(rootHash), new Uint8Array(merkleProof), new Uint8Array(leafData))
 };
 global.rsaVerify = function (digest, msg, sig, key) {
     let alg = digest.toString();
@@ -48,3 +48,5 @@ global.rsaVerify = function (digest, msg, sig, key) {
     }//fixme
     return crypto.rsaVerify(new Uint8Array(key), new Uint8Array(msg), new Uint8Array(sig), alg)
 };
+
+

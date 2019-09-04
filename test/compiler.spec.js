@@ -228,8 +228,10 @@ func multiply(a: Int, b: Int) = a * b
         const code = "let rootHash = base64'eh9fm3HeHZ3XA/UfMpC9HSwLVMyBLgkAJL0MIVBIoYk='\n" +
             "let leafData = base64'AAAm+w=='\n" +
             "let merkleProof = base64'ACBSs2di6rY+9N3mrpQVRNZLGAdRX2WBD6XkrOXuhh42XwEgKhB3Aiij6jqLRuQhrwqv6e05kr89tyxkuFYwUuMCQB8AIKLhp/AFQkokTe/NMQnKFL5eTMvDlFejApmJxPY6Rp8XACAWrdgB8DwvPA8D04E9HgUjhKghAn5aqtZnuKcmpLHztQAgd2OG15WYz90r1WipgXwjdq9WhvMIAtvGlm6E3WYY12oAIJXPPVIdbwOTdUJvCgMI4iape2gvR55vsrO2OmJJtZUNASAya23YyBl+EpKytL9+7cPdkeMMWSjk0Bc0GNnqIisofQ=='\n" +
-            "checkMerkleProof(rootHash, merkleProof, leafData)"
-        expect(evaluate(code).result.slice(-4)).to.eq('true')
+            "checkMerkleProof(rootHash, merkleProof, leafData)";
+        const compiled = evaluate(code);
+        expect(compiled.error).to.be.undefined;
+        expect(compiled.result.slice(-4)).to.eq('true')
     })
 
 });

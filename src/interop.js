@@ -1,7 +1,17 @@
 const crypto = require('@waves/ts-lib-crypto');
+const {AbortController, abortableFetch} = require('abortcontroller-polyfill/dist/cjs-ponyfill');
+
+global.fetch = require("node-fetch")
+global.Headers = require("fetch-headers")
+global.AbortController = AbortController;
+global.abortableFetch = abortableFetch;
 
 global.base58Encode = function (bytes) {
     return crypto.base58Encode(new Uint8Array(bytes))
+};
+global.httpGet = async function (path) {
+    const resp = await fetch(path);
+    return await (resp).text();
 };
 global.base58Decode = function (data) {
     return crypto.base58Decode(data).buffer

@@ -76,9 +76,10 @@ export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean
 
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
 
-export function repl(): {
+export function repl(url?: string, chainId?: string, address?: string): {
     evaluate: (expr: string) => IDecompilationResult | IDecompilationError,
-    clear: () => void
+    clear: () => void,
+    test: (str: string) => Promise<string>,
     info: (s: string) => string,
     totalInfo: () => string,
 };

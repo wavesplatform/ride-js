@@ -11,7 +11,7 @@ global.base58Encode = function (bytes) {
 };
 global.httpGet = async function (path) {
     const resp = await fetch(path);
-    return await (resp).text();
+    return resp.status === 404 ? null : await resp.text()
 };
 global.base58Decode = function (data) {
     return crypto.base58Decode(data).buffer

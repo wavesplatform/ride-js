@@ -262,8 +262,8 @@ func multiply(a: Int, b: Int) = a * b
         repl.test('test')
     })
 
-    it('testHttp', () => {
-        const res =  httpGet('https://goeeqweogle.com')
+    it('testHttp', async () => {
+        const res =  await httpGet('https://nodes.wavesplatform.com/transactions/info/asd')
         console.log(res)
 
     })

@@ -1,7 +1,8 @@
 const compiler = require('../src');
 const {expect} = require('chai');
 
-describe('Compiler', () => {
+describe('Compiler', function () {
+    this.timeout(50000);
     it('Should compile multisig contract', () => {
         const contract = `
 # alice { private:EUzwt3buFVEyWAQQpt8ZXxDiEG51W7DhW6Hft54UHFfk,public:5AzfA9UfpWVYiwFwvdr77k6LWupSTGLb14b24oVdEpMM }
@@ -232,6 +233,39 @@ func multiply(a: Int, b: Int) = a * b
         const compiled = evaluate(code);
         expect(compiled.error).to.be.undefined;
         expect(compiled.result.slice(-4)).to.eq('true')
+    })
+
+
+    it('connect blockchain', () => {
+        const
+            url = 'https://testnodes.wavesnodes.com/',
+            chainId = 'T',
+            address = '3N4S7xqHfGvePCGduvzAp7bgUM3j59MZdhB',
+            obj = {url, chainId, address},
+            map = new Map([['url', url], ['chainId', chainId], ['address', address]]);
+
+        const {evaluate} = compiler.repl(url, chainId, address);
+        console.log(evaluate('height'))
+
+        // expect(compiled.error).to.be.undefined;
+        // expect(compiled.result.slice(-4)).to.eq('true')
+    })
+    it('connect test',  () => {
+        const
+            url = 'https://testnodes.wavesnodes.com/',
+            chainId = 'T',
+            address = '3N4S7xqHfGvePCGduvzAp7bgUM3j59MZdhB',
+            obj = {url, chainId, address},
+            map = new Map([['url', url], ['chainId', chainId], ['address', address]]);
+
+        const repl = compiler.repl();
+        repl.test('test')
+    })
+
+    it('testHttp', () => {
+        const res =  httpGet('https://goeeqweogle.com')
+        console.log(res)
+
     })
 
 });

@@ -1,28 +1,8 @@
 const crypto = require('@waves/ts-lib-crypto');
-const {AbortController, abortableFetch} = require('abortcontroller-polyfill/dist/cjs-ponyfill');
-
-global.fetch = require("node-fetch")
-global.Headers = require("fetch-headers")
-global.AbortController = AbortController;
-global.abortableFetch = abortableFetch;
+const axios = require('axios');
 
 global.base58Encode = function (bytes) {
     return crypto.base58Encode(new Uint8Array(bytes))
-};
-
-global.httpGet = async function (data) {
-    try {
-        if (!data.url) return {...data, status: 400, body: 'url is undefined'};
-        data.url = data.url.replace((/\.com\/\//), '.com/');
-        const
-            resp = await fetch(data.url),
-            status = resp.status,
-            body = await resp.text();
-        return {...data, status, body}
-    } catch (e) {
-        return {...data, status: 400, body: e};
-    }
-
 };
 global.base58Decode = function (data) {
     return crypto.base58Decode(data).buffer
@@ -69,5 +49,18 @@ global.rsaVerify = function (digest, msg, sig, key) {
     }//fixme
     return crypto.rsaVerify(new Uint8Array(key), new Uint8Array(msg), new Uint8Array(sig), alg)
 };
-
+global.httpGet = async function (data) {
+    try {
+        if (!data.url) return {...data, status: 400, body: 'url is undefined'};
+        data.url = data.url.replace((/\.com\/\//), '.com/');
+        let
+            resp = await axios.get(data.url),
+            status = resp.status,
+            body = await resp.data;
+        if (typeof body !== 'string') body = JSON.stringify(body);
+        return {...data, status, body}
+    } catch (e) {
+        return {...data, status: 400, body: e.toString()};
+    }
+};
 

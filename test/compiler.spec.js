@@ -263,7 +263,7 @@ func multiply(a: Int, b: Int) = a * b
     })
 
     it('testHttp', async () => {
-        const res =  await httpGet('https://nodes.wavesplatform.com/transactions/info/asd')
+        const res =  await httpGet({url: 'https://nodes.wavesplatform.com/transactions/info/asd'});
         console.log(res)
 
     })

@@ -9,9 +9,37 @@ global.abortableFetch = abortableFetch;
 global.base58Encode = function (bytes) {
     return crypto.base58Encode(new Uint8Array(bytes))
 };
-global.httpGet = async function (path) {
-    const resp = await fetch(path);
-    return resp.status === 404 ? null : await resp.text()
+
+/*
+
+{
+...,
+url: string
+}
+
+
+
+{
+...,
+url: string,
+body: string,
+status: string
+}
+
+*/
+
+global.httpGet = async function (data) {
+    try{
+        if (!data.url) return {...data, status: 400, body: 'url is undefined'};
+        const
+            resp = await fetch(data.url),
+            status = resp.status,
+            body = await resp.text();
+        return {...data, status, body}
+    }catch (e) {
+        return {...data, status: 400, body: e};
+    }
+
 };
 global.base58Decode = function (data) {
     return crypto.base58Decode(data).buffer

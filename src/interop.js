@@ -52,7 +52,6 @@ global.rsaVerify = function (digest, msg, sig, key) {
 global.httpGet = async function (data) {
     try {
         if (!data.url) return {...data, status: 400, body: 'url is undefined'};
-        data.url = data.url.replace((/\.com\/\//), '.com/');
         let
             resp = await axios.get(data.url),
             status = resp.status,

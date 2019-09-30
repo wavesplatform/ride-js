@@ -10,33 +10,16 @@ global.base58Encode = function (bytes) {
     return crypto.base58Encode(new Uint8Array(bytes))
 };
 
-/*
-
-{
-...,
-url: string
-}
-
-
-
-{
-...,
-url: string,
-body: string,
-status: string
-}
-
-*/
-
 global.httpGet = async function (data) {
-    try{
+    try {
         if (!data.url) return {...data, status: 400, body: 'url is undefined'};
+        data.url = data.url.replace((/\.com\/\//), '.com/');
         const
             resp = await fetch(data.url),
             status = resp.status,
             body = await resp.text();
         return {...data, status, body}
-    }catch (e) {
+    } catch (e) {
         return {...data, status: 400, body: e};
     }
 

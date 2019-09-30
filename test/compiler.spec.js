@@ -1,7 +1,8 @@
 const compiler = require('../src');
 const {expect} = require('chai');
 
-describe('Compiler', () => {
+describe('Compiler', function () {
+    this.timeout(50000);
     it('Should compile multisig contract', () => {
         const contract = `
 # alice { private:EUzwt3buFVEyWAQQpt8ZXxDiEG51W7DhW6Hft54UHFfk,public:5AzfA9UfpWVYiwFwvdr77k6LWupSTGLb14b24oVdEpMM }
@@ -113,9 +114,9 @@ func bar() = WriteSet([])`;
         expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000)
     });
 
-    it(' ba.sha256 is not a function', () => {
+    it(' ba.sha256 is not a function', async () => {
         const eval = compiler.repl().evaluate;
-        const res = eval("sha256(base58'qwe')");
+        const res = await eval("sha256(base58'qwe')");
         expect(res.result).to.eq('res1: ByteVector = Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp')
     })
 
@@ -169,8 +170,8 @@ func multiply(a: Int, b: Int) = a * b
         expect(res.error).to.be.undefined
     })
 
-    it('Should sign and verify via global curve25519verify', function () {
-        const res = compiler.repl().evaluate(`sigVerify(
+    it('Should sign and verify via global curve25519verify', async function () {
+        const res = await compiler.repl().evaluate(`sigVerify(
        base58'D6HmGZqpXCyAqpz8mCAfWijYDWsPKncKe5v3jq1nTpf5',
        base58'59Su1K4KSU',
        base58'CGNGZ6G4tuYsW9AbBZPvhTvtVQYAnE8w22UMWLpLM8bGMiys4psATG7sX58p2aFe9uysYyrwnuP2GwT7NAJe737'
@@ -179,7 +180,7 @@ func multiply(a: Int, b: Int) = a * b
         expect(res.result).to.eq('res1: Boolean = true')
     });
 
-    it('rsa verify', function () {
+    it('rsa verify', async function () {
         const {evaluate} = compiler.repl();
         const pk = `let pk = fromBase64String("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkDg8m0bCDX7fTbBlHZm+BZIHVOfC2I4klRbjSqwFi/eCdfhGjYRYvu/frpSO0LIm0beKOUvwat6DY4dEhNt2PW3UeQvT2udRQ9VBcpwaJlLreCr837sn4fa9UG9FQFaGofSww1O9eBBjwMXeZr1jOzR9RBIwoL1TQkIkZGaDXRltEaMxtNnzotPfF3vGIZZuZX4CjiitHaSC0zlmQrEL3BDqqoLwo3jq8U3Zz8XUMyQElwufGRbZqdFCeiIs/EoHiJm8q8CVExRoxB0H/vE2uDFK/OXLGTgfwnDlrCa/qGt9Zsb8raUSz9IIHx72XB+kOXTt/GOuW7x2dJvTJIqKTwIDAQAB")`
         const msg = `let msg = fromBase64String("REIiN2hDQUxIJVQzdk1zQSpXclRRelExVWd+YGQoOyx0KHduPzFmcU8zUWosWiA7aFloOWplclAxPCU=")`
@@ -189,13 +190,14 @@ func multiply(a: Int, b: Int) = a * b
             'SHA256', 'SHA384', 'SHA512',
             'SHA3224', 'SHA3256', 'SHA3384', 'SHA3512'
         ]
-        evaluate(pk)
-        evaluate(msg)
-        evaluate(sig)
-        algs.forEach(alg => {
+        await evaluate(pk)
+        await evaluate(msg)
+        await evaluate(sig)
+        algs.forEach((alg) => {
             const rsaVerify = `rsaVerify(${alg}, msg, sig, pk)`
-            const res = evaluate(rsaVerify)
-            expect('result' in res).to.eq(true)
+            evaluate(rsaVerify).then(res => {
+                expect('result' in res).to.eq(true)
+            })
         })
     });
 
@@ -220,19 +222,38 @@ func multiply(a: Int, b: Int) = a * b
             "pow(10, 0, -8, 0, 8, HALFUP)",
             "pow(10, 0, -9, 0, 8, HALFUP)"
         ];
-        tests.forEach(test => expect('result' in eval(test)).to.eq(true))
+        tests.forEach(async test => expect('result' in await eval(test)).to.eq(true))
     });
 
-    it('checkMerkleProof', () => {
+    it('checkMerkleProof', async () => {
         const {evaluate} = compiler.repl();
         const code = "let rootHash = base64'eh9fm3HeHZ3XA/UfMpC9HSwLVMyBLgkAJL0MIVBIoYk='\n" +
             "let leafData = base64'AAAm+w=='\n" +
             "let merkleProof = base64'ACBSs2di6rY+9N3mrpQVRNZLGAdRX2WBD6XkrOXuhh42XwEgKhB3Aiij6jqLRuQhrwqv6e05kr89tyxkuFYwUuMCQB8AIKLhp/AFQkokTe/NMQnKFL5eTMvDlFejApmJxPY6Rp8XACAWrdgB8DwvPA8D04E9HgUjhKghAn5aqtZnuKcmpLHztQAgd2OG15WYz90r1WipgXwjdq9WhvMIAtvGlm6E3WYY12oAIJXPPVIdbwOTdUJvCgMI4iape2gvR55vsrO2OmJJtZUNASAya23YyBl+EpKytL9+7cPdkeMMWSjk0Bc0GNnqIisofQ=='\n" +
             "checkMerkleProof(rootHash, merkleProof, leafData)";
-        const compiled = evaluate(code);
+        const compiled = await evaluate(code);
         expect(compiled.error).to.be.undefined;
         expect(compiled.result.slice(-4)).to.eq('true')
+    });
+
+    it('testHttp', async () => {
+        expect((await httpGet({url: 'https://nodes.wavesplatform.com/transactions/info/asd'})).body === undefined)
+            .to.eq(false)
+    });
+
+    it('connect blockchain - transactionHeightById', async () => {
+        const
+            url = 'https://testnodes.wavesnodes.com/',
+            chainId = 'T',
+            address = '3N4S7xqHfGvePCGduvzAp7bgUM3j59MZdhB';
+
+        const {evaluate} = compiler.repl(url, chainId, address);
+        const res = await evaluate('transactionHeightById(base58\'GgjvCxoDP2FtNrKMqsWrUqJZfMGTiWB1tF2RyYHk6u9w\')');
+        expect('result' in res).to.eq(true);
+        expect(res.result).to.eq("res1: Int|Unit = 661401");
     })
+
+
 
 });
 

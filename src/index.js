@@ -31,8 +31,15 @@ function wrappedCompile(code, libraries) {
     }
 }
 
+function wrappedRepl(url, chainId, address) {
+    return (url && chainId && address)
+        ? scalaJsCompiler.repl(new scalaJsCompiler.NodeConnectionSettings(url, chainId.charCodeAt(0), address))
+        : scalaJsCompiler.repl();
+}
+
 const api = {
     compile: wrappedCompile,
+    repl:  wrappedRepl,
     get contractLimits() {
         return scalaJsCompiler.contractLimits()
     },
@@ -45,7 +52,6 @@ const api = {
     getVarsDoc: scalaJsCompiler.getVarsDoc,
     getFunctionsDoc: scalaJsCompiler.getFunctionsDoc,
     decompile: scalaJsCompiler.decompile,
-    repl: scalaJsCompiler.repl
 }
 
 global.RideJS = api;

@@ -64,7 +64,7 @@ export interface IScriptInfo {
     imports: string[]
 }
 
-export function compile(code: string, libraries?: {[key: string]: string}): ICompilationResult | ICompilationError;
+export function compile(code: string, libraries?: { [key: string]: string }): ICompilationResult | ICompilationError;
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 
@@ -76,12 +76,14 @@ export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean
 
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
 
-export function repl(): {
-    evaluate: (expr: string) => IDecompilationResult | IDecompilationError,
-    clear: () => void
+export function repl(url?: string, chainId?: string, address?: string): {
+    evaluate: (expr: string) => Promise<IDecompilationResult | IDecompilationError>,
+    clear: () => void,
+    test: (str: string) => Promise<string>,
     info: (s: string) => string,
     totalInfo: () => string,
 };
+
 export const version: string;
 export const contractLimits: {
     MaxComplexityByVersion: (v: number) => number,

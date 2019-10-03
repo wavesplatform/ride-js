@@ -76,7 +76,13 @@ export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean
 
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
 
-export function repl(url?: string, chainId?: string, address?: string): {
+export interface IReplOptions {
+    nodeUrl: string
+    chainId: string
+    address: string
+}
+
+export function repl(opts?: IReplOptions): {
     evaluate: (expr: string) => Promise<IDecompilationResult | IDecompilationError>,
     clear: () => void,
     test: (str: string) => Promise<string>,

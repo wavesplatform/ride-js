@@ -243,11 +243,11 @@ func multiply(a: Int, b: Int) = a * b
 
     it('connect blockchain - transactionHeightById', async () => {
         const
-            url = 'https://testnodes.wavesnodes.com/',
+            nodeUrl = 'https://testnodes.wavesnodes.com/',
             chainId = 'T',
             address = '3N4S7xqHfGvePCGduvzAp7bgUM3j59MZdhB';
 
-        const {evaluate} = compiler.repl(url, chainId, address);
+        const {evaluate} = compiler.repl({nodeUrl, chainId, address});
         const res = await evaluate('transactionHeightById(base58\'GgjvCxoDP2FtNrKMqsWrUqJZfMGTiWB1tF2RyYHk6u9w\')');
         expect('result' in res).to.eq(true);
         expect(res.result).to.eq("res1: Int|Unit = 661401");

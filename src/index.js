@@ -31,9 +31,9 @@ function wrappedCompile(code, libraries) {
     }
 }
 
-function wrappedRepl(url, chainId, address) {
-    return (url && chainId && address)
-        ? scalaJsCompiler.repl(new scalaJsCompiler.NodeConnectionSettings(url, chainId.charCodeAt(0), address))
+function wrappedRepl(opts) {
+    return (opts != null)
+        ? scalaJsCompiler.repl(new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address))
         : scalaJsCompiler.repl();
 }
 

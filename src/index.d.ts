@@ -61,18 +61,38 @@ export interface IScriptInfo {
     stdLibVersion: number,
     contentType: number,
     scriptType: number
+    imports: string[]
 }
 
-export function compile(code: string): ICompilationResult | ICompilationError;
-export function scriptInfo(code: string):  IScriptInfo;
+export function compile(code: string, libraries?: { [key: string]: string }): ICompilationResult | ICompilationError;
+
+export function scriptInfo(code: string): IScriptInfo | ICompilationError;
+
 export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): TStructField[];
+
 export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IVarDoc[];
+
 export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): TFunction[];
+
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
+
+export interface IReplOptions {
+    nodeUrl: string
+    chainId: string
+    address: string
+}
+
+export function repl(opts?: IReplOptions): {
+    evaluate: (expr: string) => Promise<IDecompilationResult | IDecompilationError>,
+    clear: () => void,
+    test: (str: string) => Promise<string>,
+    info: (s: string) => string,
+    totalInfo: () => string,
+};
 
 export const version: string;
 export const contractLimits: {
-    MaxComplexityByVersion: (v:number) => number,
+    MaxComplexityByVersion: (v: number) => number,
     MaxExprSizeInBytes: number,
     MaxContractSizeInBytes: number,
     MaxContractInvocationArgs: number,

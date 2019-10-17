@@ -83,6 +83,7 @@ export interface IReplOptions {
 }
 
 export function repl(opts?: IReplOptions): {
+    reconfigure: (opts: IReplOptions) => ReturnType<typeof repl>
     evaluate: (expr: string) => Promise<IDecompilationResult | IDecompilationError>,
     clear: () => void,
     test: (str: string) => Promise<string>,

@@ -32,14 +32,21 @@ function wrappedCompile(code, libraries) {
 }
 
 function wrappedRepl(opts) {
-    return (opts != null)
+    const repl = (opts != null)
         ? scalaJsCompiler.repl(new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address))
         : scalaJsCompiler.repl();
+
+    const oldReconfigure = repl.reconfigure.bind(repl);
+    repl.reconfigure = (opts) => {
+        const settings = new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address);
+        return oldReconfigure(settings)
+    };
+    return repl
 }
 
 const api = {
     compile: wrappedCompile,
-    repl:  wrappedRepl,
+    repl: wrappedRepl,
     get contractLimits() {
         return scalaJsCompiler.contractLimits()
     },

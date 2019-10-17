@@ -254,6 +254,20 @@ func multiply(a: Int, b: Int) = a * b
     })
 
 
+    it('reconfigure', async () => {
+        let
+            nodeUrl = 'https://testnodes.wavesnodes.com/',
+            chainId = 'T',
+            address = '3N4S7xqHfGvePCGduvzAp7bgUM3j59MZdhB';
 
+        let repl = compiler.repl({nodeUrl, chainId, address});
+        let res = await repl.evaluate('this');
+        expect('result' in res && res.result.includes(address)).to.eq(true);
+
+        address = '3N5hQm6twVhFgf8mKBkJpNhxwcBnpZsPyni';
+        repl = repl.reconfigure({nodeUrl, chainId, address});
+        res = await repl.evaluate('this');
+        expect('result' in res && res.result.includes(address)).to.eq(true);
+    })
 });
 

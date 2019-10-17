@@ -50,16 +50,11 @@ global.rsaVerify = function (digest, msg, sig, key) {
     return crypto.rsaVerify(new Uint8Array(key), new Uint8Array(msg), new Uint8Array(sig), alg)
 };
 global.httpGet = async function (data) {
-    try {
-        if (!data.url) return {...data, status: 400, body: 'url is undefined'};
-        let
-            resp = await axios.get(data.url),
-            status = resp.status,
-            body = await resp.data;
-        if (typeof body !== 'string') body = JSON.stringify(body);
-        return {...data, status, body}
-    } catch (e) {
-        return {...data, status: 400, body: e.toString()};
-    }
+    if (!data.url) return {...data, status: 404, body: 'url is undefined'};
+    let
+        resp = await axios.get(data.url, {validateStatus: () => true}),
+        status = resp.status,
+        body = await resp.data;
+    if (typeof body !== 'string') body = JSON.stringify(body);
+    return {...data, status, body}
 };
-

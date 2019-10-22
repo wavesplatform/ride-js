@@ -268,6 +268,16 @@ func multiply(a: Int, b: Int) = a * b
         repl = repl.reconfigure({nodeUrl, chainId, address});
         res = await repl.evaluate('this');
         expect('result' in res && res.result.includes(address)).to.eq(true);
+
+        address = '3N77yhDrPTdLFjzNPZcBQPZLDg11EHAB7xF';
+        repl = repl.reconfigure({nodeUrl, chainId, address});
+        res = await repl.evaluate('this');
+        expect('result' in res && res.result.includes(address)).to.eq(true);
+
+        address = '3Mzrrp6SCrDz7bUQThWoYvbwkFSjTDcRtCv';
+        repl = repl.reconfigure({nodeUrl, chainId, address});
+        res = await repl.evaluate('this');
+        expect('result' in res && res.result.includes(address)).to.eq(true);
     })
 });
 

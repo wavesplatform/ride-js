@@ -36,11 +36,18 @@ function wrappedRepl(opts) {
         ? scalaJsCompiler.repl(new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address))
         : scalaJsCompiler.repl();
 
-    const oldReconfigure = repl.reconfigure.bind(repl);
-    repl.reconfigure = (opts) => {
-        const settings = new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address);
-        return oldReconfigure(settings)
+    const wrapReconfigure = (repl) => {
+        let reconfigureFn = repl.reconfigure.bind(repl);
+        return (opts) => {
+            const settings = new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address);
+            const newRepl = reconfigureFn(settings);
+            newRepl.reconfigure = wrapReconfigure(newRepl);
+            return newRepl;
+        }
     };
+
+    repl.reconfigure = wrapReconfigure(repl);
+
     return repl
 }
 

@@ -22,7 +22,7 @@ global.sha256 = function (bytes) {
 global.blake2b256 = function (bytes) {
     return crypto.blake2b(new Uint8Array(bytes)).buffer
 };
-global.curve25519verify = function (key, msg, sig) {
+global.curve25519verify = function (msg, sig, key) {
     return crypto.verifySignature(new Uint8Array(key), new Uint8Array(msg), new Uint8Array(sig))
 };
 global.merkleVerify = function (rootHash, merkleProof, leafData) {

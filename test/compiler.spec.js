@@ -172,9 +172,9 @@ func multiply(a: Int, b: Int) = a * b
 
     it('Should sign and verify via global curve25519verify', async function () {
         const res = await compiler.repl().evaluate(`sigVerify(
-       base58'D6HmGZqpXCyAqpz8mCAfWijYDWsPKncKe5v3jq1nTpf5',
        base58'59Su1K4KSU',
-       base58'CGNGZ6G4tuYsW9AbBZPvhTvtVQYAnE8w22UMWLpLM8bGMiys4psATG7sX58p2aFe9uysYyrwnuP2GwT7NAJe737'
+       base58'CGNGZ6G4tuYsW9AbBZPvhTvtVQYAnE8w22UMWLpLM8bGMiys4psATG7sX58p2aFe9uysYyrwnuP2GwT7NAJe737',
+       base58'D6HmGZqpXCyAqpz8mCAfWijYDWsPKncKe5v3jq1nTpf5'
        )`)
 
         expect(res.result).to.eq('res1: Boolean = true')

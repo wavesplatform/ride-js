@@ -117,7 +117,7 @@ func bar() = WriteSet([])`;
     it(' ba.sha256 is not a function', async () => {
         const eval = compiler.repl().evaluate;
         const res = await eval("sha256(base58'qwe')");
-        expect(res.result).to.eq('res1: ByteVector = Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp')
+        expect(res.result).to.eq('res1: ByteVector = base58\'Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp\'')
     })
 
     it('Imports', () => {

@@ -57,7 +57,7 @@ let a = {
 x
             `;
         const result = compiler.compile(contract);
-        expect(result.error).to.eql('Compilation failed: A definition of \'x\' is not found in 33-34')
+        expect(result.error).to.eql('Compilation failed: [A definition of \'x\' is not found in 33-34]')
     });
 
     it('Should give sensible error on nulls and undefined', () => {
@@ -278,6 +278,10 @@ func multiply(a: Int, b: Int) = a * b
         repl = repl.reconfigure({nodeUrl, chainId, address});
         res = await repl.evaluate('this');
         expect('result' in res && res.result.includes(address)).to.eq(true);
+    })
+
+    it('v', async () => {
+        console.log(compiler.version)
     })
 });
 

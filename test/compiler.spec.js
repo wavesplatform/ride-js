@@ -243,7 +243,7 @@ func multiply(a: Int, b: Int) = a * b
 
     it('connect blockchain - transactionHeightById', async () => {
         const
-            nodeUrl = 'https://testnodes.wavesnodes.com/',
+            nodeUrl = 'https://nodes-testnet.wavesnodes.com/',
             chainId = 'T',
             address = '3N4S7xqHfGvePCGduvzAp7bgUM3j59MZdhB';
 
@@ -256,7 +256,7 @@ func multiply(a: Int, b: Int) = a * b
 
     it('reconfigure', async () => {
         let
-            nodeUrl = 'https://testnodes.wavesnodes.com/',
+            nodeUrl = 'https://nodes-testnet.wavesnodes.com/',
             chainId = 'T',
             address = '3N4S7xqHfGvePCGduvzAp7bgUM3j59MZdhB';
 

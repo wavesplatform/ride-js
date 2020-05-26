@@ -280,9 +280,5 @@ func multiply(a: Int, b: Int) = a * b
         expect('result' in res && res.result.includes(address)).to.eq(true);
     })
 
-    it('v', async () => {
-        const f = compiler.getFunctionsDoc(4).find(({name}) => name === 'makeString')
-        console.log(f)
-    })
 });
 

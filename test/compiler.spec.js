@@ -281,7 +281,8 @@ func multiply(a: Int, b: Int) = a * b
     })
 
     it('v', async () => {
-        console.log(compiler.version)
+        const f = compiler.getFunctionsDoc(4).find(({name}) => name === 'makeString')
+        console.log(f)
     })
 });
 

@@ -280,8 +280,5 @@ func multiply(a: Int, b: Int) = a * b
         expect('result' in res && res.result.includes(address)).to.eq(true);
     })
 
-    it('v', async () => {
-        console.log(compiler.version)
-    })
 });
 

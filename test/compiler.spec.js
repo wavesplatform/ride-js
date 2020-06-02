@@ -309,7 +309,7 @@ func foo() = {
 func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)`
 
         const compiled = compiler.compile(contract)
-        console.log(compiled.result)
+        console.log(compiled)
     })
 
 });

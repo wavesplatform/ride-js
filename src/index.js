@@ -11,6 +11,10 @@ function wrappedCompile(code, libraries) {
     try {
         const result = scalaJsCompiler.compile(code, libraries);
         if (result.error) {
+            try {
+                result.size = new Uint8Array(result.result).length;
+            } catch (e) {
+            }
             return result;
         } else {
             const bytes = new Uint8Array(result.result);

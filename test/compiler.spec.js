@@ -280,8 +280,37 @@ func multiply(a: Int, b: Int) = a * b
         expect('result' in res && res.result.includes(address)).to.eq(true);
     })
 
-    it('v', async () => {
-        console.log(compiler.version)
+    it('complexity', () => {
+        const contract = `
+{-# STDLIB_VERSION 3 #-}
+{-# CONTENT_TYPE EXPRESSION #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+${Array.from({length: 100}, () =>
+            'sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)').join(' &&\n')
+}`;
+        const compiled = compiler.compile(contract)
+        console.log(compiled)
     })
+
+
+
+    it('complexity by funcs', () => {
+        const contract = `
+        {-# STDLIB_VERSION 3 #-}
+{-# CONTENT_TYPE DAPP #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+
+@Callable(i)
+func foo() = {
+    WriteSet([])
+}
+
+@Verifier(tx)
+func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)`
+
+        const compiled = compiler.compile(contract)
+        console.log(compiled)
+    })
+
 });
 

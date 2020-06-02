@@ -5,6 +5,7 @@ export interface ICompilationResult {
         bytes: Uint8Array
         size: number
         complexity: number
+        complexityByFunc?: object
     }
 }
 

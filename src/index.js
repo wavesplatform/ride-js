@@ -21,6 +21,7 @@ function wrappedCompile(code, libraries) {
                     size: bytes.byteLength,
                     ast: result.ast,
                     complexity: result.complexity,
+                    complexityByFunc: result.complexityByFunc,
                 }
             }
         }

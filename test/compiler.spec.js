@@ -282,12 +282,23 @@ func multiply(a: Int, b: Int) = a * b
 
     it('complexity', () => {
         const contract = `
-{-# STDLIB_VERSION 3 #-}
-{-# CONTENT_TYPE EXPRESSION #-}
+        {-# STDLIB_VERSION 3 #-}
+{-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
-${Array.from({length: 100}, () =>
-            'sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)').join(' &&\n')
-}`;
+
+func userfunc() = {
+    sigVerify(base58'', base58'', base58'')
+}
+
+@Callable(i)
+func asd() = {
+    WriteSet([DataEntry("d",
+    ${Array.from({length: 100}, () =>
+            "sigVerify(base58'', base58'', base58'')").join(' &&\n')
+        }
+    )])
+}
+`;
         const compiled = compiler.compile(contract)
         console.log(compiled)
     })
@@ -311,6 +322,7 @@ func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicK
         const compiled = compiler.compile(contract)
         console.log(compiled)
     })
+
 
 });
 

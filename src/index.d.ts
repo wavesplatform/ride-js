@@ -98,6 +98,7 @@ export const contractLimits: {
     MaxExprSizeInBytes: number,
     MaxContractSizeInBytes: number,
     MaxContractInvocationArgs: number,
+    MaxAccountVerifierComplexityByVersion: number
     MaxContractInvocationSizeInBytes: number,
     MaxWriteSetSizeInBytes: number,
     MaxPaymentAmount: number

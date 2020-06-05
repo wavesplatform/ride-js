@@ -5,7 +5,9 @@ export interface ICompilationResult {
         bytes: Uint8Array
         size: number
         complexity: number
-        complexityByFunc?: object
+        verifierComplexity?: number
+        callableComplexity?: Record<string, number>
+        userFunctionsComplexity?: Record<string, number>
     }
 }
 
@@ -65,7 +67,21 @@ export interface IScriptInfo {
     imports: string[]
 }
 
-export function compile(code: string, libraries?: { [key: string]: string }): ICompilationResult | ICompilationError;
+export interface IFlattenedCompilationResult {
+    ast?: object
+    base64?: string
+    bytes?: Uint8Array
+    size?: number
+    complexity?: number
+    verifierComplexity?: number
+    callableComplexities?: Record<string, number>
+    userFunctionComplexities?: Record<string, number>
+    error?: string
+}
+
+export function compile(code: string, estimatorVersion?: number): ICompilationResult | ICompilationError;
+
+export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 

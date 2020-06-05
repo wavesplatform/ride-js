@@ -2,14 +2,14 @@ require('./interop');
 const crypto = require('@waves/ts-lib-crypto');
 const scalaJsCompiler = require('./lang-opt.js');
 
-function wrappedCompile(code, libraries) {
+function wrappedCompile(code, estimatorVersion = 2) {
     if (typeof code !== 'string') {
         return {
             error: 'Type error: contract should be string'
         }
     }
     try {
-        const result = scalaJsCompiler.compile(code, libraries);
+        const result = scalaJsCompiler.compile(code, estimatorVersion);
         if (result.error) {
             try {
                 result.size = new Uint8Array(result.result).length;
@@ -25,11 +25,14 @@ function wrappedCompile(code, libraries) {
                     size: bytes.byteLength,
                     ast: result.ast,
                     complexity: result.complexity,
-                    complexityByFunc: result.complexityByFunc,
+                    verifierComplexity: result.verifierComplexity,
+                    callableComplexity: result.verifierComplexity,
+                    userFunctionsComplexity: result.verifierComplexity
                 }
             }
         }
     } catch (e) {
+        console.log(e)
         return typeof e === 'object' ?
             {error: e.message} :
             {error: e}
@@ -56,6 +59,21 @@ function wrappedRepl(opts) {
     return repl
 }
 
+const flattenCompilationResult = (compiled) => {
+    let result = {};
+    if (compiled.error) {
+        if (compiled.result) {
+            const bytes = new Uint8Array(compiled.result);
+            const base64 = crypto.base64Encode(bytes);
+            result = {...compiled, base64};
+            result.result && delete result.result
+        }
+    } else {
+        result = compiled.result
+    }
+    return result
+}
+
 const api = {
     compile: wrappedCompile,
     repl: wrappedRepl,
@@ -71,6 +89,7 @@ const api = {
     getVarsDoc: scalaJsCompiler.getVarsDoc,
     getFunctionsDoc: scalaJsCompiler.getFunctionsDoc,
     decompile: scalaJsCompiler.decompile,
+    flattenCompilationResult
 }
 
 global.RideJS = api;

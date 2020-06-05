@@ -1,5 +1,6 @@
 const compiler = require('../src');
 const {expect} = require('chai');
+const scalaJsCompiler = require('../src/lang-opt.js');
 
 describe('Compiler', function () {
     this.timeout(50000);
@@ -120,55 +121,55 @@ func bar() = WriteSet([])`;
         expect(res.result).to.eq('res1: ByteVector = base58\'Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp\'')
     })
 
-    it('Imports', () => {
-        const script = `
-{-# STDLIB_VERSION 3 #-}
-{-# SCRIPT_TYPE ACCOUNT #-}
-{-# IMPORT lib2,lib1,lib3 #-}
-let a = 5
-multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
-            `;
-
-        const info = compiler.scriptInfo(script);
-        expect(info.imports.toString()).to.eq('lib2,lib1,lib3');
-        const files = [
-            {
-                name: "lib1",
-                content: `
-{-# SCRIPT_TYPE  ACCOUNT #-}
-{-# CONTENT_TYPE LIBRARY #-}
-{-# STDLIB_VERSION 3 #-}
-func inc(a: Int) = a + 1
-`
-            },
-            {
-                name: "lib2",
-                content: `
-{-# SCRIPT_TYPE  ACCOUNT #-}
-{-# CONTENT_TYPE LIBRARY #-}
-{-# STDLIB_VERSION 3 #-}
-func dec(a: Int) = a - 1
-`
-            },
-            {
-                name: "lib3",
-                content: `
-{-# SCRIPT_TYPE  ACCOUNT #-}
-{-# CONTENT_TYPE LIBRARY #-}
-{-# STDLIB_VERSION 3 #-}
-func multiply(a: Int, b: Int) = a * b
-`
-            }
-        ];
-
-        const libs = files.filter(({name}) => info.imports.includes(name)).reduce((acc, val) => ({
-            ...acc,
-            [val.name]: val.content
-        }), {});
-        let res = compiler.compile(script, libs);
-        if ('error' in res) console.log(res.error);
-        expect(res.error).to.be.undefined
-    })
+//     it('Imports', () => {
+//         const script = `
+// {-# STDLIB_VERSION 3 #-}
+// {-# SCRIPT_TYPE ACCOUNT #-}
+// {-# IMPORT lib2,lib1,lib3 #-}
+// let a = 5
+// multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
+//             `;
+//
+//         const info = compiler.scriptInfo(script);
+//         expect(info.imports.toString()).to.eq('lib2,lib1,lib3');
+//         const files = [
+//             {
+//                 name: "lib1",
+//                 content: `
+// {-# SCRIPT_TYPE  ACCOUNT #-}
+// {-# CONTENT_TYPE LIBRARY #-}
+// {-# STDLIB_VERSION 3 #-}
+// func inc(a: Int) = a + 1
+// `
+//             },
+//             {
+//                 name: "lib2",
+//                 content: `
+// {-# SCRIPT_TYPE  ACCOUNT #-}
+// {-# CONTENT_TYPE LIBRARY #-}
+// {-# STDLIB_VERSION 3 #-}
+// func dec(a: Int) = a - 1
+// `
+//             },
+//             {
+//                 name: "lib3",
+//                 content: `
+// {-# SCRIPT_TYPE  ACCOUNT #-}
+// {-# CONTENT_TYPE LIBRARY #-}
+// {-# STDLIB_VERSION 3 #-}
+// func multiply(a: Int, b: Int) = a * b
+// `
+//             }
+//         ];
+//
+//         const libs = files.filter(({name}) => info.imports.includes(name)).reduce((acc, val) => ({
+//             ...acc,
+//             [val.name]: val.content
+//         }), {});
+//         let res = compiler.compile(script, libs);
+//         if ('error' in res) console.log(res.error);
+//         expect(res.error).to.be.undefined
+//     })
 
     it('Should sign and verify via global curve25519verify', async function () {
         const res = await compiler.repl().evaluate(`sigVerify(
@@ -232,6 +233,7 @@ func multiply(a: Int, b: Int) = a * b
             "let merkleProof = base64'ACBSs2di6rY+9N3mrpQVRNZLGAdRX2WBD6XkrOXuhh42XwEgKhB3Aiij6jqLRuQhrwqv6e05kr89tyxkuFYwUuMCQB8AIKLhp/AFQkokTe/NMQnKFL5eTMvDlFejApmJxPY6Rp8XACAWrdgB8DwvPA8D04E9HgUjhKghAn5aqtZnuKcmpLHztQAgd2OG15WYz90r1WipgXwjdq9WhvMIAtvGlm6E3WYY12oAIJXPPVIdbwOTdUJvCgMI4iape2gvR55vsrO2OmJJtZUNASAya23YyBl+EpKytL9+7cPdkeMMWSjk0Bc0GNnqIisofQ=='\n" +
             "checkMerkleProof(rootHash, merkleProof, leafData)";
         const compiled = await evaluate(code);
+        console.log(compiled)
         expect(compiled.error).to.be.undefined;
         expect(compiled.result.slice(-4)).to.eq('true')
     });
@@ -299,15 +301,19 @@ func asd() = {
     )])
 }
 `;
-        const compiled = compiler.compile(contract)
-        console.log(compiled)
-    })
+        const flattenResult = compiler.flattenCompilationResult(compiler.compile(contract))
+        expect(typeof flattenResult.verifierComplexity).to.eq('number')
+        expect(typeof flattenResult.callableComplexities).to.eq('object')
+        expect(typeof flattenResult.userFunctionComplexities).to.eq('object')
+        expect(typeof flattenResult.error).to.eq('string')
+        expect(typeof flattenResult.complexity).to.eq('number')
 
+    })
 
 
     it('complexity by funcs', () => {
         const contract = `
-        {-# STDLIB_VERSION 3 #-}
+{-# STDLIB_VERSION 3 #-}
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
 
@@ -317,9 +323,10 @@ func foo() = {
 }
 
 @Verifier(tx)
-func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)`
+func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
+      `
 
-        const compiled = compiler.compile(contract)
+        const compiled = compiler.compile(contract, 3)
         console.log(compiled)
     })
 

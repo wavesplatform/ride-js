@@ -326,10 +326,14 @@ func foo() = {
 func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
       `
 
-        const compiled = compiler.compile(contract, 3)
-        console.log(compiled)
-    })
+        const flattenResult = compiler.flattenCompilationResult(compiler.compile(contract))
+        expect(typeof flattenResult.verifierComplexity).to.eq('number')
+        expect(typeof flattenResult.callableComplexities).to.eq('object')
+        expect(typeof flattenResult.userFunctionComplexities).to.eq('object')
+        expect(typeof flattenResult.error).to.eq('undefined')
+        expect(typeof flattenResult.complexity).to.eq('number')
 
-
+    });
 });
+
 

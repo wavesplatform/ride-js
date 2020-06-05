@@ -18,16 +18,17 @@ function wrappedCompile(code, estimatorVersion = 2) {
             return result;
         } else {
             const bytes = new Uint8Array(result.result);
+            const {ast, complexity, verifierComplexity, callableComplexities, userFunctionComplexities} = result;
             return {
                 result: {
                     bytes,
                     base64: crypto.base64Encode(bytes),
                     size: bytes.byteLength,
-                    ast: result.ast,
-                    complexity: result.complexity,
-                    verifierComplexity: result.verifierComplexity,
-                    callableComplexity: result.verifierComplexity,
-                    userFunctionsComplexity: result.verifierComplexity
+                    ast,
+                    complexity,
+                    verifierComplexity,
+                    callableComplexities,
+                    userFunctionComplexities,
                 }
             }
         }

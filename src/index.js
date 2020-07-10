@@ -18,7 +18,7 @@ function wrappedCompile(code, estimatorVersion = 2) {
             return result;
         } else {
             const bytes = new Uint8Array(result.result);
-            const {ast, complexity, verifierComplexity, callableComplexities, userFunctionComplexities} = result;
+            const {ast, complexity, verifierComplexity, callableComplexities, userFunctionComplexities, globalVariableComplexities} = result;
             return {
                 result: {
                     bytes,
@@ -29,6 +29,7 @@ function wrappedCompile(code, estimatorVersion = 2) {
                     verifierComplexity,
                     callableComplexities,
                     userFunctionComplexities,
+                    globalVariableComplexities
                 }
             }
         }

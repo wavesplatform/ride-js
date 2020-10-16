@@ -35,7 +35,7 @@ export type TStruct = {
 };
 
 export type TList = {
-    "listOf": TType
+    'listOf': TType
 };
 
 export type TUnionItem = TStruct | TPrimitive | TList
@@ -56,7 +56,7 @@ export type TFunctionArgument = {
 
 export interface IVarDoc {
     name: string
-    type: any
+    type: TType
     doc: string
 }
 
@@ -82,6 +82,8 @@ export interface IFlattenedCompilationResult {
 export function compile(code: string, estimatorVersion?: number): ICompilationResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
+
+export function parseAndCompile(code: string, estimatorVersion?: number): IParseAndCompileResult | ICompilationError;
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 
@@ -114,9 +116,205 @@ export const contractLimits: {
     MaxExprSizeInBytes: number,
     MaxContractSizeInBytes: number,
     MaxContractInvocationArgs: number,
-    MaxAccountVerifierComplexityByVersion: number
     MaxContractInvocationSizeInBytes: number,
     MaxWriteSetSizeInBytes: number,
     MaxPaymentAmount: number
 };
 
+export interface IPos {
+    posStart: number,
+    posEnd: number
+}
+
+export interface IName extends IPos {
+    value: string,
+}
+
+export interface IContext extends IPos {
+    name: string
+}
+
+
+export interface IConstByteStr extends IExprNode {
+    type: 'CONST_BYTESTR'
+}
+
+export interface IConstLong extends IExprNode {
+    type: 'CONST_LONG'
+}
+
+export interface IConstStr extends IExprNode {
+    type: 'CONST_STRING'
+}
+
+export interface ITrue extends IExprNode {
+    type: 'TRUE'
+}
+
+export interface IFalse extends IExprNode {
+    type: 'FALSE'
+}
+
+export interface IRef extends IExprNode {
+    type: 'REF'
+    name: string
+}
+
+export interface IBlock extends IExprNode {
+    type: 'BLOCK'
+    dec: TDecl
+    body: TExpr
+}
+
+
+export interface IIf extends IExprNode {
+    type: 'IF'
+    cond: TExpr
+    ifTrue: TExpr
+    ifFalse: TExpr
+}
+
+
+export interface IGetter extends IExprNode {
+    type: 'GETTER'
+    ref: TExpr
+    field: IName
+    name: string
+}
+
+export interface IMatch extends IExprNode {
+    type: 'MATCH'
+    expr: TExpr
+    cases: IMatchCase[]
+}
+
+//------------------------
+export interface IMatchCase extends INode {
+    type: 'MATCH_CASE'
+    expr: TExpr
+}
+
+export interface ILet extends INode {
+    type: 'LET'
+    name: IName
+    expr: TExpr
+}
+
+export interface IScript extends Exclude<INode, 'resultType'> {
+    type: 'SCRIPT'
+    expr: TExpr
+}
+
+export interface IDApp extends Exclude<INode, 'resultType'> {
+    type: 'DAPP'
+    decList: (ILet | IFunc)[]
+    annFuncList: IAnnotatedFunc//todo fix
+}
+
+export interface IAnnotatedFunc extends Exclude<INode, 'resultType'> {
+    type: 'ANNOTATEDFUNC',
+    annList: IAnnotation[],
+    func: IFunc
+}
+
+export interface IAnnotation extends Exclude<INode, 'resultType'> {
+    type: 'ANNOTATION',
+    posStart: 80,
+    posEnd: 143,
+    name: IName,
+    argList: IName[]
+}
+
+export interface IFunc extends INode {
+    type: 'FUNC'
+    name: IName
+    expr: TExpr
+    argList: TArgument[],
+}
+
+export type TArgument = { argName: IName, typeList: TArgumentType[] }
+export type TArgumentType = { typeName: IName, typeParam?: any }
+
+export interface IFunctionCall extends IExprNode {
+    type: 'FUNCTION_CALL'
+    name: IName
+    args: TExpr[]
+}
+
+export interface INode extends IPos {
+    type: TNodeType
+    resultType: string
+    ctx: IContext[]
+}
+
+export type TExprResultType = { type: string } | { unionTypes: TExprResultType[] } | { listOf: TExprResultType }
+
+export interface IExprNode extends Omit<INode, 'resultType'> {
+    resultType: TExprResultType
+}
+
+export interface IError extends IPos {
+    msg: string
+}
+
+export interface IParseAndCompileResult {
+    result: ArrayBuffer
+    complexity: number
+    errorList: IError[]
+    exprAst?: IScript
+    dAppAst?: IDApp
+}
+
+export type TPrimitiveNode = IConstStr | IConstLong | IConstByteStr | ITrue | IFalse
+
+export type TNode =
+    | IBlock
+    | IConstByteStr
+    | IIf
+    | IFunctionCall
+    | IConstLong
+    | IRef
+    | IConstStr
+    | ITrue
+    | IFalse
+    | IGetter
+    | IMatch
+    | ILet
+    | IMatchCase
+    | IFunc
+    | IScript
+    | IDApp
+    | IAnnotatedFunc
+    | IAnnotation
+export type TNodeType =
+    | 'BLOCK'
+    | 'LET'
+    | 'CONST_BYTESTR'
+    | 'IF'
+    | 'FUNCTION_CALL'
+    | 'CONST_LONG'
+    | 'REF'
+    | 'CONST_STRING'
+    | 'TRUE'
+    | 'FALSE'
+    | 'GETTER'
+    | 'MATCH'
+    | 'MATCH_CASE'
+    | 'FUNC'
+    | 'SCRIPT'
+    | 'DAPP'
+    | 'ANNOTATEDFUNC'
+    | 'ANNOTATION'
+export type TDecl = ILet | IFunc
+export type TExpr =
+    | IBlock
+    | IConstByteStr
+    | IIf
+    | IFunctionCall
+    | IConstLong
+    | IConstStr
+    | ITrue
+    | IFalse
+    | IGetter
+    | IMatch
+    | IRef

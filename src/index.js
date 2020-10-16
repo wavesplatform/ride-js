@@ -91,7 +91,8 @@ const api = {
     getVarsDoc: scalaJsCompiler.getVarsDoc,
     getFunctionsDoc: scalaJsCompiler.getFunctionsDoc,
     decompile: scalaJsCompiler.decompile,
-    flattenCompilationResult
+    flattenCompilationResult,
+    parseAndCompile: scalaJsCompiler.parseAndCompile
 }
 
 global.RideJS = api;

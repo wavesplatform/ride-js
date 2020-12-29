@@ -8,6 +8,7 @@ export interface ICompilationResult {
         verifierComplexity?: number
         callableComplexity?: Record<string, number>
         userFunctionsComplexity?: Record<string, number>
+        stateCallsComplexities?: Record<string, number>
     }
 }
 

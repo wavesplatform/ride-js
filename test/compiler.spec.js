@@ -355,8 +355,8 @@ func asd() = {
         }
         `
 
-        const result = scalaJsCompiler.compile(contract, 5)
-        console.log(result.error)
+        const result = compiler.compile(contract)
+        console.log(result)
         expect(typeof result.error).to.eq('undefined')
     });
 

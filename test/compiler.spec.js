@@ -313,18 +313,18 @@ func asd() = {
 
     it('complexity by funcs', () => {
         const contract = `
-{-# STDLIB_VERSION 3 #-}
-{-# CONTENT_TYPE DAPP #-}
-{-# SCRIPT_TYPE ACCOUNT #-}
-
-@Callable(i)
-func foo() = {
-    WriteSet([])
-}
-
-@Verifier(tx)
-func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
-      `
+        {-# STDLIB_VERSION 3 #-}
+        {-# CONTENT_TYPE DAPP #-}
+        {-# SCRIPT_TYPE ACCOUNT #-}
+        
+        @Callable(i)
+        func foo() = {
+            WriteSet([])
+        }
+        
+        @Verifier(tx)
+        func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
+        `
 
         const flattenResult = compiler.flattenCompilationResult(compiler.compile(contract))
         expect(typeof flattenResult.verifierComplexity).to.eq('number')
@@ -334,6 +334,35 @@ func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicK
         expect(typeof flattenResult.complexity).to.eq('number')
 
     });
+
+    it('presence of errors ride v5', () => {
+        const contract = `
+        {-# STDLIB_VERSION 5 #-}
+        {-# CONTENT_TYPE DAPP #-}
+        {-#SCRIPT_TYPE ACCOUNT#-}
+        
+        @Callable(i)
+        func foo() = {
+            let nextDAppAddr = Address(base58'')
+        
+            strict invResult = Invoke(nextDAppAddr, "bar", [], [])
+        
+            if invResult == 42
+            then
+              ([], unit)
+            else
+              throw("Internal invoke state update error")
+        }
+        `
+
+        const result = scalaJsCompiler.compile(contract, 5)
+        console.log(result.error)
+        expect(typeof result.error).to.eq('undefined')
+    });
+
+    it('compiler version', () => {
+        console.log(compiler.version)
+    })
 });
 
 

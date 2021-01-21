@@ -340,9 +340,24 @@ func asd() = {
         {-# STDLIB_VERSION 5 #-}
         {-# CONTENT_TYPE DAPP #-}
         {-#SCRIPT_TYPE ACCOUNT#-}
-        
+        @Verifier(tx)
+        func verify() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
+
         @Callable(i)
         func foo() = {
+            let nextDAppAddr = Address(base58'')
+        
+            strict invResult = Invoke(nextDAppAddr, "bar", [], [])
+        
+            if invResult == 42
+            then
+              ([], unit)
+            else
+              throw("Internal invoke state update error")
+        }
+        
+        @Callable(i)
+        func foo1() = {
             let nextDAppAddr = Address(base58'')
         
             strict invResult = Invoke(nextDAppAddr, "bar", [], [])
@@ -358,6 +373,39 @@ func asd() = {
         const result = compiler.compile(contract)
         console.log(result)
         expect(typeof result.error).to.eq('undefined')
+    });
+
+    it('library', () => {
+        const liba = `
+        {-# STDLIB_VERSION 4 #-}
+        {-# SCRIPT_TYPE ACCOUNT #-}
+        {-# CONTENT_TYPE LIBRARY #-}
+    
+        let a = 1
+        let b = 2
+    
+        func inc(a: Int) = a + 1
+        `
+
+        const result = compiler.scriptInfo(liba)
+        console.log(result)
+        expect(typeof result.error).to.eq('undefined')
+    });
+
+    it('imports', () => {
+        const scriptec = `
+        {-# STDLIB_VERSION 4 #-}
+        {-# SCRIPT_TYPE ACCOUNT #-}
+        {-# IMPORT lib1,lib2 #-}
+    
+        let a = 5
+    
+        multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
+        `
+
+        const result = compiler.scriptInfo(scriptec)
+        console.log(result)
+        expect(result.imports.toString()).to.eq('lib1,lib2')
     });
 
     it('compiler version', () => {

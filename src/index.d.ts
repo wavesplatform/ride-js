@@ -64,7 +64,7 @@ export interface IVarDoc {
 export interface IScriptInfo {
     stdLibVersion: number,
     contentType: number,
-    scriptType: number
+    scriptType: number,
     imports: string[]
 }
 
@@ -80,6 +80,7 @@ export interface IFlattenedCompilationResult {
     error?: string
 }
 
+//todo разобраться в акой версии компилятора импорту рыботают
 export function compile(code: string, estimatorVersion?: number): ICompilationResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult

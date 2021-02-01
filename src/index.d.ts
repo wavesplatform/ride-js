@@ -1,4 +1,4 @@
-export interface ICompilationResult {
+export interface  ICompilationResult {
     result: {
         ast: object
         base64: string
@@ -79,7 +79,7 @@ export interface IFlattenedCompilationResult {
     error?: string
 }
 
-export function compile(code: string, estimatorVersion?: number): ICompilationResult | ICompilationError;
+export function compile(code: string, estimatorVersion?: number, libraries?: Record<string, string>): ICompilationResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
 

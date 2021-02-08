@@ -343,30 +343,38 @@ func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicK
 
     it('use libs', async () => {
         const lib1 = `
-{-# STDLIB_VERSION 4 #-}
 {-# SCRIPT_TYPE  ACCOUNT #-}
 {-# CONTENT_TYPE LIBRARY #-}
  
 func inc(a: Int) = a + 1
 `
         const lib2 = `
-{-# STDLIB_VERSION 4 #-}
 {-# SCRIPT_TYPE  ACCOUNT #-}
 {-# CONTENT_TYPE LIBRARY #-}
  
 func dec(a: Int) = a - 1
 `
+        const lib3 = `
+{-# SCRIPT_TYPE  ACCOUNT #-}
+{-# CONTENT_TYPE LIBRARY #-}
+
+func multiply(a: Int, b: Int) = a * b
+`
         const code = `
 {-# STDLIB_VERSION 4 #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
-{-# IMPORT lib1,lib2 #-}
+{-# IMPORT lib1,lib2,lib3 #-}
  
 let a = 5
  
 multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
 `
-
-        const res = compiler.compile(code, 4, {lib1, lib2})
+        let libMap = {
+            'lib1': lib1,
+            'lib2': lib2,
+            'lib3': lib3
+        }
+        const res = compiler.compile(code,3, libMap)
         console.log(res)
     })
 });

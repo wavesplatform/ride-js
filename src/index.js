@@ -9,10 +9,8 @@ function wrappedCompile(code, estimatorVersion = 2, libraries = {}) {
         }
     }
     try {
-        // const libs = new Map(Object.entries(libraries).map((k,v) => [k,v]))
-        const libs = Object.entries(libraries).reduce((acc, [k,v]) => [...acc, `${k}~${v}`], [])
-        console.log('libs', libs)
-        const result = scalaJsCompiler.compile(code, estimatorVersion, libs);
+        console.log('libs', libraries)
+        const result = scalaJsCompiler.compile(code, estimatorVersion, libraries);
         if (result.error) {
             try {
                 result.size = new Uint8Array(result.result).length;

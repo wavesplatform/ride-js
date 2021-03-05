@@ -1,4 +1,4 @@
-export interface ICompilationResult {
+export interface  ICompilationResult {
     result: {
         ast: object
         base64: string
@@ -79,7 +79,7 @@ export interface IFlattenedCompilationResult {
     error?: string
 }
 
-export function compile(code: string, estimatorVersion?: number): ICompilationResult | ICompilationError;
+export function compile(code: string, estimatorVersion?: number, libraries?: Record<string, string>): ICompilationResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
 
@@ -232,8 +232,12 @@ export interface IFunc extends INode {
     argList: TArgument[],
 }
 
-export type TArgument = { argName: IName, typeList: TArgumentType[] }
-export type TArgumentType = { typeName: IName, typeParam?: any }
+export type TArgument = { argName: IName, type: TArgumentType }
+export type TArgumentType = { typeName: IName, typeParam?: ITypeParam }
+
+export interface ITypeParam extends IPos {
+    value: {isUnion: boolean, typeList: TArgumentType[]}
+}
 
 export interface IFunctionCall extends IExprNode {
     type: 'FUNCTION_CALL'

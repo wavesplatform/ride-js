@@ -1,6 +1,6 @@
 {
   "name": "@waves/ride-js",
-  "version": "2.1.0",
+  "version": "2.1.1-beta.1",
   "description": "Js compiler for Ride - Waves smart contract language.",
   "main": "src/index.js",
   "typings": "src/index.d.ts",
@@ -33,14 +33,15 @@
   "homepage": "https://github.com/wavesplatform/ride-js#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "copy-webpack-plugin": "^4.5.2",
-    "mocha": "^5.2.0",
+    "copy-webpack-plugin": "^8.1.1",
+    "mocha": "^8.3.2",
+    "node-forge": "^0.10.0",
     "webpack": "^4.16.0",
     "webpack-cli": "^3.0.8",
     "webpack-closure-compiler": "^2.1.6"
   },
   "dependencies": {
     "@waves/ts-lib-crypto": "^1.4.3",
-    "axios": "^0.19.0"
+    "axios": "^0.21.1"
   }
 }

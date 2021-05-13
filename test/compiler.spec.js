@@ -112,7 +112,16 @@ func bar() = WriteSet([])`;
 
     it('Should get MaxComplexityByVersion', () => {
         expect(compiler.contractLimits.MaxComplexityByVersion(2)).to.eq(2000);
-        expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000)
+        expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000);
+        expect(compiler.contractLimits.MaxComplexityByVersion(4)).to.eq(4000);
+        expect(compiler.contractLimits.MaxComplexityByVersion(5)).to.eq(4000);
+    });
+
+    it('Should get MaxCallableComplexityByVersion', () => {
+        expect(compiler.contractLimits.MaxCallableComplexityByVersion(2)).to.eq(4000);
+        expect(compiler.contractLimits.MaxCallableComplexityByVersion(3)).to.eq(4000);
+        expect(compiler.contractLimits.MaxCallableComplexityByVersion(4)).to.eq(4000);
+        expect(compiler.contractLimits.MaxCallableComplexityByVersion(5)).to.eq(10000);
     });
 
     it(' ba.sha256 is not a function', async () => {

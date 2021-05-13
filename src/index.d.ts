@@ -115,6 +115,7 @@ export function repl(opts?: IReplOptions): {
 export const version: string;
 export const contractLimits: {
     MaxComplexityByVersion: (v: number) => number,
+    MaxCallableComplexityByVersion: (v: number) => number,
     MaxExprSizeInBytes: number,
     MaxContractSizeInBytes: number,
     MaxContractInvocationArgs: number,

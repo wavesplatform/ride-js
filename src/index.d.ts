@@ -208,7 +208,7 @@ export interface IScript extends Exclude<INode, 'resultType'> {
 export interface IDApp extends Exclude<INode, 'resultType'> {
     type: 'DAPP'
     decList: (ILet | IFunc)[]
-    annFuncList: IAnnotatedFunc//todo fix
+    annFuncList: IAnnotatedFunc[]
 }
 
 export interface IAnnotatedFunc extends Exclude<INode, 'resultType'> {
@@ -219,8 +219,6 @@ export interface IAnnotatedFunc extends Exclude<INode, 'resultType'> {
 
 export interface IAnnotation extends Exclude<INode, 'resultType'> {
     type: 'ANNOTATION',
-    posStart: 80,
-    posEnd: 143,
     name: IName,
     argList: IName[]
 }
@@ -229,7 +227,8 @@ export interface IFunc extends INode {
     type: 'FUNC'
     name: IName
     expr: TExpr
-    argList: TArgument[],
+    argList: TArgument[]
+    body: IBlock | IFunctionCall
 }
 
 export type TArgument = { argName: IName, type: TArgumentType }

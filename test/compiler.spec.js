@@ -327,6 +327,7 @@ func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicK
       `
 
         const flattenResult = compiler.flattenCompilationResult(compiler.compile(contract))
+        console.log('flattenResult', flattenResult)
         expect(typeof flattenResult.verifierComplexity).to.eq('number')
         expect(typeof flattenResult.callableComplexities).to.eq('object')
         expect(typeof flattenResult.userFunctionComplexities).to.eq('object')
@@ -334,6 +335,14 @@ func standardVerifier() = sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicK
         expect(typeof flattenResult.complexity).to.eq('number')
 
     });
+
+    it('getFunctionsDoc', () => {
+        console.log(JSON.stringify(compiler.getFunctionsDoc()))
+    })
+
+    it('getTypes', () => {
+        console.log(compiler.getTypes())
+    })
 });
 
 

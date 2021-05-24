@@ -2,16 +2,14 @@ require('./interop');
 const crypto = require('@waves/ts-lib-crypto');
 const scalaJsCompiler = require('./lang-opt.js');
 
-function wrappedCompile(code, estimatorVersion = 2, libraries = {}) {
+function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, removeUnusedCode = false, libraries = {}) {
     if (typeof code !== 'string') {
         return {
             error: 'Type error: contract should be string'
         }
     }
     try {
-        // const libs = new Map(Object.entries(libraries).map((k,v) => [k,v]))
-        const libs = Object.entries(libraries).reduce((acc, [k,v]) => [...acc, `${k}~${v}`], [])
-        const result = scalaJsCompiler.compile(code, estimatorVersion, libs);
+        const result = scalaJsCompiler.compile(code, estimatorVersion, needCompaction, removeUnusedCode, libraries);
         if (result.error) {
             try {
                 result.size = new Uint8Array(result.result).length;

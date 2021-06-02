@@ -17,5 +17,8 @@ describe('Sandbox Test', function () {
         console.log(`\tBase: ${baseRes.result.size}. | Compaction: ${compactionRes.result.size} | Unused: ${unusedRes.result.size}`);
         expect(baseRes.result.size).to.not.equal(compactionRes.result.size);
         expect(baseRes.result.size).to.not.equal(unusedRes.result.size);
+
+        // console.log(compiler.decompile(baseRes.result.base64));
+        // console.log(compiler.decompile(unusedRes.result.base64));
     });
 });

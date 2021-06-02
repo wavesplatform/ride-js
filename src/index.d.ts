@@ -81,11 +81,21 @@ export interface IFlattenedCompilationResult {
 }
 
 //todo разобраться в акой версии компилятора импорту рыботают
-export function compile(code: string, estimatorVersion?: number): ICompilationResult | ICompilationError;
+export function compile(
+    code: string,
+    estimatorVersion?: number,
+    needCompaction?: boolean,
+    removeUnusedCode?: boolean,
+): ICompilationResult | ICompilationError;
+
+export function parseAndCompile(
+    code: string,
+    estimatorVersion?: number,
+    needCompaction?: boolean,
+    removeUnusedCode?: boolean,
+): IParseAndCompileResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
-
-export function parseAndCompile(code: string, estimatorVersion?: number): IParseAndCompileResult | ICompilationError;
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 

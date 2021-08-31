@@ -50,7 +50,7 @@ export type TFunction = {
 
 export type TFunctionArgument = {
     name: string
-    type: TType
+    type: TType | TType[]
     doc: string
 };
 

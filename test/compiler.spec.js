@@ -408,6 +408,10 @@ func asd() = {
         expect(result.imports.toString()).to.eq('lib1,lib2')
     });
 
+    it('repl', () => {
+        console.log(compiler.version)
+    })
+
     it('compiler version', () => {
         console.log(compiler.version)
     })

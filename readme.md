@@ -15,7 +15,8 @@ sbt replJS/fullOptJS
 
 # Workaround
 If there is error with compiling try
-```sbt clean && sbt lang/clean
+```sbt
+sbt clean && sbt lang/clean
 ```
 
 ### Tasks

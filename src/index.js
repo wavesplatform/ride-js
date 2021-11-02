@@ -1,15 +1,16 @@
 require('./interop');
 const crypto = require('@waves/ts-lib-crypto');
 const scalaJsCompiler = require('./lang-opt.js');
+const replJs = require('./repl-opt.js');
 
-function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, removeUnusedCode = false, libraries = {}) {
+function wrappedCompile(code, estimatorVersion = 2) {
     if (typeof code !== 'string') {
         return {
             error: 'Type error: contract should be string'
         }
     }
     try {
-        const result = scalaJsCompiler.compile(code, estimatorVersion, needCompaction, removeUnusedCode, libraries);
+        const result = scalaJsCompiler.compile(code, estimatorVersion);
         if (result.error) {
             try {
                 result.size = new Uint8Array(result.result).length;
@@ -18,7 +19,7 @@ function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, remo
             return result;
         } else {
             const bytes = new Uint8Array(result.result);
-            const {ast, complexity, verifierComplexity, callableComplexities, userFunctionComplexities, globalVariableComplexities} = result;
+            const {ast, complexity, verifierComplexity, callableComplexities, userFunctionComplexities, globalVariableComplexities, stateCallsComplexities} = result;
             return {
                 result: {
                     bytes,
@@ -29,7 +30,8 @@ function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, remo
                     verifierComplexity,
                     callableComplexities,
                     userFunctionComplexities,
-                    globalVariableComplexities
+                    globalVariableComplexities,
+                    stateCallsComplexities
                 }
             }
         }
@@ -43,13 +45,13 @@ function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, remo
 
 function wrappedRepl(opts) {
     const repl = (opts != null)
-        ? scalaJsCompiler.repl(new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address))
-        : scalaJsCompiler.repl();
+        ? replJs.repl(new replJs.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address))
+        : replJs.repl();
 
     const wrapReconfigure = (repl) => {
         let reconfigureFn = repl.reconfigure.bind(repl);
         return (opts) => {
-            const settings = new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address);
+            const settings = new replJs.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address);
             const newRepl = reconfigureFn(settings);
             newRepl.reconfigure = wrapReconfigure(newRepl);
             return newRepl;

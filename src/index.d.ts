@@ -8,6 +8,7 @@ export interface  ICompilationResult {
         verifierComplexity?: number
         callableComplexity?: Record<string, number>
         userFunctionsComplexity?: Record<string, number>
+        stateCallsComplexities?: Record<string, number>
     }
 }
 
@@ -63,7 +64,7 @@ export interface IVarDoc {
 export interface IScriptInfo {
     stdLibVersion: number,
     contentType: number,
-    scriptType: number
+    scriptType: number,
     imports: string[]
 }
 

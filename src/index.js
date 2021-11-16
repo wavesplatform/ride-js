@@ -3,14 +3,14 @@ const crypto = require('@waves/ts-lib-crypto');
 const scalaJsCompiler = require('./lang-opt.js');
 const replJs = require('./repl-opt.js');
 
-function wrappedCompile(code, estimatorVersion = 2) {
+function wrappedCompile(code, estimatorVersion = 2, needCompaction, removeUnusedCode) {
     if (typeof code !== 'string') {
         return {
             error: 'Type error: contract should be string'
         }
     }
     try {
-        const result = scalaJsCompiler.compile(code, estimatorVersion);
+        const result = scalaJsCompiler.compile(code, estimatorVersion, needCompaction, removeUnusedCode);
         if (result.error) {
             try {
                 result.size = new Uint8Array(result.result).length;

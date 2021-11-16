@@ -1,0 +1,15 @@
+{-# STDLIB_VERSION 4 #-}
+{-# CONTENT_TYPE DAPP #-}
+
+let unusedVar = 10
+let fooVar = 42
+func barFunc(barFuncArg1: Int) = 100500 + barFuncArg1
+
+@Callable(invocation)
+func bazCallableFunc(bazCallableFuncArg1: Int, bazCallableFuncArg2: String) = {
+  let result = barFunc(fooVar) + bazCallableFuncArg1
+  [
+    IntegerEntry("integerEntryKey", result),
+    StringEntry("stringEntryKey", bazCallableFuncArg2)
+  ]
+}

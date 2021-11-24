@@ -80,12 +80,23 @@ export interface IFlattenedCompilationResult {
     error?: string
 }
 
-//todo разобраться в акой версии компилятора импорту рыботают
-export function compile(code: string, estimatorVersion?: number): ICompilationResult | ICompilationError;
+export function compile(
+    code: string,
+    estimatorVersion?: number,
+    needCompaction?: boolean,
+    removeUnusedCode?: boolean,
+    libraries?: Record<string, string>
+): ICompilationResult | ICompilationError;
+
+export function parseAndCompile(
+    code: string,
+    estimatorVersion?: number,
+    needCompaction?: boolean,
+    removeUnusedCode?: boolean,
+    libraries?: Record<string, string>
+): IParseAndCompileResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
-
-export function parseAndCompile(code: string, estimatorVersion?: number): IParseAndCompileResult | ICompilationError;
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 

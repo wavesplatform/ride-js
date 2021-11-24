@@ -80,12 +80,12 @@ export interface IFlattenedCompilationResult {
     error?: string
 }
 
-//todo разобраться в акой версии компилятора импорту рыботают
 export function compile(
     code: string,
     estimatorVersion?: number,
     needCompaction?: boolean,
     removeUnusedCode?: boolean,
+    libraries?: Record<string, string>
 ): ICompilationResult | ICompilationError;
 
 export function parseAndCompile(
@@ -93,6 +93,7 @@ export function parseAndCompile(
     estimatorVersion?: number,
     needCompaction?: boolean,
     removeUnusedCode?: boolean,
+    libraries?: Record<string, string>
 ): IParseAndCompileResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult

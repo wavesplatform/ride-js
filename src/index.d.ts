@@ -1,4 +1,4 @@
-export interface  ICompilationResult {
+export interface ICompilationResult {
     result: {
         ast: object
         base64: string
@@ -50,7 +50,7 @@ export type TFunction = {
 
 export type TFunctionArgument = {
     name: string
-    type: TType | TType[]
+    type: TType
     doc: string
 };
 
@@ -83,7 +83,7 @@ export function compile(code: string, estimatorVersion?: number, libraries?: Rec
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
 
-export function parseAndCompile(code: string, estimatorVersion?: number): IParseAndCompileResult | ICompilationError;
+export function parseAndCompile(code: string, estimatorVersion?: number, lastInsertedCharPos?: number | undefined): IParseAndCompileResult | ICompilationError;
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 
@@ -235,7 +235,7 @@ export type TArgument = { argName: IName, type: TArgumentType }
 export type TArgumentType = { typeName: IName, typeParam?: ITypeParam }
 
 export interface ITypeParam extends IPos {
-    value: {isUnion: boolean, typeList: TArgumentType[]}
+    value: { isUnion: boolean, typeList: TArgumentType[] }
 }
 
 export interface IFunctionCall extends IExprNode {

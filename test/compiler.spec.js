@@ -377,23 +377,6 @@ func asd() = {
         expect(typeof result.error).to.eq('undefined')
     });
 
-    it('library', () => {
-        const liba = `
-        {-# STDLIB_VERSION 4 #-}
-        {-# SCRIPT_TYPE ACCOUNT #-}
-        {-# CONTENT_TYPE LIBRARY #-}
-    
-        let a = 1
-        let b = 2
-    
-        func inc(a: Int) = a + 1
-        `
-
-        const result = compiler.scriptInfo(liba)
-        console.log(result)
-        expect(typeof result.error).to.eq('undefined')
-    });
-
     it('imports', () => {
         const scriptec = `
         {-# STDLIB_VERSION 4 #-}
@@ -409,14 +392,6 @@ func asd() = {
         console.log(result)
         expect(result.imports.toString()).to.eq('lib1,lib2')
     });
-
-    it('compiler version', () => {
-        console.log(compiler.version)
-    })
-
-    it('compiler version', () => {
-        console.log(compiler.version)
-    })
 
     it('use libs', async () => {
         const lib1 = `
@@ -440,19 +415,23 @@ func multiply(a: Int, b: Int) = a * b
         const code = `
 {-# STDLIB_VERSION 4 #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
-{-# IMPORT lib1,lib2,lib3 #-}
+{-# IMPORT lib1.ride,lib-2.ride,lib.3.ride #-}
  
 let a = 5
  
 multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
 `
         let libMap = {
-            'lib1': lib1,
-            'lib2': lib2,
-            'lib3': lib3
+            'lib1.ride': lib1,
+            'lib-2.ride': lib2,
+            'lib.3.ride': lib3
         }
-        const res = compiler.parseAndCompile(code,3, false, false, libMap)
+        const res = compiler.compile(code,3, false, false, libMap)
         console.log(res)
+    })
+
+    it('compiler version', () => {
+        console.log(compiler.version)
     })
 });
 

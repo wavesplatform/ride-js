@@ -415,16 +415,16 @@ func multiply(a: Int, b: Int) = a * b
         const code = `
 {-# STDLIB_VERSION 4 #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
-{-# IMPORT lib1,lib2,lib3 #-}
+{-# IMPORT lib1.ride,lib-2.ride,lib.3.ride #-}
  
 let a = 5
  
 multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
 `
         let libMap = {
-            'lib1': lib1,
-            'lib2': lib2,
-            'lib3': lib3
+            'lib1.ride': lib1,
+            'lib-2.ride': lib2,
+            'lib.3.ride': lib3
         }
         const res = compiler.compile(code,3, false, false, libMap)
         console.log(res)

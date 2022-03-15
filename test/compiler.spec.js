@@ -349,7 +349,7 @@ func asd() = {
         func foo() = {
             let nextDAppAddr = Address(base58'')
         
-            strict invResult = Invoke(nextDAppAddr, "bar", [], [])
+            strict invResult = invoke(nextDAppAddr, "bar", [], [])
         
             if invResult == 42
             then
@@ -362,7 +362,7 @@ func asd() = {
         func foo1() = {
             let nextDAppAddr = Address(base58'')
         
-            strict invResult = Invoke(nextDAppAddr, "bar", [], [])
+            strict invResult = invoke(nextDAppAddr, "bar", [], [])
         
             if invResult == 42
             then

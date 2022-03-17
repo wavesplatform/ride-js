@@ -3,8 +3,8 @@ const {expect} = require('chai');
 const scalaJsCompiler = require('../src/lang-opt.js');
 
 describe('Compiler', function () {
-    this.timeout(50000);
-    it('Should compile multisig contract', () => {
+
+        it('Should compile multisig contract', () => {
         const contract = `
 # alice { private:EUzwt3buFVEyWAQQpt8ZXxDiEG51W7DhW6Hft54UHFfk,public:5AzfA9UfpWVYiwFwvdr77k6LWupSTGLb14b24oVdEpMM }
 # bob { private:7V13MftX7mbcZpEkzyUgsj5S7CwgvCyqqFc2ire7X7WC,public:2KwU4vzdgPmKyf7q354H9kSyX9NZjNiq4qbnH2wi2VDF }
@@ -116,8 +116,8 @@ func bar() = WriteSet([])`;
     });
 
     it(' ba.sha256 is not a function', async () => {
-        const eval = compiler.repl().evaluate;
-        const res = await eval("sha256(base58'qwe')");
+        const evaluation = compiler.repl().evaluate;
+        const res = await evaluation("sha256(base58'qwe')");
         expect(res.result).to.eq('res1: ByteVector = base58\'Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp\'')
     })
 
@@ -205,7 +205,7 @@ func multiply(a: Int, b: Int) = a * b
     });
 
     it('log', function () {
-        const eval = compiler.repl().evaluate;
+        const evaluate = compiler.repl().evaluate;
         const tests = [
             "pow(12, 1, 3456, 3, 2, DOWN)",
             "pow(12, 1, 3456, 3, 2, UP)",
@@ -225,7 +225,7 @@ func multiply(a: Int, b: Int) = a * b
             "pow(10, 0, -8, 0, 8, HALFUP)",
             "pow(10, 0, -9, 0, 8, HALFUP)"
         ];
-        tests.forEach(async test => expect('result' in await eval(test)).to.eq(true))
+        tests.forEach(async test => expect('result' in await evaluate(test)).to.eq(true))
     });
 
     it('checkMerkleProof', async () => {

@@ -3,7 +3,6 @@ const {expect} = require('chai');
 const getRide = require('./utils').getRide;
 
 describe('Sandbox Test', function () {
-    this.timeout(50000);
 
     it('Remove unused code and Compaction mode', () => {
         // source

@@ -20,10 +20,7 @@ describe('getBinary',  () => {
         [5, GreaterV3Result],
         [44, GreaterV3Result],
     ])('get byte array by Address', (version, scriptResult) => {
-        const tx = () => data({
-            version: version,
-            cases: scriptResult,
-        });
+
         let contract = generateContract(version, scriptResult);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
@@ -44,7 +41,6 @@ describe('getBinary',  () => {
               case _ => throw("not binary")
             }
             ${caseForVersions}
-        }
-`;
+        }`;
     }
 });

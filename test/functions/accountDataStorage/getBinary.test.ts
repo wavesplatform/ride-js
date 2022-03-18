@@ -1,42 +1,33 @@
+import {getRandomAddress, getRandomAlias, GreaterV3Result, RideV3Result} from "../../testData/data";
+
 const compiler = require('../../../src');
 const scalaJsCompiler = require('../../../src/lang-opt.js');
 
-
 describe('getBinary',  () => {
 
-    const RideV3Result = `
-        WriteSet([
-            DataEntry("binaryValue", binValue)
-        ])`;
-    const GreaterV3Result =
-        `[
-            BinaryEntry("bin", binValue)
-        ]`;
-
-    const testAddress = "Address(base58'')";
-    const testAlias = 'Alias("merry")';
-
     test.each([
-        [3, RideV3Result, testAddress],
-        [4, GreaterV3Result, testAddress],
-        [5, GreaterV3Result, testAddress],
+        [3, RideV3Result, getRandomAddress()],
+        [4, GreaterV3Result, getRandomAddress()],
+        [5, GreaterV3Result, getRandomAddress()],
     ])('get byte array by address', (version, scriptResult, address) => {
+        console.log(address)
         let contract = generateContract(version, scriptResult, address);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     })
 
     test.each([
-        [3, RideV3Result, testAlias],
-        [4, GreaterV3Result, testAlias],
-        [5, GreaterV3Result, testAlias],
+        [3, RideV3Result, getRandomAlias()],
+        [4, GreaterV3Result, getRandomAlias()],
+        [5, GreaterV3Result, getRandomAlias()],
     ])('get byte array by alias', (version, scriptResult, alias) => {
+        console.log(alias)
         let contract = generateContract(version, scriptResult, alias);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     })
 
-    let generateContract = (libVersion, caseForVersions, testData) => {
+    const generateContract = (libVersion, caseForVersions, testData) => {
             return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}

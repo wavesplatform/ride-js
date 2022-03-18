@@ -1,30 +1,30 @@
 const compiler = require('../../../src');
 const scalaJsCompiler = require('../../../src/lang-opt.js');
 const {binaryValue} = require("../../testData/binary");
-const {expect} = require("@jest/globals");
 
-describe('getBinary', function () {
 
-    const caseForV3 = `
+describe('getBinary',  () => {
+
+    const RideV3Result = `
         WriteSet([
             DataEntry("binaryValue", binValue)
         ])`;
-    const caseForLargestVersions =
+    const GreaterV3Result =
         `[
             BinaryEntry("bin", binValue)
         ]`;
 
-    it.each([
-        [3, caseForV3],
-        [4, caseForLargestVersions],
-        [5, caseForLargestVersions],
-        [44, caseForLargestVersions],
-    ])('get byte array by Address', (version, cases) => {
+    test.each([
+        [3, RideV3Result],
+        [4, GreaterV3Result],
+        [5, GreaterV3Result],
+        [44, GreaterV3Result],
+    ])('get byte array by Address', (version, scriptResult) => {
         const tx = () => data({
             version: version,
-            cases: cases,
+            cases: scriptResult,
         });
-        let contract = generateContract(version, cases);
+        let contract = generateContract(version, scriptResult);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     })

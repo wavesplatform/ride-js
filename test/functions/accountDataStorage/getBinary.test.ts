@@ -1,7 +1,6 @@
 import * as data from "../../testData/data";
 
 const compiler = require('../../../src');
-const scalaJsCompiler = require('../../../src/lang-opt.js');
 
 describe('getBinary',  () => {
 
@@ -28,8 +27,8 @@ describe('getBinary',  () => {
     test.each([
         [data.STDLIB_INVALID_VERSION, data.RideV3Result, data.getRandomAddress()],
         [data.STDLIB_INVALID_VERSION, data.GreaterV3Result, data.getRandomAlias()]
-    ])("invalid lib version", (version, scriptResult, addressOrAlias) => {
-        let contract = generateContract(version, scriptResult, addressOrAlias);
+    ])("invalid lib version", (version, scriptResult, getBinary) => {
+        let contract = generateContract(version, scriptResult, getBinary);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toEqual(`Illegal directive value ${data.STDLIB_INVALID_VERSION} for key STDLIB_VERSION`);
@@ -38,8 +37,8 @@ describe('getBinary',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.InvalidDataEntryV3Result, data.getRandomAddress()],
         [data.STDLIB_VERSION_3, data.InvalidDataEntryV3Result, data.getRandomAlias()],
-    ])("invalid ride v3 script", (version, scriptResult, addressOrAlias) => {
-        let contract = generateContract(version, scriptResult, addressOrAlias);
+    ])("invalid ride v3 script", (version, scriptResult, getBinary) => {
+        let contract = generateContract(version, scriptResult, getBinary);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Compilation failed: [Function 'DataEntry' requires 2 arguments, but 1 are provided in`);
@@ -67,10 +66,10 @@ describe('getBinary',  () => {
     })
 
     test.each([
-        [data.STDLIB_VERSION_3, data.InvalidGetBinaryV3Result, data.getRandomAddress(), `'getBinary'(Address)`],
-        [data.STDLIB_VERSION_3, data.InvalidGetBinaryV3Result, data.getRandomAlias(), `'getBinary'(Alias)`],
-        [data.STDLIB_VERSION_4, data.InvalidGetBinaryGreaterV3Result, data.getRandomAddress(), `'getBinary'(Address)`],
-        [data.STDLIB_VERSION_5, data.InvalidGetBinaryGreaterV3Result, data.getRandomAlias(), `'getBinary'(Alias)`],
+        [data.STDLIB_VERSION_3, data.invalidGetBinaryV3, data.getRandomAddress(), `'getBinary'(Address)`],
+        [data.STDLIB_VERSION_3, data.invalidGetBinaryV3, data.getRandomAlias(), `'getBinary'(Alias)`],
+        [data.STDLIB_VERSION_4, data.InvalidGetBinaryGreaterV3, data.getRandomAddress(), `'getBinary'(Address)`],
+        [data.STDLIB_VERSION_5, data.InvalidGetBinaryGreaterV3, data.getRandomAlias(), `'getBinary'(Alias)`],
     ])("Can't find a function overload 'getBinary'(Address) or 'getBinary'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
         let contract = generateContract(version, scriptResult, addressOrAlias);
@@ -79,7 +78,7 @@ describe('getBinary',  () => {
             .toContain(`Compilation failed: [Can't find a function overload ${funcError}`);
     })
 
-    const generateContract = (libVersion, caseForVersions, testData) => {
+    const generateContract = (libVersion, caseForVersions, testData, getBinaryFunction = data.defaultGetBinary) => {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -88,6 +87,11 @@ describe('getBinary',  () => {
         @Callable(i)
         func binary() = {
             let callerAddressOrAlias = ${testData}
+            let binValueOrUnit = ${getBinaryFunction}
+            let binValue = match(binValueOrUnit) {
+              case b:ByteVector => b
+              case _ => throw("not binary")
+            }
             ${caseForVersions}
         }`;
     }

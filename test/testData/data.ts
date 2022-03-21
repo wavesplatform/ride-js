@@ -6,25 +6,64 @@ export const STDLIB_INVALID_VERSION = 44;
 
 
 export const RideV3Result = `
+        let binValueOrUnit = getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖꭛믳癚曉续")
+        let binValue = match(binValueOrUnit) {
+          case b:ByteVector => b
+          case _ => throw("not binary")
+        }
         WriteSet([
             DataEntry("binaryValue", binValue)
         ])`;
 
-export const GreaterV3Result =
-    `[
+export const GreaterV3Result = `
+        let binValueOrUnit = getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖꭛믳癚曉续")
+        let binValue = match(binValueOrUnit) {
+            case b:ByteVector => b
+            case _ => throw("not binary")
+        }
+        [
             BinaryEntry("bin", binValue)
         ]`;
 
-export const InvalidGreaterV3Result =
-    `[
-            BinaryEntry(binValue)
-        ]`;
-
-export const InvalidV3Result = `
+export const InvalidDataEntryV3Result = `
+        let binValueOrUnit = getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖꭛믳癚曉续")
+        let binValue = match(binValueOrUnit) {
+            case b:ByteVector => b
+            case _ => throw("not binary")
+        }
         WriteSet([
             DataEntry("binaryValue")
         ])`;
 
+export const InvalidBinaryEntryGreaterV3Result = `
+        let binValueOrUnit = getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖꭛믳癚曉续")
+        let binValue = match(binValueOrUnit) {
+            case b:ByteVector => b
+            case _ => throw("not binary")
+        }
+        [
+            BinaryEntry(binValue)
+        ]`;
+
+export const InvalidGetBinaryV3Result = `
+        let binValueOrUnit = getBinary(callerAddressOrAlias)
+        let binValue = match(binValueOrUnit) {
+            case b:ByteVector => b
+            case _ => throw("not binary")
+        }
+        WriteSet([
+            DataEntry("binaryValue", binValue)
+        ])`
+
+export const InvalidGetBinaryGreaterV3Result = `
+        let binValueOrUnit = getBinary(callerAddressOrAlias)
+        let binValue = match(binValueOrUnit) {
+            case b:ByteVector => b
+            case _ => throw("not binary")
+        }
+        [
+            BinaryEntry("bin", binValue)
+        ]`
 
 const addressDataArray = [
     "Address(base58'')",

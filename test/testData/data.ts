@@ -1,12 +1,30 @@
 
+export const STDLIB_VERSION_3 = 3;
+export const STDLIB_VERSION_4 = 4;
+export const STDLIB_VERSION_5 = 5;
+export const STDLIB_INVALID_VERSION = 44;
+
+
 export const RideV3Result = `
         WriteSet([
             DataEntry("binaryValue", binValue)
         ])`;
+
 export const GreaterV3Result =
     `[
             BinaryEntry("bin", binValue)
         ]`;
+
+export const InvalidGreaterV3Result =
+    `[
+            BinaryEntry(binValue)
+        ]`;
+
+export const InvalidV3Result = `
+        WriteSet([
+            DataEntry("binaryValue")
+        ])`;
+
 
 const addressDataArray = [
     "Address(base58'')",
@@ -22,5 +40,5 @@ const aliasDataArray = [
     'Alias("")',
 ];
 
-export const getRandomAddress = () => addressDataArray[Math.floor((Math.random()*addressDataArray.length))];
-export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random()*aliasDataArray.length))];
+export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
+export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];

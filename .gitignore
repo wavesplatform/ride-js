@@ -148,3 +148,4 @@ $RECYCLE.BIN/
 # Project
 dist/
 .idea
+.run

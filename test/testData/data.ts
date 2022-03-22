@@ -33,13 +33,3 @@ export const GreaterV3Result = `
         [
             BinaryEntry("bin", binValue)
         ]`;
-
-export const InvalidDataEntryV3Result = `
-        WriteSet([
-            DataEntry("binaryValue")
-        ])`;
-
-export const InvalidBinaryEntryGreaterV3Result = `
-        [
-            BinaryEntry(binValue)
-        ]`;

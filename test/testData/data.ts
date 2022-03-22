@@ -7,13 +7,17 @@ export const defaultGetBinary = `getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖
 export const invalidGetBinaryV3 = `getBinary(callerAddressOrAlias)`;
 export const InvalidGetBinaryGreaterV3 = `getBinary(callerAddressOrAlias)`;
 
-export const defaultGetBinaryValue = `getBinaryValue(callerAddressOrAlias, "LJKaSADfHH127gd")`
+export const defaultGetBinaryValue = `getBinaryValue(callerAddressOrAlias, "LJKaSADfHH782gd")`
 export const invalidGetBinaryValueV3 = `getBinaryValue(callerAddressOrAlias)`;
 export const InvalidGetBinaryValueGreaterV3 = `getBinaryValue(callerAddressOrAlias)`;
 
-export const defaultGetBoolean = `getBoolean(callerAddressOrAlias, "LJKaSADfHH127gd")`
+export const defaultGetBoolean = `getBoolean(callerAddressOrAlias, "LtKaSADfaH127gd")`
 export const invalidGetBooleanV3 = `getBoolean(callerAddressOrAlias)`;
 export const InvalidGetBooleanGreaterV3 = `getBoolean(callerAddressOrAlias)`;
+
+export const defaultGetBooleanValue = `getBooleanValue(callerAddressOrAlias, "LGd042RGb27")`
+export const invalidGetBooleanValueV3 = `getBooleanValue(callerAddressOrAlias)`;
+export const InvalidGetBooleanValueGreaterV3 = `getBooleanValue(callerAddressOrAlias)`;
 
 
 const addressDataArray = [

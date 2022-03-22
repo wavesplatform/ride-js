@@ -1,10 +1,9 @@
 const compiler = require('../src');
-const {expect} = require('chai');
 const getRide = require('./utils').getRide;
 
 describe('Sandbox Test', function () {
 
-    it('Remove unused code and Compaction mode', () => {
+    test.only('Remove unused code and Compaction mode', () => {
         // source
         const source = getRide('./ride/compileCompaction.ride');
 
@@ -14,8 +13,8 @@ describe('Sandbox Test', function () {
         const unusedRes = compiler.compile(source, 3, false, true);
 
         console.log(`\tBase: ${baseRes.result.size}. | Compaction: ${compactionRes.result.size} | Unused: ${unusedRes.result.size}`);
-        expect(baseRes.result.size).to.not.equal(compactionRes.result.size);
-        expect(baseRes.result.size).to.not.equal(unusedRes.result.size);
+        expect(baseRes.result.size).not.toEqual(compactionRes.result.size);
+        expect(baseRes.result.size).not.toEqual(unusedRes.result.size);
 
         // console.log(compiler.decompile(baseRes.result.base64));
         // console.log(compiler.decompile(unusedRes.result.base64));

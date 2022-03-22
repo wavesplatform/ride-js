@@ -7,6 +7,10 @@ export const defaultGetBinary = `getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖
 export const invalidGetBinaryV3 = `getBinary(callerAddressOrAlias)`;
 export const InvalidGetBinaryGreaterV3 = `getBinary(callerAddressOrAlias)`;
 
+export const defaultGetBinaryValue = `getBinaryValue(callerAddressOrAlias, "LJKaSADfHH127gd")`
+export const invalidGetBinaryValueV3 = `getBinaryValue(callerAddressOrAlias)`;
+export const InvalidGetBinaryValueGreaterV3 = `getBinaryValue(callerAddressOrAlias)`;
+
 const addressDataArray = [
     "Address(base58'')",
     "Address(base58'3MDaMwqLtwBGcJrTA5tstJfY95GqnNnDDAS')",

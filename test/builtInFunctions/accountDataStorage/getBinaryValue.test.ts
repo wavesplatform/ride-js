@@ -75,11 +75,7 @@ describe('getBinaryValue',  () => {
         @Callable(i)
         func binary() = {
             let callerAddressOrAlias = ${testData}
-            let binValueOrUnit = ${getBinaryFunction}
-            let binValue = match(binValueOrUnit) {
-              case b:ByteVector => b
-              case _ => throw("not binary")
-            }
+            let binValue = ${getBinaryFunction}
             ${caseForVersions}
         }`;
     };
@@ -92,11 +88,7 @@ describe('getBinaryValue',  () => {
  
         @Callable(i)
         func binary() = {
-            let binValueOrUnit = getBinaryValue("LJKaSADfHH127gd")
-            let binValue = match(binValueOrUnit) {
-              case b:ByteVector => b
-              case _ => throw("not binary")
-            }
+            let binValue = getBinaryValue("LJKaSADfHH127gd")
             ${caseForVersions}
         }`;
     };

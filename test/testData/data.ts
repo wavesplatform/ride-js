@@ -11,6 +11,11 @@ export const defaultGetBinaryValue = `getBinaryValue(callerAddressOrAlias, "LJKa
 export const invalidGetBinaryValueV3 = `getBinaryValue(callerAddressOrAlias)`;
 export const InvalidGetBinaryValueGreaterV3 = `getBinaryValue(callerAddressOrAlias)`;
 
+export const defaultGetBoolean = `getBoolean(callerAddressOrAlias, "LJKaSADfHH127gd")`
+export const invalidGetBooleanV3 = `getBoolean(callerAddressOrAlias)`;
+export const InvalidGetBooleanGreaterV3 = `getBoolean(callerAddressOrAlias)`;
+
+
 const addressDataArray = [
     "Address(base58'')",
     "Address(base58'3MDaMwqLtwBGcJrTA5tstJfY95GqnNnDDAS')",
@@ -28,12 +33,22 @@ const aliasDataArray = [
 export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
 export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];
 
-export const RideV3Result = `
+export const RideV3ResultBinaryEntry = `
         WriteSet([
-            DataEntry("binaryValue", binValue)
+            DataEntry("bin", binValue)
         ])`;
 
-export const GreaterV3Result = `
+export const GreaterV3ResultBinaryEntry = `
         [
             BinaryEntry("bin", binValue)
+        ]`;
+
+export const RideV3ResultBooleanEntry = `
+        WriteSet([
+            DataEntry("boolean", boolValue)
+        ])`;
+
+export const GreaterV3ResultBooleanEntry = `
+        [
+            BooleanEntry("boolean", boolValue)
         ]`;

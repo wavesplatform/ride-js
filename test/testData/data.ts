@@ -3,6 +3,7 @@ export const STDLIB_VERSION_4 = 4;
 export const STDLIB_VERSION_5 = 5;
 export const STDLIB_INVALID_VERSION = 44;
 
+// Binary functions
 export const defaultGetBinary = `getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖꭛믳癚曉续")`;
 export const invalidGetBinaryV3 = `getBinary(callerAddressOrAlias)`;
 export const InvalidGetBinaryGreaterV3 = `getBinary(callerAddressOrAlias)`;
@@ -11,6 +12,7 @@ export const defaultGetBinaryValue = `getBinaryValue(callerAddressOrAlias, "LJKa
 export const invalidGetBinaryValueV3 = `getBinaryValue(callerAddressOrAlias)`;
 export const InvalidGetBinaryValueGreaterV3 = `getBinaryValue(callerAddressOrAlias)`;
 
+// Boolean functions
 export const defaultGetBoolean = `getBoolean(callerAddressOrAlias, "LtKaSADfaH127gd")`
 export const invalidGetBooleanV3 = `getBoolean(callerAddressOrAlias)`;
 export const InvalidGetBooleanGreaterV3 = `getBoolean(callerAddressOrAlias)`;
@@ -19,6 +21,14 @@ export const defaultGetBooleanValue = `getBooleanValue(callerAddressOrAlias, "LG
 export const invalidGetBooleanValueV3 = `getBooleanValue(callerAddressOrAlias)`;
 export const InvalidGetBooleanValueGreaterV3 = `getBooleanValue(callerAddressOrAlias)`;
 
+// Integer functions
+export const defaultGetInteger = `getInteger(callerAddressOrAlias, "LtKaSADfaH127gd")`
+export const invalidGetIntegerV3 = `getInteger(callerAddressOrAlias)`;
+export const InvalidGetIntegerGreaterV3 = `getInteger(callerAddressOrAlias)`;
+
+export const defaultGetIntegerValue = `getIntegerValue(callerAddressOrAlias, "LtKaSADfaH127gd")`
+export const invalidGetIntegerValueV3 = `getIntegerValue(callerAddressOrAlias)`;
+export const InvalidGetIntegerValueGreaterV3 = `getIntegerValue(callerAddressOrAlias)`;
 
 const addressDataArray = [
     "Address(base58'')",
@@ -55,4 +65,14 @@ export const RideV3ResultBooleanEntry = `
 export const GreaterV3ResultBooleanEntry = `
         [
             BooleanEntry("boolean", boolValue)
+        ]`;
+
+export const RideV3ResultIntEntry = `
+        WriteSet([
+            DataEntry("integer", intValue)
+        ])`;
+
+export const GreaterV3ResultIntEntry = `
+        [
+            IntegerEntry("integer", intValue)
         ]`;

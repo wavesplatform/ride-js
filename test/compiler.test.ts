@@ -1,10 +1,11 @@
+import * as https from "https";
+import * as data from "./testData/data";
+
 const compiler = require('../src');
-const {expect} = require('chai');
-const scalaJsCompiler = require('../src/lang-opt.js');
 
 describe('Compiler', function () {
 
-        it('Should compile multisig contract', () => {
+        test.only('Should compile multisig contract', () => {
         const contract = `
 # alice { private:EUzwt3buFVEyWAQQpt8ZXxDiEG51W7DhW6Hft54UHFfk,public:5AzfA9UfpWVYiwFwvdr77k6LWupSTGLb14b24oVdEpMM }
 # bob { private:7V13MftX7mbcZpEkzyUgsj5S7CwgvCyqqFc2ire7X7WC,public:2KwU4vzdgPmKyf7q354H9kSyX9NZjNiq4qbnH2wi2VDF }
@@ -23,11 +24,11 @@ let cooperSigned = if(sigVerify(tx.bodyBytes, tx.proofs[2], cooperPubKey )) then
 aliceSigned + bobSigned + cooperSigned >= 2
             `;
         const result = compiler.compile(contract);
-        expect(result.error).to.be.undefined
+        expect(result.error).toBeUndefined()
     });
 
 
-    it('Should compile notary contract', () => {
+    test.only('Should compile notary contract', () => {
         const contract = `
 let king = extract(addressFromString("kingAddress"))
 let company = extract(addressFromString("companyAddress"))
@@ -46,10 +47,10 @@ match tx {
 }
             `;
         const result = compiler.compile(contract);
-        expect(result.error).to.be.undefined
+        expect(result.error).toBeUndefined()
     });
 
-    it('Should not compile invalid contract', () => {
+    test.only('Should not compile invalid contract', () => {
         const contract = `
 let a = {
     let x = 1
@@ -58,46 +59,45 @@ let a = {
 x
             `;
         const result = compiler.compile(contract);
-        expect(result.error).to.eql('Compilation failed: [A definition of \'x\' is not found in 33-34]')
+        expect(result.error).toEqual('Compilation failed: [A definition of \'x\' is not found in 33-34]')
     });
 
-    it('Should give sensible error on nulls and undefined', () => {
+    test.only('Should give sensible error on nulls and undefined', () => {
         const contract1 = null;
         const contract2 = undefined;
         const result1 = compiler.compile(contract1);
         const result2 = compiler.compile(contract2);
-        expect(result1.error).to.eql('Type error: contract should be string')
-        expect(result2.error).to.eql('Type error: contract should be string')
+        expect(result1.error).toEqual('Type error: contract should be string')
+        expect(result2.error).toEqual('Type error: contract should be string')
     });
 
-    it('Should compile contract with base64 literals', () => {
+    test.only('Should compile contract with base64 literals', () => {
         const contract = `
 let a = base64'AAA=' 
 true`;
 
         const result = compiler.compile(contract);
-        expect(result.error).to.be.undefined
+        expect(result.error).toBeUndefined()
     });
 
-    it('Should return estimate', () => {
+    test.only('Should return estimate', () => {
         const contract = `
 let a = base64'AAA=' 
 true`;
         const result = compiler.compile(contract);
-        expect(result.result.complexity).to.be.a('number')
-
+        expect(typeof result.result.complexity).toBe('number')
     });
 
-    it('Should decompile code', () => {
+    test.only('Should decompile code', () => {
         const contract = `
 let a = base64'AAA=' 
 true`;
         const contractBase64 = compiler.compile(contract).result.base64;
-        expect(compiler.decompile(contractBase64).result).to.be.a('string')
+        expect(typeof compiler.decompile(contractBase64).result).toBe('string')
 
     });
 
-    it('Should compile dApp', () => {
+    test.only('Should compile dApp', () => {
         const contract = `{-# STDLIB_VERSION 3 #-}
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
@@ -107,21 +107,21 @@ func foo() = 3
 @Callable(i)
 func bar() = WriteSet([])`;
         const compiled = compiler.compile(contract);
-        expect(compiled.error).to.be.undefined
+        expect(compiled.error).toBeUndefined()
     });
 
-    it('Should get MaxComplexityByVersion', () => {
-        expect(compiler.contractLimits.MaxComplexityByVersion(2)).to.eq(2000);
-        expect(compiler.contractLimits.MaxComplexityByVersion(3)).to.eq(4000)
+    test.only('Should get MaxComplexityByVersion', () => {
+        expect(compiler.contractLimits.MaxComplexityByVersion(2)).toEqual(2000);
+        expect(compiler.contractLimits.MaxComplexityByVersion(3)).toEqual(4000)
     });
 
-    it(' ba.sha256 is not a function', async () => {
+    test.only(' ba.sha256 is not a function', async () => {
         const evaluation = compiler.repl().evaluate;
         const res = await evaluation("sha256(base58'qwe')");
-        expect(res.result).to.eq('res1: ByteVector = base58\'Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp\'')
+        expect(res.result).toEqual('res1: ByteVector = base58\'Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp\'')
     })
 
-    it('Imports', () => {
+    test.only('Imports', () => {
         const script = `
 {-# STDLIB_VERSION 3 #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
@@ -131,7 +131,7 @@ multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
             `;
 
         const info = compiler.scriptInfo(script);
-        expect(info.imports.toString()).to.eq('lib2,lib1,lib3');
+        expect(info.imports.toString()).toEqual('lib2,lib1,lib3');
         const files = [
             {
                 name: "lib1",
@@ -170,20 +170,20 @@ func multiply(a: Int, b: Int) = a * b
         let res = compiler.compile(script, 3, libs);
         console.log('res', res)
         if ('error' in res) console.log(res.error);
-        expect(res.error).to.be.undefined
+        expect(res.error).toBeUndefined()
     })
 
-    it('Should sign and verify via global curve25519verify', async function () {
+    test.only('Should sign and verify via global curve25519verify', async function () {
         const res = await compiler.repl().evaluate(`sigVerify(
        base58'59Su1K4KSU',
        base58'CGNGZ6G4tuYsW9AbBZPvhTvtVQYAnE8w22UMWLpLM8bGMiys4psATG7sX58p2aFe9uysYyrwnuP2GwT7NAJe737',
        base58'D6HmGZqpXCyAqpz8mCAfWijYDWsPKncKe5v3jq1nTpf5'
        )`)
 
-        expect(res.result).to.eq('res1: Boolean = true')
+        expect(res.result).toEqual('res1: Boolean = true')
     });
 
-    it('rsa verify', async function () {
+    test.only('rsa verify', async function () {
         const {evaluate} = compiler.repl();
         const pk = `let pk = fromBase64String("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkDg8m0bCDX7fTbBlHZm+BZIHVOfC2I4klRbjSqwFi/eCdfhGjYRYvu/frpSO0LIm0beKOUvwat6DY4dEhNt2PW3UeQvT2udRQ9VBcpwaJlLreCr837sn4fa9UG9FQFaGofSww1O9eBBjwMXeZr1jOzR9RBIwoL1TQkIkZGaDXRltEaMxtNnzotPfF3vGIZZuZX4CjiitHaSC0zlmQrEL3BDqqoLwo3jq8U3Zz8XUMyQElwufGRbZqdFCeiIs/EoHiJm8q8CVExRoxB0H/vE2uDFK/OXLGTgfwnDlrCa/qGt9Zsb8raUSz9IIHx72XB+kOXTt/GOuW7x2dJvTJIqKTwIDAQAB")`
         const msg = `let msg = fromBase64String("REIiN2hDQUxIJVQzdk1zQSpXclRRelExVWd+YGQoOyx0KHduPzFmcU8zUWosWiA7aFloOWplclAxPCU=")`
@@ -199,12 +199,12 @@ func multiply(a: Int, b: Int) = a * b
         algs.forEach((alg) => {
             const rsaVerify = `rsaVerify(${alg}, msg, sig, pk)`
             evaluate(rsaVerify).then(res => {
-                expect('result' in res).to.eq(true)
+                expect('result' in res).toEqual(true)
             })
         })
     });
 
-    it('log', function () {
+    test.only('log', function () {
         const evaluate = compiler.repl().evaluate;
         const tests = [
             "pow(12, 1, 3456, 3, 2, DOWN)",
@@ -225,27 +225,30 @@ func multiply(a: Int, b: Int) = a * b
             "pow(10, 0, -8, 0, 8, HALFUP)",
             "pow(10, 0, -9, 0, 8, HALFUP)"
         ];
-        tests.forEach(async test => expect('result' in await evaluate(test)).to.eq(true))
+        tests.forEach(async test => expect('result' in await evaluate(test)).toEqual(true))
     });
 
-    it('checkMerkleProof', async () => {
+    test.only('checkMerkleProof', async () => {
         const {evaluate} = compiler.repl();
-        const code = "let rootHash = base64'eh9fm3HeHZ3XA/UfMpC9HSwLVMyBLgkAJL0MIVBIoYk='\n" +
-            "let leafData = base64'AAAm+w=='\n" +
-            "let merkleProof = base64'ACBSs2di6rY+9N3mrpQVRNZLGAdRX2WBD6XkrOXuhh42XwEgKhB3Aiij6jqLRuQhrwqv6e05kr89tyxkuFYwUuMCQB8AIKLhp/AFQkokTe/NMQnKFL5eTMvDlFejApmJxPY6Rp8XACAWrdgB8DwvPA8D04E9HgUjhKghAn5aqtZnuKcmpLHztQAgd2OG15WYz90r1WipgXwjdq9WhvMIAtvGlm6E3WYY12oAIJXPPVIdbwOTdUJvCgMI4iape2gvR55vsrO2OmJJtZUNASAya23YyBl+EpKytL9+7cPdkeMMWSjk0Bc0GNnqIisofQ=='\n" +
-            "checkMerkleProof(rootHash, merkleProof, leafData)";
+        const code = `
+            let rootHash = base64'eh9fm3HeHZ3XA/UfMpC9HSwLVMyBLgkAJL0MIVBIoYk='
+            let leafData = base64'AAAm+w=='
+            let merkleProof = base64'ACBSs2di6rY+9N3mrpQVRNZLGAdRX2WBD6XkrOXuhh42XwEgKhB3Aiij6jqLRuQhrwqv6e05kr89tyxkuFYwUuMCQB8AIKLhp/AFQkokTe/NMQnKFL5eTMvDlFejApmJxPY6Rp8XACAWrdgB8DwvPA8D04E9HgUjhKghAn5aqtZnuKcmpLHztQAgd2OG15WYz90r1WipgXwjdq9WhvMIAtvGlm6E3WYY12oAIJXPPVIdbwOTdUJvCgMI4iape2gvR55vsrO2OmJJtZUNASAya23YyBl+EpKytL9+7cPdkeMMWSjk0Bc0GNnqIisofQ=='
+            createMerkleRoot(rootHash, merkleProof, leafData)
+        `;
         const compiled = await evaluate(code);
         console.log(compiled)
-        expect(compiled.error).to.be.undefined;
-        expect(compiled.result.slice(-4)).to.eq('true')
+        expect(compiled.error).toBeUndefined();
+        expect(compiled.result.slice(-4)).toEqual('true')
     });
 
-    it('testHttp', async () => {
-        expect((await httpGet({url: 'https://nodes.wavesplatform.com/transactions/info/asd'})).body === undefined)
-            .to.eq(false)
+    test.only('testHttp', async () => {
+        expect((await https.get( 'https://nodes.wavesplatform.com/transactions/info/asd')
+            .getHeader("body")))
+            .toBeUndefined()
     });
 
-    it('connect blockchain - transactionHeightById', async () => {
+    test.only('connect blockchain - transactionHeightById', async () => {
         const
             nodeUrl = 'https://nodes-testnet.wavesnodes.com/',
             chainId = 'T',
@@ -253,12 +256,12 @@ func multiply(a: Int, b: Int) = a * b
 
         const {evaluate} = compiler.repl({nodeUrl, chainId, address});
         const res = await evaluate('transactionHeightById(base58\'GgjvCxoDP2FtNrKMqsWrUqJZfMGTiWB1tF2RyYHk6u9w\')');
-        expect('result' in res).to.eq(true);
-        expect(res.result).to.eq("res1: Int|Unit = 661401");
+        expect('result' in res).toEqual(true);
+        expect(res.result).toEqual("res1: Int|Unit = 661401");
     })
 
 
-    it('reconfigure', async () => {
+    test.only('reconfigure', async () => {
         let
             nodeUrl = 'https://nodes-testnet.wavesnodes.com/',
             chainId = 'T',
@@ -266,25 +269,25 @@ func multiply(a: Int, b: Int) = a * b
 
         let repl = compiler.repl({nodeUrl, chainId, address});
         let res = await repl.evaluate('this');
-        expect('result' in res && res.result.includes(address)).to.eq(true);
+        expect('result' in res && res.result.includes(address)).toEqual(true);
 
         address = '3N5hQm6twVhFgf8mKBkJpNhxwcBnpZsPyni';
         repl = repl.reconfigure({nodeUrl, chainId, address});
         res = await repl.evaluate('this');
-        expect('result' in res && res.result.includes(address)).to.eq(true);
+        expect('result' in res && res.result.includes(address)).toEqual(true);
 
         address = '3N77yhDrPTdLFjzNPZcBQPZLDg11EHAB7xF';
         repl = repl.reconfigure({nodeUrl, chainId, address});
         res = await repl.evaluate('this');
-        expect('result' in res && res.result.includes(address)).to.eq(true);
+        expect('result' in res && res.result.includes(address)).toEqual(true);
 
         address = '3Mzrrp6SCrDz7bUQThWoYvbwkFSjTDcRtCv';
         repl = repl.reconfigure({nodeUrl, chainId, address});
         res = await repl.evaluate('this');
-        expect('result' in res && res.result.includes(address)).to.eq(true);
+        expect('result' in res && res.result.includes(address)).toEqual(true);
     })
 
-    it('complexity', () => {
+    test.only('complexity', () => {
         const contract = `
         {-# STDLIB_VERSION 3 #-}
 {-# CONTENT_TYPE DAPP #-}
@@ -304,16 +307,16 @@ func asd() = {
 }
 `;
         const flattenResult = compiler.flattenCompilationResult(compiler.compile(contract))
-        expect(typeof flattenResult.verifierComplexity).to.eq('number')
-        expect(typeof flattenResult.callableComplexities).to.eq('object')
-        expect(typeof flattenResult.userFunctionComplexities).to.eq('object')
-        expect(typeof flattenResult.error).to.eq('string')
-        expect(typeof flattenResult.complexity).to.eq('number')
+        expect(typeof flattenResult.verifierComplexity).toEqual('number')
+        expect(typeof flattenResult.callableComplexities).toEqual('object')
+        expect(typeof flattenResult.userFunctionComplexities).toEqual('object')
+        expect(typeof flattenResult.error).toEqual('string')
+        expect(typeof flattenResult.complexity).toEqual('number')
 
     })
 
 
-    it('complexity by funcs', () => {
+    test.only('complexity by funcs', () => {
         const contract = `
         {-# STDLIB_VERSION 3 #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -329,15 +332,15 @@ func asd() = {
         `
 
         const flattenResult = compiler.flattenCompilationResult(compiler.compile(contract))
-        expect(typeof flattenResult.verifierComplexity).to.eq('number')
-        expect(typeof flattenResult.callableComplexities).to.eq('object')
-        expect(typeof flattenResult.userFunctionComplexities).to.eq('object')
-        expect(typeof flattenResult.error).to.eq('undefined')
-        expect(typeof flattenResult.complexity).to.eq('number')
+        expect(typeof flattenResult.verifierComplexity).toEqual('number')
+        expect(typeof flattenResult.callableComplexities).toEqual('object')
+        expect(typeof flattenResult.userFunctionComplexities).toEqual('object')
+        expect(typeof flattenResult.error).toEqual('undefined')
+        expect(typeof flattenResult.complexity).toEqual('number')
 
     });
 
-    it('presence of errors ride v5', () => {
+    test.only('presence of errors ride v5', () => {
         const contract = `
         {-# STDLIB_VERSION 5 #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -373,11 +376,10 @@ func asd() = {
         `
 
         const result = compiler.compile(contract)
-        console.log(result)
-        expect(typeof result.error).to.eq('undefined')
+        expect(result.error).toBeUndefined()
     });
 
-    it('imports', () => {
+    test.only('imports', () => {
         const scriptec = `
         {-# STDLIB_VERSION 4 #-}
         {-# SCRIPT_TYPE ACCOUNT #-}
@@ -390,10 +392,10 @@ func asd() = {
 
         const result = compiler.scriptInfo(scriptec)
         console.log(result)
-        expect(result.imports.toString()).to.eq('lib1,lib2')
+        expect(result.imports.toString()).toEqual('lib1,lib2')
     });
 
-    it('use libs', async () => {
+    test.only('use libs', async () => {
         const lib1 = `
 {-# SCRIPT_TYPE  ACCOUNT #-}
 {-# CONTENT_TYPE LIBRARY #-}
@@ -427,11 +429,21 @@ multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
             'lib.3.ride': lib3
         }
         const res = compiler.compile(code,3, false, false, libMap)
-        console.log(res)
     })
 
-    it('compiler version', () => {
+    test.only('compiler version', () => {
         console.log(compiler.version)
+    })
+
+    test.only("negative: invalid lib version", () => {
+        let contract = `
+            {-# STDLIB_VERSION ${data.STDLIB_INVALID_VERSION} #-}
+            {-# CONTENT_TYPE DAPP #-}
+            {-# SCRIPT_TYPE ACCOUNT #-}
+        `
+        const compiled = compiler.compile(contract);
+        expect(compiled.error)
+            .toEqual(`Illegal directive value ${data.STDLIB_INVALID_VERSION} for key STDLIB_VERSION`);
     })
 });
 

@@ -24,4 +24,4 @@ describe('binaryEntry',  () => {
         expect(compiled.error)
             .toContain(`Compilation failed: [Function 'BinaryEntry' requires 2 arguments, but 1 are provided in`);
     })
-})
+});

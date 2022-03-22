@@ -26,16 +26,16 @@ describe('getBoolean',  () => {
 
     test.each([
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry],
-    ])('positive: getBoolean - getting a binary from your own data', (version, scriptResult) => {
-        let contract = generateContractForGetBinaryOwnData(version, scriptResult);
+    ])('positive: getBoolean - getting a boolean from your own data', (version, scriptResult) => {
+        let contract = generateContractForGetBooleanOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBinaryEntry, ''],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, ''],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, ''],
+        [data.STDLIB_VERSION_3, data.RideV3ResultBooleanEntry, ''],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, ''],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, ''],
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
         let contract = generateContract(version, scriptResult, addressOrAlias);
         const compiled = compiler.compile(contract);
@@ -57,10 +57,10 @@ describe('getBoolean',  () => {
         });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBinaryEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3ResultBooleanEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
     ])("negative: Can't find a function overload 'getBoolean'(String)", (version, scriptResult) => {
-        let contract = generateContractForGetBinaryOwnData(version, scriptResult);
+        let contract = generateContractForGetBooleanOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Compilation failed: [Can't find a function overload 'getBoolean'(String)`);
@@ -73,7 +73,7 @@ describe('getBoolean',  () => {
         {-# SCRIPT_TYPE ACCOUNT #-}
 
         @Callable(i)
-        func binary() = {
+        func bool() = {
             let callerAddressOrAlias = ${testData}
             let boolValueOrUnit = ${getBooleanFunction}
             let boolValue = match(boolValueOrUnit) {
@@ -84,14 +84,14 @@ describe('getBoolean',  () => {
         }`;
     };
 
-    const generateContractForGetBinaryOwnData = (libVersion, caseForVersions) => {
+    const generateContractForGetBooleanOwnData = (libVersion, caseForVersions) => {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
         {-# SCRIPT_TYPE ACCOUNT #-}
  
         @Callable(i)
-        func binary() = {
+        func bool() = {
             let boolValueOrUnit = getBoolean("LJKaSADfHH127gd")
             let boolValue = match(boolValueOrUnit) {
               case b:Boolean => b

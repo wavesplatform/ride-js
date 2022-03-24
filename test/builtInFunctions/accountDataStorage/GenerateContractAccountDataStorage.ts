@@ -73,4 +73,6 @@ export class GenerateContractAccountDataStorage {
             ${caseForVersions}
         }`;
     };
+
+
 }

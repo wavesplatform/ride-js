@@ -5,8 +5,12 @@ const compiler = require('../../../src');
 
 describe('getString',  () => {
 
+    const defaultGetString = `getString(callerAddressOrAlias, "LtKaSADfaH127gd")`;
+    const invalidGetStringV3 = `getString(callerAddressOrAlias)`;
+    const invalidGetStringGreaterV3 = `getString(callerAddressOrAlias)`;
+
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetString, 'getString("LJKaSADdsH127gd")', 'String');
+    (defaultGetString, 'getString("LJKaSADdsH127gd")', 'String');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
@@ -48,10 +52,10 @@ describe('getString',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.invalidGetStringV3, data.getRandomAddress(), `'getString'(Address)`],
-        [data.STDLIB_VERSION_3, data.invalidGetStringV3, data.getRandomAlias(), `'getString'(Alias)`],
-        [data.STDLIB_VERSION_4, data.invalidGetStringGreaterV3, data.getRandomAddress(), `'getString'(Address)`],
-        [data.STDLIB_VERSION_5, data.invalidGetStringGreaterV3, data.getRandomAlias(), `'getString'(Alias)`],
+        [data.STDLIB_VERSION_3, invalidGetStringV3, data.getRandomAddress(), `'getString'(Address)`],
+        [data.STDLIB_VERSION_3, invalidGetStringV3, data.getRandomAlias(), `'getString'(Alias)`],
+        [data.STDLIB_VERSION_4, invalidGetStringGreaterV3, data.getRandomAddress(), `'getString'(Address)`],
+        [data.STDLIB_VERSION_5, invalidGetStringGreaterV3, data.getRandomAlias(), `'getString'(Alias)`],
     ])("negative: Can't find a function overload 'getString'(Address) or 'getString'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
             let contract = precondition.generateContract(version, scriptResult, addressOrAlias);

@@ -5,8 +5,12 @@ const compiler = require('../../../src');
 
 describe('getIntegerValue',  () => {
 
+    const defaultGetIntegerValue = `getIntegerValue(callerAddressOrAlias, "LtKaSADfaH127gd")`;
+    const invalidGetIntegerValueV3 = `getIntegerValue(callerAddressOrAlias)`;
+    const invalidGetIntegerValueGreaterV3 = `getIntegerValue(callerAddressOrAlias)`;
+
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetIntegerValue, 'getIntegerValue("LJKaSADfHH127gd")');
+    (defaultGetIntegerValue, 'getIntegerValue("LJKaSADfHH127gd")');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
@@ -48,10 +52,10 @@ describe('getIntegerValue',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.invalidGetIntegerValueV3, data.getRandomAddress(), `'getIntegerValue'(Address)`],
-        [data.STDLIB_VERSION_3, data.invalidGetIntegerValueV3, data.getRandomAlias(), `'getIntegerValue'(Alias)`],
-        [data.STDLIB_VERSION_4, data.invalidGetIntegerValueGreaterV3, data.getRandomAddress(), `'getIntegerValue'(Address)`],
-        [data.STDLIB_VERSION_5, data.invalidGetIntegerValueGreaterV3, data.getRandomAlias(), `'getIntegerValue'(Alias)`],
+        [data.STDLIB_VERSION_3, invalidGetIntegerValueV3, data.getRandomAddress(), `'getIntegerValue'(Address)`],
+        [data.STDLIB_VERSION_3, invalidGetIntegerValueV3, data.getRandomAlias(), `'getIntegerValue'(Alias)`],
+        [data.STDLIB_VERSION_4, invalidGetIntegerValueGreaterV3, data.getRandomAddress(), `'getIntegerValue'(Address)`],
+        [data.STDLIB_VERSION_5, invalidGetIntegerValueGreaterV3, data.getRandomAlias(), `'getIntegerValue'(Alias)`],
     ])("negative: Can't find a function overload 'getIntegerValue'(Address) or 'getIntegerValue'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
             let contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias);

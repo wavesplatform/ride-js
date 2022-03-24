@@ -5,8 +5,12 @@ const compiler = require('../../../src');
 
 describe('getBoolean',  () => {
 
+    const defaultGetBoolean = `getBoolean(callerAddressOrAlias, "LtKaSADfaH127gd")`
+    const invalidGetBooleanV3 = `getBoolean(callerAddressOrAlias)`;
+    const invalidGetBooleanGreaterV3 = `getBoolean(callerAddressOrAlias)`;
+
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetBoolean, 'getBoolean("LJKaSADfHH127gd")', 'Boolean');
+    (defaultGetBoolean, 'getBoolean("LJKaSADfHH127gd")', 'Boolean');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
@@ -49,10 +53,10 @@ describe('getBoolean',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.invalidGetBooleanV3, data.getRandomAddress(), `'getBoolean'(Address)`],
-        [data.STDLIB_VERSION_3, data.invalidGetBooleanV3, data.getRandomAlias(), `'getBoolean'(Alias)`],
-        [data.STDLIB_VERSION_4, data.invalidGetBooleanGreaterV3, data.getRandomAddress(), `'getBoolean'(Address)`],
-        [data.STDLIB_VERSION_5, data.invalidGetBooleanGreaterV3, data.getRandomAlias(), `'getBoolean'(Alias)`],
+        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.getRandomAddress(), `'getBoolean'(Address)`],
+        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.getRandomAlias(), `'getBoolean'(Alias)`],
+        [data.STDLIB_VERSION_4, invalidGetBooleanGreaterV3, data.getRandomAddress(), `'getBoolean'(Address)`],
+        [data.STDLIB_VERSION_5, invalidGetBooleanGreaterV3, data.getRandomAlias(), `'getBoolean'(Alias)`],
     ])("negative: Can't find a function overload 'getBoolean'(Address) or 'getBoolean'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
             let contract = precondition.generateContract(version, scriptResult, addressOrAlias);

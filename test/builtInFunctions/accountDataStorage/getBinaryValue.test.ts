@@ -5,8 +5,12 @@ const compiler = require('../../../src');
 
 describe('getBinaryValue',  () => {
 
+    const defaultGetBinaryValue = `getBinaryValue(callerAddressOrAlias, "LJKaSADfHH782gd")`
+    const invalidGetBinaryValueV3 = `getBinaryValue(callerAddressOrAlias)`;
+    const invalidGetBinaryValueGreaterV3 = `getBinaryValue(callerAddressOrAlias)`;
+
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetBinaryValue, 'getBinaryValue("LJKaSADfHH127gd")');
+    (defaultGetBinaryValue, 'getBinaryValue("LJKaSADfHH127gd")');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
@@ -48,10 +52,10 @@ describe('getBinaryValue',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.invalidGetBinaryValueV3, data.getRandomAddress(), `'getBinaryValue'(Address)`],
-        [data.STDLIB_VERSION_3, data.invalidGetBinaryValueV3, data.getRandomAlias(), `'getBinaryValue'(Alias)`],
-        [data.STDLIB_VERSION_4, data.invalidGetBinaryValueGreaterV3, data.getRandomAddress(), `'getBinaryValue'(Address)`],
-        [data.STDLIB_VERSION_5, data.invalidGetBinaryValueGreaterV3, data.getRandomAlias(), `'getBinaryValue'(Alias)`],
+        [data.STDLIB_VERSION_3, invalidGetBinaryValueV3, data.getRandomAddress(), `'getBinaryValue'(Address)`],
+        [data.STDLIB_VERSION_3, invalidGetBinaryValueV3, data.getRandomAlias(), `'getBinaryValue'(Alias)`],
+        [data.STDLIB_VERSION_4, invalidGetBinaryValueGreaterV3, data.getRandomAddress(), `'getBinaryValue'(Address)`],
+        [data.STDLIB_VERSION_5, invalidGetBinaryValueGreaterV3, data.getRandomAlias(), `'getBinaryValue'(Alias)`],
     ])("negative: Can't find a function overload 'getBinaryValue'(Address) or 'getBinaryValue'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
             let contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias);

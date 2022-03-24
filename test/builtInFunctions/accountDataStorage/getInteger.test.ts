@@ -5,8 +5,12 @@ const compiler = require('../../../src');
 
 describe('getInteger',  () => {
 
+    const defaultGetInteger = `getInteger(callerAddressOrAlias, "LtKaSADfaH127gd")`;
+    const invalidGetIntegerV3 = `getInteger(callerAddressOrAlias)`;
+    const invalidGetIntegerGreaterV3 = `getInteger(callerAddressOrAlias)`;
+
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetInteger, 'getInteger("LJKaSADfHH127gd")', 'Int');
+    (defaultGetInteger, 'getInteger("LJKaSADfHH127gd")', 'Int');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
@@ -48,10 +52,10 @@ describe('getInteger',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.invalidGetIntegerV3, data.getRandomAddress(), `'getInteger'(Address)`],
-        [data.STDLIB_VERSION_3, data.invalidGetIntegerV3, data.getRandomAlias(), `'getInteger'(Alias)`],
-        [data.STDLIB_VERSION_4, data.invalidGetIntegerGreaterV3, data.getRandomAddress(), `'getInteger'(Address)`],
-        [data.STDLIB_VERSION_5, data.invalidGetIntegerGreaterV3, data.getRandomAlias(), `'getInteger'(Alias)`],
+        [data.STDLIB_VERSION_3, invalidGetIntegerV3, data.getRandomAddress(), `'getInteger'(Address)`],
+        [data.STDLIB_VERSION_3, invalidGetIntegerV3, data.getRandomAlias(), `'getInteger'(Alias)`],
+        [data.STDLIB_VERSION_4, invalidGetIntegerGreaterV3, data.getRandomAddress(), `'getInteger'(Address)`],
+        [data.STDLIB_VERSION_5, invalidGetIntegerGreaterV3, data.getRandomAlias(), `'getInteger'(Alias)`],
     ])("negative: Can't find a function overload 'getInteger'(Address) or 'getInteger'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
             let contract = precondition.generateContract(version, scriptResult, addressOrAlias);

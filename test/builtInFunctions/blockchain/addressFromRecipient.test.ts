@@ -17,6 +17,16 @@ describe('addressFromRecipient',  () => {
         expect(compiled.error).toBeUndefined();
     });
 
+    test.each([
+        [data.STDLIB_VERSION_3, 'invalid address', data.getRandomAddress()],
+        [data.STDLIB_VERSION_4, 'invalid address', data.getRandomAddress()],
+        [data.STDLIB_VERSION_5, 'invalid address', data.getRandomAddress()],
+    ])('negative: invalid address', (version, invalidAddress, address) => {
+        let contract = generateContract(version, invalidAddress, address);
+        const compiled = compiler.compile(contract);
+        expect(compiled.error).toContain(`Parsed.Failure`);
+    });
+
     const generateContract = (libVersion, addressOrAlias, address) => {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}

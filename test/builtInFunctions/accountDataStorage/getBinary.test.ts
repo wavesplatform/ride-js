@@ -47,8 +47,7 @@ describe('getBinary',  () => {
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
         let contract = precondition.generateContract(version, scriptResult, addressOrAlias);
         const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Parsed.Failure`);
+        expect(compiled.error).toContain(`Parsed.Failure`);
     });
 
     test.each([

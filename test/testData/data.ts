@@ -17,6 +17,12 @@ const aliasDataArray = [
     'Alias("")',
 ];
 
+const byteVectorArray = [
+    "base16'52696465'",
+    "base58'8t38fWQhrYJsqxXtPpiRCEk1g5RJdq9bG5Rkr2N7mDFC'",
+    "base64'UmlkZQ=='"
+];
+
 export const RideV3Result = `
         WriteSet([
             DataEntry("dataType", val)
@@ -44,3 +50,4 @@ export const GreaterV3ResultStringEntry = `
 
 export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
 export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];
+export const getRandomByteVector = () => byteVectorArray[Math.floor((Math.random() * byteVectorArray.length))];

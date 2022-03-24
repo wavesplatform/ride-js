@@ -44,35 +44,35 @@ const aliasDataArray = [
     'Alias("")',
 ];
 
-export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
-export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];
-
 export const RideV3ResultBinaryEntry = `
         WriteSet([
-            DataEntry("bin", binValue)
+            DataEntry("bin", val)
         ])`;
 
 export const GreaterV3ResultBinaryEntry = `
         [
-            BinaryEntry("bin", binValue)
+            BinaryEntry("bin", val)
         ]`;
 
 export const RideV3ResultBooleanEntry = `
         WriteSet([
-            DataEntry("boolean", boolValue)
+            DataEntry("boolean", val)
         ])`;
 
 export const GreaterV3ResultBooleanEntry = `
         [
-            BooleanEntry("boolean", boolValue)
+            BooleanEntry("boolean", val)
         ]`;
 
 export const RideV3ResultIntEntry = `
         WriteSet([
-            DataEntry("integer", intValue)
+            DataEntry("integer", val)
         ])`;
 
 export const GreaterV3ResultIntEntry = `
         [
-            IntegerEntry("integer", intValue)
+            IntegerEntry("integer", val)
         ]`;
+
+export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
+export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];

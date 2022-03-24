@@ -54,7 +54,7 @@ export class GenerateContractAccountDataStorage {
         {-# SCRIPT_TYPE ACCOUNT #-}
 
         @Callable(i)
-        func bool() = {
+        func val() = {
             let callerAddressOrAlias = ${testData}
             let val = ${getFunction}
             ${caseForVersions}

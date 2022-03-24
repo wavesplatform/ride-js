@@ -39,6 +39,8 @@ export const defaultGetStringValue = `getStringValue(callerAddressOrAlias, "LtKa
 export const invalidGetStringValueV3 = `getStringValue(callerAddressOrAlias)`;
 export const invalidGetStringValueGreaterV3 = `getStringValue(callerAddressOrAlias)`;
 
+export const defaultIsDataStorageUntouched = `isDataStorageUntouched(callerAddressOrAlias)`;
+
 const addressDataArray = [
     "Address(base58'')",
     "Address(base58'3MDaMwqLtwBGcJrTA5tstJfY95GqnNnDDAS')",

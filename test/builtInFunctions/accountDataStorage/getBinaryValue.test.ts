@@ -6,7 +6,7 @@ const compiler = require('../../../src');
 describe('getBinaryValue',  () => {
 
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetBinaryValue, 'getBinaryValue("LJKaSADfHH127gd")', 'ByteVector');
+    (data.defaultGetBinaryValue, 'getBinaryValue("LJKaSADfHH127gd")');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],

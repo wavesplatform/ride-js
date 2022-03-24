@@ -6,7 +6,7 @@ const compiler = require('../../../src');
 describe('getIntegerValue',  () => {
 
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetIntegerValue, 'getIntegerValue("LJKaSADfHH127gd")', 'Int');
+    (data.defaultGetIntegerValue, 'getIntegerValue("LJKaSADfHH127gd")');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],

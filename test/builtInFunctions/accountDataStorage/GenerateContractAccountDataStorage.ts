@@ -5,7 +5,7 @@ export class GenerateContractAccountDataStorage {
     private readonly ownDataFunction;
     private readonly dataType;
 
-    constructor(defaultFunc: string, ownDataFunc: string, data: string) {
+    constructor(defaultFunc: string, ownDataFunc?: string, data?: string) {
         this.defaultFunction = defaultFunc;
         this.ownDataFunction = ownDataFunc;
         this.dataType = data;

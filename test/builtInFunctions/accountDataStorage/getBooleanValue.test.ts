@@ -6,7 +6,7 @@ const compiler = require('../../../src');
 describe('getBooleanValue',  () => {
 
     const precondition = new GenerateContractAccountDataStorage
-    (data.defaultGetBooleanValue, 'getBooleanValue("LJKaSADfHH127gd")', 'Boolean');
+    (data.defaultGetBooleanValue, 'getBooleanValue("LJKaSADfHH127gd")');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],

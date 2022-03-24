@@ -9,7 +9,7 @@ describe('getBooleanValue',  () => {
     (data.defaultGetBooleanValue, 'getBooleanValue("LJKaSADfHH127gd")', 'Boolean');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBooleanEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
     ])('positive: getBooleanValue - get byte array by address', (version, scriptResult, address) => {
@@ -19,7 +19,7 @@ describe('getBooleanValue',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBooleanEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAlias()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAlias()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.getRandomAlias()],
     ])('positive: getBooleanValue - get byte array by alias', (version, scriptResult, alias) => {
@@ -37,7 +37,7 @@ describe('getBooleanValue',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBooleanEntry, ''],
+        [data.STDLIB_VERSION_3, data.RideV3Result, ''],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, ''],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, ''],
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
@@ -50,8 +50,8 @@ describe('getBooleanValue',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.invalidGetBooleanValueV3, data.getRandomAddress(), `'getBooleanValue'(Address)`],
         [data.STDLIB_VERSION_3, data.invalidGetBooleanValueV3, data.getRandomAlias(), `'getBooleanValue'(Alias)`],
-        [data.STDLIB_VERSION_4, data.InvalidGetBooleanValueGreaterV3, data.getRandomAddress(), `'getBooleanValue'(Address)`],
-        [data.STDLIB_VERSION_5, data.InvalidGetBooleanValueGreaterV3, data.getRandomAlias(), `'getBooleanValue'(Alias)`],
+        [data.STDLIB_VERSION_4, data.invalidGetBooleanValueGreaterV3, data.getRandomAddress(), `'getBooleanValue'(Address)`],
+        [data.STDLIB_VERSION_5, data.invalidGetBooleanValueGreaterV3, data.getRandomAlias(), `'getBooleanValue'(Alias)`],
     ])("negative: Can't find a function overload 'getBooleanValue'(Address) or 'getBooleanValue'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
             let contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias);
@@ -61,7 +61,7 @@ describe('getBooleanValue',  () => {
         });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBooleanEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
     ])("negative: Can't find a function overload 'getBooleanValue'(String)", (version, scriptResult) => {
         let contract = precondition.generateContractOwnDataWithoutMatcher(version, scriptResult);

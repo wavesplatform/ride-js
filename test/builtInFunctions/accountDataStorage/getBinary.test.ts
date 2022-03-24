@@ -9,7 +9,7 @@ describe('getBinary',  () => {
     (data.defaultGetBinary, 'getBinary("LJKaSADfHH127gd")', 'ByteVector');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBinaryEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
     ])('positive: get byte array by address', (version, scriptResult, address) => {
@@ -19,7 +19,7 @@ describe('getBinary',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBinaryEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAlias()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
     ])('positive: get byte array by alias', (version, scriptResult, alias) => {
@@ -37,7 +37,7 @@ describe('getBinary',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBinaryEntry, ''],
+        [data.STDLIB_VERSION_3, data.RideV3Result, ''],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, ''],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, ''],
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
@@ -50,8 +50,8 @@ describe('getBinary',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.invalidGetBinaryV3, data.getRandomAddress(), `'getBinary'(Address)`],
         [data.STDLIB_VERSION_3, data.invalidGetBinaryV3, data.getRandomAlias(), `'getBinary'(Alias)`],
-        [data.STDLIB_VERSION_4, data.InvalidGetBinaryGreaterV3, data.getRandomAddress(), `'getBinary'(Address)`],
-        [data.STDLIB_VERSION_5, data.InvalidGetBinaryGreaterV3, data.getRandomAlias(), `'getBinary'(Alias)`],
+        [data.STDLIB_VERSION_4, data.invalidGetBinaryGreaterV3, data.getRandomAddress(), `'getBinary'(Address)`],
+        [data.STDLIB_VERSION_5, data.invalidGetBinaryGreaterV3, data.getRandomAlias(), `'getBinary'(Alias)`],
     ])("negative: Can't find a function overload 'getBinary'(Address) or 'getBinary'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
         let contract = precondition.generateContract(version, scriptResult, addressOrAlias);
@@ -61,7 +61,7 @@ describe('getBinary',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3ResultBinaryEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
     ])("negative: Can't find a function overload 'getBinary'(String)", (version, scriptResult) => {
         let contract = precondition.generateContractOwnData(version, scriptResult);

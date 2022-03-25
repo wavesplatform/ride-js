@@ -27,7 +27,7 @@ describe('scriptHash',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
-    ])('negative: scriptHash', (version, scriptResult, addressOrAlias) => {
+    ])(`negative: Can't find a function scriptHash`, (version, scriptResult, addressOrAlias) => {
 
             let contract = precondition.generateContract(version, scriptResult, addressOrAlias);
             console.log(contract)

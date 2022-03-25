@@ -18,7 +18,7 @@ export class GenerateContractAccountDataStorage {
         {-# SCRIPT_TYPE ACCOUNT #-}
 
         @Callable(i)
-        func int() = {
+        func expression() = {
             let callerAddressOrAlias = ${testData}
             let valueOrUnit = ${getFunction}
             let val = match(valueOrUnit) {
@@ -36,7 +36,7 @@ export class GenerateContractAccountDataStorage {
         {-# SCRIPT_TYPE ACCOUNT #-}
  
         @Callable(i)
-        func int() = {
+        func expression() = {
             let valueOrUnit = ${this.ownDataFunction}
             let val = match(valueOrUnit) {
               case b:${this.dataType} => b
@@ -54,7 +54,7 @@ export class GenerateContractAccountDataStorage {
         {-# SCRIPT_TYPE ACCOUNT #-}
 
         @Callable(i)
-        func val() = {
+        func expression() = {
             let callerAddressOrAlias = ${testData}
             let val = ${getFunction}
             ${caseForVersions}
@@ -68,7 +68,7 @@ export class GenerateContractAccountDataStorage {
         {-# SCRIPT_TYPE ACCOUNT #-}
  
         @Callable(i)
-        func val() = {
+        func expression() = {
             let val = ${this.ownDataFunction}
             ${caseForVersions}
         }`;

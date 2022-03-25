@@ -18,7 +18,7 @@ describe('calculateAssetId',  () => {
     ])('negative: calculateAssetId function is missing in version v%i', (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain("Can't find a function 'calculateAssetId");
+        expect(compiled.error).toContain("Can't find a function 'calculateAssetId'");
     });
 
     test.each([

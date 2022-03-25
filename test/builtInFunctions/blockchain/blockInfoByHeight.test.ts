@@ -29,7 +29,7 @@ describe('blockInfoByHeight',  () => {
             case data.STDLIB_VERSION_3:
             case data.STDLIB_VERSION_4: {
                 expect(compiled.error)
-                    .toContain(`Compilation failed: [Non-matching types: expected: Int, actual: Address`);
+                    .toContain(`Compilation failed: [Non-matching types: expected: Int`);
                 break;
             }
             case data.STDLIB_VERSION_5:

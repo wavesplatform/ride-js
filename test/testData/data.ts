@@ -20,7 +20,6 @@ const aliasDataArray = [
 const byteVectorArray = [
     "base16'52696465'",
     "base58'8t38fWQhrYJsqxXtPpiRCEk1g5RJdq9bG5Rkr2N7mDFC'",
-    "base58'3t34fWAhrYjcQxXtP0PRC000g5RJdq9bG5Rkr8n9mDSC'",
     "base64'UmlkZQ=='"
 ];
 

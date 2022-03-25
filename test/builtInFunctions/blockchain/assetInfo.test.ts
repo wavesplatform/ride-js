@@ -2,19 +2,15 @@ import * as data from "../../testData/data";
 
 const compiler = require('../../../src');
 
-describe('addressFromRecipient',  () => {
+describe('assetInfo',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomByteVector()],
         [data.STDLIB_VERSION_4, data.getRandomByteVector()],
         [data.STDLIB_VERSION_5, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_3, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.getRandomByteVector()],
-    ])('positive: Checking the address in a transfer transaction', (version, byteVector) => {
+    ])('positive: Checking asset info', (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
-        console.log(contract)
         expect(compiled.error).toBeUndefined();
     });
 
@@ -25,25 +21,8 @@ describe('addressFromRecipient',  () => {
     ])('negative: invalid asset in assetInfo', (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
-        switch(version) {
-            case data.STDLIB_VERSION_3: {
-                expect(compiled.error)
-                    .toContain(`Compilation failed: [Non-matching types: expected: ByteVector, actual: Address`);
-                break;
-            }
-            case data.STDLIB_VERSION_4:
-            {
-                expect(compiled.error)
-                    .toContain(`Compilation failed: [Non-matching types: expected: ByteVector, actual: Alias`);
-                break;
-            }
-            case data.STDLIB_VERSION_5:
-            {
-                expect(compiled.error)
-                    .toContain(`Compilation failed: [Non-matching types: expected: ByteVector, actual: Int`);
-                break;
-            }
-        }
+        expect(compiled.error)
+            .toContain(`Compilation failed: [Non-matching types: expected: ByteVector`);
     });
 
     const generateContract = (libVersion, byteVector) => {
@@ -54,7 +33,7 @@ describe('addressFromRecipient',  () => {
 
         let x = match assetInfo(${byteVector}) {
             case asset:Asset =>
-                asset.decimals # 8
+                asset.decimals
             case _ => throw("Can't find asset")
         }`;
     };

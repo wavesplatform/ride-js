@@ -5,10 +5,8 @@ const compiler = require('../../../src');
 
 describe('assetBalance',  () => {
 
-    const defaultFunction = null;
-
-    const precondition = new GenerateContractAccountDataStorage
-    (defaultFunction);
+    let defaultFunction;
+    let precondition;
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress(), data.getRandomByteVector()],
@@ -20,7 +18,8 @@ describe('assetBalance',  () => {
     ])('positive: Checking the address in a transfer transaction',
         (version, scriptResult, addressOrAlias, byteVector) => {
 
-        const defaultFunction = `assetBalance(${addressOrAlias}, ${byteVector})`
+        defaultFunction = `assetBalance(${addressOrAlias}, ${byteVector})`;
+        precondition = new GenerateContractAccountDataStorage(defaultFunction);
 
         let contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, defaultFunction);
         const compiled = compiler.compile(contract);

@@ -8,9 +8,6 @@ describe('blockInfoByHeight',  () => {
         [data.STDLIB_VERSION_3, data.getRandomInt()],
         [data.STDLIB_VERSION_4, data.getRandomInt()],
         [data.STDLIB_VERSION_5, data.getRandomInt()],
-        [data.STDLIB_VERSION_3, data.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.getRandomInt()],
-        [data.STDLIB_VERSION_5, data.getRandomInt()],
     ])('positive: check block info by height', (version, num) => {
         let contract = generateContract(version, num);
         const compiled = compiler.compile(contract);
@@ -35,7 +32,7 @@ describe('blockInfoByHeight',  () => {
             case data.STDLIB_VERSION_5:
             {
                 expect(compiled.error)
-                    .toContain(`Compilation failed: [Function 'blockInfoByHeight' requires 1 arguments, but 0`);
+                    .toContain(`Function 'blockInfoByHeight' requires 1 arguments, but 0`);
                 break;
             }
         }

@@ -34,7 +34,7 @@ describe('parseBigInt ',  () => {
 
     test.each([
         [data.STDLIB_VERSION_5, data.getRandomInt()],
-    ])('negative: invalid byteVector in parseBigInt', (version, byteVector) => {
+    ])('negative: invalid data in parseBigInt', (version, byteVector) => {
         let contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
@@ -43,9 +43,9 @@ describe('parseBigInt ',  () => {
 
     test.each([
         [data.STDLIB_VERSION_5, data.getRandomByteVector()],
-    ])('negative: invalid function for v%i', (version, byteVector) => {
+    ])('negative: invalid function for v%i', (version, int) => {
         let contract = precondition.generateOnlyMatcherContract
-        (version, byteVector, invalidParseBigInt);
+        (version, int, invalidParseBigInt);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Function 'parseBigInt' requires 1 arguments, but 0 are provided`);

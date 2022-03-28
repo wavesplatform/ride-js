@@ -83,8 +83,8 @@ export class GenerateContractForBuiltInFunctions {
 
         let testData = ${testData}
         let x = match ${getFunction} {
-            case h:Int => h
-            case _ => throw("Can't find transaction")
+            case h:${this.dataType} => h
+            case _ => throw("not ${this.dataType}")
         }`
     }
 

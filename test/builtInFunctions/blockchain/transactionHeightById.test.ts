@@ -1,15 +1,24 @@
 import * as data from "../../testData/data";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
 describe('transactionHeightById',  () => {
+
+    const defaultScriptHashFunction = `transactionHeightById(testData)`;
+    const incorrectFunction = `transactionHeightById()`
+
+    const precondition =
+        new GenerateContractForBuiltInFunctions
+        (defaultScriptHashFunction, incorrectFunction, 'Int');
 
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomByteVector()],
         [data.STDLIB_VERSION_4, data.getRandomByteVector()],
         [data.STDLIB_VERSION_5, data.getRandomByteVector()],
     ])('positive: get the height of the transaction block.', (version, byteVector) => {
-        let contract = generateContract(version, byteVector);
+        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        console.log(contract)
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -17,35 +26,11 @@ describe('transactionHeightById',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, ''],
-    ])('negative: invalid arg by transactionHeightById', (version, byteVector) => {
-        let contract = generateContract(version, byteVector);
+        [data.STDLIB_VERSION_5, `"string"`],
+    ])('negative: invalid arg by transactionHeightById', (version, invalidData) => {
+        let contract = precondition.generateOnlyMatcherContract(version, invalidData);
         const compiled = compiler.compile(contract);
-        switch(version) {
-            case data.STDLIB_VERSION_3:
-            case data.STDLIB_VERSION_4: {
-                expect(compiled.error)
-                    .toContain(`Compilation failed: [Non-matching types: expected: ByteVector`);
-                break;
-            }
-            case data.STDLIB_VERSION_5:
-            {
-                expect(compiled.error)
-                    .toContain(`Function 'transactionHeightById' requires 1 arguments, but 0 are provided`);
-                break;
-            }
-        }
+        expect(compiled.error)
+            .toContain(`Non-matching types: expected: ByteVector`);
     });
-
-    const generateContract = (libVersion, byteVector) => {
-        return `
-        {-# STDLIB_VERSION ${libVersion} #-}
-        {-# CONTENT_TYPE DAPP #-}
-        {-# SCRIPT_TYPE ACCOUNT #-}
-
-        let x = match transactionHeightById(${byteVector}) {
-            case h:Int => h
-            case _ => throw("Can't find transaction")
-        }`
-    };
 })

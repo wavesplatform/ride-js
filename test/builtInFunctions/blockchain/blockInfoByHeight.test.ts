@@ -1,15 +1,23 @@
 import * as data from "../../testData/data";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
 describe('blockInfoByHeight',  () => {
+
+    const defaultScriptHashFunction = `blockInfoByHeight(testData)`;
+    const incorrectFunction = `blockInfoByHeight()`
+
+    const precondition =
+        new GenerateContractForBuiltInFunctions
+        (defaultScriptHashFunction, incorrectFunction, 'BlockInfo');
 
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomInt()],
         [data.STDLIB_VERSION_4, data.getRandomInt()],
         [data.STDLIB_VERSION_5, data.getRandomInt()],
     ])('positive: check block info by height', (version, num) => {
-        let contract = generateContract(version, num);
+        let contract = precondition.generateOnlyMatcherContract(version, num);
         const compiled = compiler.compile(contract);
         console.log(contract)
         expect(compiled.error).toBeUndefined();
@@ -18,36 +26,11 @@ describe('blockInfoByHeight',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, ''],
+        [data.STDLIB_VERSION_5, `"string"`],
     ])('negative: invalid arg by blockInfoByHeight', (version, num) => {
-        let contract = generateContract(version, num);
+        let contract = precondition.generateOnlyMatcherContract(version, num);
         const compiled = compiler.compile(contract);
-        switch(version) {
-            case data.STDLIB_VERSION_3:
-            case data.STDLIB_VERSION_4: {
-                expect(compiled.error)
-                    .toContain(`Compilation failed: [Non-matching types: expected: Int`);
-                break;
-            }
-            case data.STDLIB_VERSION_5:
-            {
-                expect(compiled.error)
-                    .toContain(`Function 'blockInfoByHeight' requires 1 arguments, but 0`);
-                break;
-            }
-        }
+        expect(compiled.error)
+            .toContain(`Non-matching types: expected: Int`);
     });
-
-    const generateContract = (libVersion, number) => {
-        return `
-        {-# STDLIB_VERSION ${libVersion} #-}
-        {-# CONTENT_TYPE DAPP #-}
-        {-# SCRIPT_TYPE ACCOUNT #-}
-
-        let x = match blockInfoByHeight(${number}) {
-            case block:BlockInfo =>
-                block.generator.toString()
-            case _ => throw("Can't find block")
-        }`
-    };
 });

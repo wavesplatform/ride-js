@@ -10,7 +10,7 @@ describe('scriptHash',  () => {
 
     const precondition =
         new GenerateContractForBuiltInFunctions
-        (defaultScriptHashFunction, 'scriptHash()', 'ByteVector');
+        (defaultScriptHashFunction, null, 'ByteVector');
 
     test.each([
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],

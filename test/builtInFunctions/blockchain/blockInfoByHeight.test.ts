@@ -19,7 +19,6 @@ describe('blockInfoByHeight',  () => {
     ])('positive: check block info by height', (version, num) => {
         let contract = precondition.generateOnlyMatcherContract(version, num);
         const compiled = compiler.compile(contract);
-        console.log(contract)
         expect(compiled.error).toBeUndefined();
     });
 

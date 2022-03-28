@@ -28,7 +28,7 @@ describe('calculateAssetId',  () => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
-            .toContain(`Non-matching types: expected: Issue, actual:`);
+            .toContain(`Non-matching types: expected: Issue`);
     });
 
     const generateContract = (libVersion, issue) => {

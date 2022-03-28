@@ -3,7 +3,7 @@ export class GenerateContractForBuiltInFunctions {
 
     private readonly defaultFunction;
     private readonly ownDataFunction;
-    private readonly dataType;
+    private dataType;
 
     constructor(defaultFunc: string, ownDataFunc?: string, data?: string) {
         this.defaultFunction = defaultFunc;
@@ -88,4 +88,8 @@ export class GenerateContractForBuiltInFunctions {
         }`
     }
 
+
+    public setData(data): void {
+        this.dataType = data;
+    }
 }

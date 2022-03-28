@@ -63,14 +63,14 @@ describe('toBigInt',  () => {
         [data.STDLIB_VERSION_5, data.getRandomAlias()],
         [data.STDLIB_VERSION_5, data.getRandomAddress()],
         [data.STDLIB_VERSION_5, data.getRandomIssuesArray()],
-    ])('negative: invalid data in parseIntValue for ride v%i', (version, invalidData) => {
+    ])('negative: invalid data in toBigInt for ride v%i', (version, invalidData) => {
         precondition = new GenerateContractForBuiltInFunctions
         (toBigIntFromByteVector, null, 'BigInt');
 
         let contract = precondition.generateOnlyMatcherContract(version, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
-            .toContain(`Can't find a function overload 'toBigInt'(`);
+            .toContain(`Can't find a function overload 'toBigInt'`);
     });
 
     test.each([

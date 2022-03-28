@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "./GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -9,7 +9,7 @@ describe('getStringValue',  () => {
     const invalidGetStringValueV3 = `getStringValue(callerAddressOrAlias)`;
     const invalidGetStringValueGreaterV3 = `getStringValue(callerAddressOrAlias)`;
 
-    const precondition = new GenerateContractAccountDataStorage
+    const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetStringValue, 'getStringValue("LJKaSADdsH127gd")');
 
     test.each([

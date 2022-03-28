@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "./GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -9,7 +9,7 @@ describe('getIntegerValue',  () => {
     const invalidGetIntegerValueV3 = `getIntegerValue(callerAddressOrAlias)`;
     const invalidGetIntegerValueGreaterV3 = `getIntegerValue(callerAddressOrAlias)`;
 
-    const precondition = new GenerateContractAccountDataStorage
+    const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetIntegerValue, 'getIntegerValue("LJKaSADfHH127gd")');
 
     test.each([

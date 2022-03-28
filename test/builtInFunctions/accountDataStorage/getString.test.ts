@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "./GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -9,7 +9,7 @@ describe('getString',  () => {
     const invalidGetStringV3 = `getString(callerAddressOrAlias)`;
     const invalidGetStringGreaterV3 = `getString(callerAddressOrAlias)`;
 
-    const precondition = new GenerateContractAccountDataStorage
+    const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetString, 'getString("LJKaSADdsH127gd")', 'String');
 
     test.each([
@@ -17,7 +17,7 @@ describe('getString',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultStringEntry, data.getRandomAddress()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultStringEntry, data.getRandomAddress()],
     ])('positive: getString - get byte array by address', (version, scriptResult, address) => {
-        let contract = precondition.generateContract(version, scriptResult, address);
+        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, address);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -27,7 +27,7 @@ describe('getString',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultStringEntry, data.getRandomAlias()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultStringEntry, data.getRandomAlias()],
     ])('positive: getString - get byte array by alias', (version, scriptResult, alias) => {
-        let contract = precondition.generateContract(version, scriptResult, alias);
+        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, alias);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -45,7 +45,7 @@ describe('getString',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultStringEntry, ''],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultStringEntry, ''],
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
-        let contract = precondition.generateContract(version, scriptResult, addressOrAlias);
+        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Parsed.Failure`);
@@ -58,7 +58,7 @@ describe('getString',  () => {
         [data.STDLIB_VERSION_5, invalidGetStringGreaterV3, data.getRandomAlias(), `'getString'(Alias)`],
     ])("negative: Can't find a function overload 'getString'(Address) or 'getString'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
-            let contract = precondition.generateContract(version, scriptResult, addressOrAlias);
+            let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
             const compiled = compiler.compile(contract);
             expect(compiled.error)
                 .toContain(`Compilation failed: [Can't find a function overload ${funcError}`);

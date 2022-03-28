@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "../accountDataStorage/GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -9,7 +9,7 @@ describe('scriptHash',  () => {
     const incorrectFunction = `scriptHash()`
 
     const precondition =
-        new GenerateContractAccountDataStorage
+        new GenerateContractForBuiltInFunctions
         (defaultScriptHashFunction, 'scriptHash()', 'ByteVector');
 
     test.each([
@@ -18,7 +18,7 @@ describe('scriptHash',  () => {
     ])('positive: scriptHash script is as expected',
         (version, scriptResult, addressOrAlias) => {
 
-        let contract = precondition.generateContract(version, scriptResult, addressOrAlias);
+        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
         console.log(contract)
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
@@ -29,7 +29,7 @@ describe('scriptHash',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
     ])(`negative: Can't find a function scriptHash`, (version, scriptResult, addressOrAlias) => {
 
-            let contract = precondition.generateContract(version, scriptResult, addressOrAlias);
+            let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
             console.log(contract)
             const compiled = compiler.compile(contract);
             expect(compiled.error).toContain("Can't find a function 'scriptHash'");
@@ -41,7 +41,7 @@ describe('scriptHash',  () => {
     ])('negative: incorrect function args scriptHash',
         (version, scriptResult, addressOrAlias) => {
 
-            let contract = precondition.generateContract(version, scriptResult, addressOrAlias, incorrectFunction);
+            let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias, incorrectFunction);
             const compiled = compiler.compile(contract);
             expect(compiled.error)
                 .toContain(`Function 'scriptHash' requires 1 arguments, but 0 are provided`);

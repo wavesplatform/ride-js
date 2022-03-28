@@ -1,5 +1,5 @@
 
-export class GenerateContractAccountDataStorage {
+export class GenerateContractForBuiltInFunctions {
 
     private readonly defaultFunction;
     private readonly ownDataFunction;
@@ -11,7 +11,8 @@ export class GenerateContractAccountDataStorage {
         this.dataType = data;
     }
 
-    public generateContract(libVersion, caseForVersions, testData, getFunction = this.defaultFunction):string {
+    public generateContractFromMatchingAndCase
+    (libVersion, caseForVersions, testData, getFunction = this.defaultFunction):string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -74,5 +75,17 @@ export class GenerateContractAccountDataStorage {
         }`;
     };
 
+    public generateOnlyMatcherContract(libVersion, testData, getFunction = this.defaultFunction): string {
+        return `
+        {-# STDLIB_VERSION ${libVersion} #-}
+        {-# CONTENT_TYPE DAPP #-}
+        {-# SCRIPT_TYPE ACCOUNT #-}
+
+        let testData = ${testData}
+        let x = match ${getFunction} {
+            case h:Int => h
+            case _ => throw("Can't find transaction")
+        }`
+    }
 
 }

@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "./GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -9,7 +9,7 @@ describe('getBinaryValue',  () => {
     const invalidGetBinaryValueV3 = `getBinaryValue(callerAddressOrAlias)`;
     const invalidGetBinaryValueGreaterV3 = `getBinaryValue(callerAddressOrAlias)`;
 
-    const precondition = new GenerateContractAccountDataStorage
+    const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetBinaryValue, 'getBinaryValue("LJKaSADfHH127gd")');
 
     test.each([

@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "../accountDataStorage/GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -19,7 +19,7 @@ describe('assetBalance',  () => {
         (version, scriptResult, addressOrAlias, byteVector) => {
 
         defaultFunction = `assetBalance(${addressOrAlias}, ${byteVector})`;
-        precondition = new GenerateContractAccountDataStorage(defaultFunction);
+        precondition = new GenerateContractForBuiltInFunctions(defaultFunction);
 
         let contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, defaultFunction);
         const compiled = compiler.compile(contract);

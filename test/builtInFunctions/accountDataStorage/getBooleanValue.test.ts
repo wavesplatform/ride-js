@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "./GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -9,7 +9,7 @@ describe('getBooleanValue',  () => {
     const invalidGetBooleanValueV3 = `getBooleanValue(callerAddressOrAlias)`;
     const invalidGetBooleanValueGreaterV3 = `getBooleanValue(callerAddressOrAlias)`;
 
-    const precondition = new GenerateContractAccountDataStorage
+    const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetBooleanValue, 'getBooleanValue("LJKaSADfHH127gd")');
 
     test.each([

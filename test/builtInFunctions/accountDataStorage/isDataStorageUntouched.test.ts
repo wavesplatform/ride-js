@@ -1,5 +1,5 @@
 import * as data from "../../testData/data";
-import {GenerateContractAccountDataStorage} from "./GenerateContractAccountDataStorage";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
@@ -7,7 +7,7 @@ describe('isDataStorageUntouched',  () => {
 
     const defaultIsDataStorageUntouched = `isDataStorageUntouched(callerAddressOrAlias)`;
 
-    const precondition = new GenerateContractAccountDataStorage
+    const precondition = new GenerateContractForBuiltInFunctions
     (defaultIsDataStorageUntouched, 'isDataStorageUntouched(callerAddressOrAlias)', 'Int');
 
     test.each([

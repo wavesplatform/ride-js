@@ -1,15 +1,23 @@
 import * as data from "../../testData/data";
+import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
 
 describe('assetInfo',  () => {
+
+    const defaultScriptHashFunction = `assetInfo(testData)`;
+    const incorrectFunction = `assetInfo()`
+
+    const precondition =
+        new GenerateContractForBuiltInFunctions
+        (defaultScriptHashFunction, incorrectFunction, 'Asset');
 
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomByteVector()],
         [data.STDLIB_VERSION_4, data.getRandomByteVector()],
         [data.STDLIB_VERSION_5, data.getRandomByteVector()],
     ])('positive: Checking asset info', (version, byteVector) => {
-        let contract = generateContract(version, byteVector);
+        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -19,22 +27,9 @@ describe('assetInfo',  () => {
         [data.STDLIB_VERSION_4, data.getRandomAlias()],
         [data.STDLIB_VERSION_5, 1],
     ])('negative: invalid asset in assetInfo', (version, byteVector) => {
-        let contract = generateContract(version, byteVector);
+        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
-            .toContain(`Compilation failed: [Non-matching types: expected: ByteVector`);
+            .toContain(`Non-matching types: expected: ByteVector`);
     });
-
-    const generateContract = (libVersion, byteVector) => {
-        return `
-        {-# STDLIB_VERSION ${libVersion} #-}
-        {-# CONTENT_TYPE DAPP #-}
-        {-# SCRIPT_TYPE ACCOUNT #-}
-
-        let x = match assetInfo(${byteVector}) {
-            case asset:Asset =>
-                asset.decimals
-            case _ => throw("Can't find asset")
-        }`;
-    };
 });

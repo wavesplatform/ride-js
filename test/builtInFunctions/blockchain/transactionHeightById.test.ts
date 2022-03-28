@@ -5,12 +5,12 @@ const compiler = require('../../../src');
 
 describe('transactionHeightById',  () => {
 
-    const defaultScriptHashFunction = `transactionHeightById(callerTestData)`;
+    const defaultTransactionHeightByIdFunction = `transactionHeightById(callerTestData)`;
     const incorrectFunction = `transactionHeightById()`
 
     const precondition =
         new GenerateContractForBuiltInFunctions
-        (defaultScriptHashFunction, incorrectFunction, 'Int');
+        (defaultTransactionHeightByIdFunction, incorrectFunction, 'Int');
 
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomByteVector()],

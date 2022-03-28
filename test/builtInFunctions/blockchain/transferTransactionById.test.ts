@@ -5,12 +5,12 @@ const compiler = require('../../../src');
 
 describe('transferTransactionById',  () => {
 
-    const defaultScriptHashFunction = `transferTransactionById(callerTestData)`;
+    const defaultTransferTransactionByIdFunction = `transferTransactionById(callerTestData)`;
     const incorrectFunction = `transferTransactionById()`
 
     const precondition =
         new GenerateContractForBuiltInFunctions
-        (defaultScriptHashFunction, incorrectFunction, 'TransferTransaction');
+        (defaultTransferTransactionByIdFunction, incorrectFunction, 'TransferTransaction');
 
     test.each([
         [data.STDLIB_VERSION_3, data.getRandomByteVector()],

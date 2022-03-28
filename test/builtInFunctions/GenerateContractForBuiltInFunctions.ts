@@ -81,7 +81,7 @@ export class GenerateContractForBuiltInFunctions {
         {-# CONTENT_TYPE DAPP #-}
         {-# SCRIPT_TYPE ACCOUNT #-}
 
-        let testData = ${testData}
+        let callerTestData = ${testData}
         let x = match ${getFunction} {
             case h:${this.dataType} => h
             case _ => throw("not ${this.dataType}")

@@ -5,7 +5,7 @@ const compiler = require('../../../src');
 
 describe('blockInfoByHeight',  () => {
 
-    const defaultScriptHashFunction = `blockInfoByHeight(testData)`;
+    const defaultScriptHashFunction = `blockInfoByHeight(callerTestData)`;
     const incorrectFunction = `blockInfoByHeight()`
 
     const precondition =

@@ -5,7 +5,7 @@ const compiler = require('../../../src');
 
 describe('assetInfo',  () => {
 
-    const defaultScriptHashFunction = `assetInfo(testData)`;
+    const defaultScriptHashFunction = `assetInfo(callerTestData)`;
     const incorrectFunction = `assetInfo()`
 
     const precondition =

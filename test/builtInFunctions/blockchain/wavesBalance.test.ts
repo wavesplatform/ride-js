@@ -5,7 +5,7 @@ const compiler = require('../../../src');
 
 describe('wavesBalance',  () => {
 
-    const defaultScriptHashFunction = `wavesBalance(testData)`;
+    const defaultScriptHashFunction = `wavesBalance(callerTestData)`;
     const incorrectFunction = `wavesBalance()`
 
     let precondition =

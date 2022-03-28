@@ -5,7 +5,7 @@ const compiler = require('../../../src');
 
 describe('transferTransactionById',  () => {
 
-    const defaultScriptHashFunction = `transferTransactionById(testData)`;
+    const defaultScriptHashFunction = `transferTransactionById(callerTestData)`;
     const incorrectFunction = `transferTransactionById()`
 
     const precondition =

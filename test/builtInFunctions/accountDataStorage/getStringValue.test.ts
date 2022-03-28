@@ -5,9 +5,9 @@ const compiler = require('../../../src');
 
 describe('getStringValue',  () => {
 
-    const defaultGetStringValue = `getStringValue(callerAddressOrAlias, "LtKaSADfaH127gd")`;
-    const invalidGetStringValueV3 = `getStringValue(callerAddressOrAlias)`;
-    const invalidGetStringValueGreaterV3 = `getStringValue(callerAddressOrAlias)`;
+    const defaultGetStringValue = `getStringValue(callerTestData, "LtKaSADfaH127gd")`;
+    const invalidGetStringValueV3 = `getStringValue(callerTestData)`;
+    const invalidGetStringValueGreaterV3 = `getStringValue(callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetStringValue, 'getStringValue("LJKaSADdsH127gd")');

@@ -5,7 +5,7 @@ const compiler = require('../../../src');
 
 describe('scriptHash',  () => {
 
-    const defaultScriptHashFunction = `scriptHash(callerAddressOrAlias)`;
+    const defaultScriptHashFunction = `scriptHash(callerTestData)`;
     const incorrectFunction = `scriptHash()`
 
     const precondition =

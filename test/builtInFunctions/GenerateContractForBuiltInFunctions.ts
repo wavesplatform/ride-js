@@ -20,7 +20,7 @@ export class GenerateContractForBuiltInFunctions {
 
         @Callable(i)
         func expression() = {
-            let callerAddressOrAlias = ${testData}
+            let callerTestData = ${testData}
             let valueOrUnit = ${getFunction}
             let val = match(valueOrUnit) {
               case b:${this.dataType} => b
@@ -56,7 +56,7 @@ export class GenerateContractForBuiltInFunctions {
 
         @Callable(i)
         func expression() = {
-            let callerAddressOrAlias = ${testData}
+            let callerTestData = ${testData}
             let val = ${getFunction}
             ${caseForVersions}
         }`;

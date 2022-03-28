@@ -5,9 +5,9 @@ const compiler = require('../../../src');
 
 describe('getBinary',  () => {
 
-    const defaultGetBinary = `getBinary(callerAddressOrAlias, "Ȣ瞱蛉㦎᠖꭛믳癚曉续")`;
-    const invalidGetBinaryV3 = `getBinary(callerAddressOrAlias)`;
-    const invalidGetBinaryGreaterV3 = `getBinary(callerAddressOrAlias)`;
+    const defaultGetBinary = `getBinary(callerTestData, "Ȣ瞱蛉㦎᠖꭛믳癚曉续")`;
+    const invalidGetBinaryV3 = `getBinary(callerTestData)`;
+    const invalidGetBinaryGreaterV3 = `getBinary(callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetBinary, 'getBinary("LJKaSADfHH127gd")', 'ByteVector');

@@ -5,9 +5,9 @@ const compiler = require('../../../src');
 
 describe('getBinaryValue',  () => {
 
-    const defaultGetBinaryValue = `getBinaryValue(callerAddressOrAlias, "LJKaSADfHH782gd")`
-    const invalidGetBinaryValueV3 = `getBinaryValue(callerAddressOrAlias)`;
-    const invalidGetBinaryValueGreaterV3 = `getBinaryValue(callerAddressOrAlias)`;
+    const defaultGetBinaryValue = `getBinaryValue(callerTestData, "LJKaSADfHH782gd")`
+    const invalidGetBinaryValueV3 = `getBinaryValue(callerTestData)`;
+    const invalidGetBinaryValueGreaterV3 = `getBinaryValue(callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetBinaryValue, 'getBinaryValue("LJKaSADfHH127gd")');

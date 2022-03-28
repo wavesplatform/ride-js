@@ -5,9 +5,9 @@ const compiler = require('../../../src');
 
 describe('getInteger',  () => {
 
-    const defaultGetInteger = `getInteger(callerAddressOrAlias, "LtKaSADfaH127gd")`;
-    const invalidGetIntegerV3 = `getInteger(callerAddressOrAlias)`;
-    const invalidGetIntegerGreaterV3 = `getInteger(callerAddressOrAlias)`;
+    const defaultGetInteger = `getInteger(callerTestData, "LtKaSADfaH127gd")`;
+    const invalidGetIntegerV3 = `getInteger(callerTestData)`;
+    const invalidGetIntegerGreaterV3 = `getInteger(callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetInteger, 'getInteger("LJKaSADfHH127gd")', 'Int');

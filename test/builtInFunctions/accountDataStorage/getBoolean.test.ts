@@ -5,9 +5,9 @@ const compiler = require('../../../src');
 
 describe('getBoolean',  () => {
 
-    const defaultGetBoolean = `getBoolean(callerAddressOrAlias, "LtKaSADfaH127gd")`
-    const invalidGetBooleanV3 = `getBoolean(callerAddressOrAlias)`;
-    const invalidGetBooleanGreaterV3 = `getBoolean(callerAddressOrAlias)`;
+    const defaultGetBoolean = `getBoolean(callerTestData, "LtKaSADfaH127gd")`
+    const invalidGetBooleanV3 = `getBoolean(callerTestData)`;
+    const invalidGetBooleanGreaterV3 = `getBoolean(callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions
     (defaultGetBoolean, 'getBoolean("LJKaSADfHH127gd")', 'Boolean');

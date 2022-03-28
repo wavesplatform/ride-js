@@ -5,10 +5,10 @@ const compiler = require('../../../src');
 
 describe('isDataStorageUntouched',  () => {
 
-    const defaultIsDataStorageUntouched = `isDataStorageUntouched(callerAddressOrAlias)`;
+    const defaultIsDataStorageUntouched = `isDataStorageUntouched(callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultIsDataStorageUntouched, 'isDataStorageUntouched(callerAddressOrAlias)', 'Int');
+    (defaultIsDataStorageUntouched, 'isDataStorageUntouched(callerTestData)', 'Int');
 
     test.each([
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],

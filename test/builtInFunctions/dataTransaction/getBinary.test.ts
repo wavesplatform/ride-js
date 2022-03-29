@@ -10,7 +10,7 @@ describe('dataTransaction - getBinary',  () => {
     const defaultGetBinaryIndex = `getBinary(callerTestData, ${random.getRandomInt()})`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultGetBinaryKey, 'getBinary("LJKaSADfHH127gd")', 'ByteVector');
+    (defaultGetBinaryKey, null, 'ByteVector');
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, data.dataEntryForTests],

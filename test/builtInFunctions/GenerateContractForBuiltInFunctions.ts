@@ -75,7 +75,7 @@ export class GenerateContractForBuiltInFunctions {
         }`;
     };
 
-    public generateOnlyMatcherContract(libVersion, testData, getFunction = this.defaultFunction): string {
+    public generateOnlyMatcherContract(libVersion, testData, getFunction = this.defaultFunction):string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -88,6 +88,38 @@ export class GenerateContractForBuiltInFunctions {
         }`
     }
 
+    public generateContractForDAppInvocation
+    (libVersion, byteVector, payment, getFunctionName = this.defaultFunction):string {
+        return `
+        {-# STDLIB_VERSION ${libVersion} #-}
+        {-# CONTENT_TYPE DAPP #-}
+        {-# SCRIPT_TYPE ACCOUNT #-}
+
+        func foo(dapp2: String, a: Int, key1: String, key2: String) = {
+        strict res = ${getFunctionName}(addressFromStringValue(dapp2),"bar",[a],[AttachedPayment(${byteVector}, ${payment})])
+        match res {
+            case r : Int => 
+            (
+                [
+                    IntegerEntry(key1, r),
+                    IntegerEntry(key2, wavesBalance(addressFromStringValue(dapp2)).regular)
+                ],
+                unit
+            )
+                case _ => throw("Incorrect invoke result") 
+            }
+        }
+
+        @Callable(i)
+        func bar(a: Int) = {
+        (
+            [
+                ScriptTransfer(i.caller, 100000000, unit)
+            ],
+                a * 2
+            )
+        }`
+    }
 
     public setData(data): void {
         this.dataType = data;

@@ -25,7 +25,7 @@ describe('dataTransaction - getIntegerValue',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result,data.dataEntryForTests],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.dataEntryForTests],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, data.binaryEntryForTests],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, data.booleanEntryForTests],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, data.stringEntryForTests],

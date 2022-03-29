@@ -25,11 +25,23 @@ const issuesArray = [
     `Issue("oneMoreToken", "just one more token in this crypto world", 1_500_000_000, 5, true)`,
     `Issue("assetForAll", "asset for all peoples", 1_500_000_000, 5, true)`,
 ];
+
+const stringArray = [
+    `"3P3aScAJsxBGcJrTA5tstJfY95GqnNnHLGAlsadjbf87"`,
+    `"8t38fWQhrYJsqxXtPpiRCEk1g5RJdq9bG5Rkr2N7mDFC"`,
+    `"3MDaMwqLtwBGcJrTA5tstJfY95GqnNnDDASmsakmd091"`,
+    `"3P3aScAJsxBGGqnNnHLGAlsadjbf87"`,
+    `"8t38fWQhrYJsqxXtPpiRasdiuh32he98ddr2N7"`,
+    `"091"`,
+]
+
 export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
 export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];
 export const getRandomByteVector = () => byteVectorArray[Math.floor((Math.random() * byteVectorArray.length))];
 export const getRandomIssuesArray = () => issuesArray[Math.floor((Math.random() * issuesArray.length))];
+export const getRandomStringArray = () => stringArray[Math.floor((Math.random() * stringArray.length))];
 export const getRandomInt = () => Math.floor(Math.random() * 1_000_000_000);
+
 
 /**
  * @description entryListWithRandomData: generate List with entry

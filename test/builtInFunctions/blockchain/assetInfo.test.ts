@@ -19,7 +19,7 @@ describe('assetInfo',  () => {
         [data.STDLIB_VERSION_4, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('positive: Checking asset info', (version, byteVector) => {
-        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });

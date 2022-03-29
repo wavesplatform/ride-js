@@ -18,7 +18,7 @@ describe('size',  () => {
         [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomByteVector()],
     ])('positive: size func compiles. v%i',
         (version, caseForVersions, byteVector) => {
-            let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, byteVector);
+            const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, byteVector);
             const compiled = compiler.compile(contract);
             expect(compiled.error).toBeUndefined();
         });
@@ -26,7 +26,7 @@ describe('size',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
     ])('negative: invalid data Address', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
+        const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Can't find a function overload 'size'(Address)`);
     });
@@ -34,7 +34,7 @@ describe('size',  () => {
     test.each([
         [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
     ])('negative: invalid data Alias', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
+        const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Can't find a function overload 'size'(Alias)`);
     });
@@ -42,7 +42,7 @@ describe('size',  () => {
     test.each([
         [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomIssuesArray()],
     ])('negative: invalid data Issue', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
+        const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Can't find a function overload 'size'(Issue)`);
     });
@@ -52,7 +52,7 @@ describe('size',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomInt()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomInt()],
     ])('negative: invalid function for v%i', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData, invalidSizeFunc);
+        const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData, invalidSizeFunc);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Can't find a function overload 'size'()`);
     });

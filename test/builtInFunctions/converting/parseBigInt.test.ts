@@ -17,7 +17,7 @@ describe('parseBigInt ',  () => {
         [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('positive: parseBigInt func compiles', (version, int) => {
         let intToStringForTest = `"${int}"`;
-        let contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
+        const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -27,7 +27,7 @@ describe('parseBigInt ',  () => {
         [data.STDLIB_VERSION_4, random.getRandomInt()],
     ])('negative: Undefined type: `BigInt` for ride v%i', (version, int) => {
         let intToStringForTest = `"${int}"`;
-        let contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
+        const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain('Undefined type: `BigInt`');
@@ -36,7 +36,7 @@ describe('parseBigInt ',  () => {
     test.each([
         [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('negative: invalid data in parseBigInt', (version, byteVector) => {
-        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Non-matching types: expected: String, actual: Int`);
@@ -45,7 +45,7 @@ describe('parseBigInt ',  () => {
     test.each([
         [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('negative: invalid function for v%i', (version, int) => {
-        let contract = precondition.generateOnlyMatcherContract
+        const contract = precondition.generateOnlyMatcherContract
         (version, int, invalidParseBigInt);
         const compiled = compiler.compile(contract);
         expect(compiled.error)

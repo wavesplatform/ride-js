@@ -13,7 +13,7 @@ describe('addressFromRecipient',  () => {
         [data.STDLIB_VERSION_4, random.getRandomAlias(), random.getRandomAddress()],
         [data.STDLIB_VERSION_5, random.getRandomAlias(), random.getRandomAddress()],
     ])('positive: Checking the address in a transfer transaction', (version, addressOrAlias, address) => {
-        let contract = generateContract(version, addressOrAlias, address);
+        const contract = generateContract(version, addressOrAlias, address);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });

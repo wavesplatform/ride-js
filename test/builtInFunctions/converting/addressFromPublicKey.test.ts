@@ -18,7 +18,7 @@ describe('addressFromPublicKey',  () => {
         [data.STDLIB_VERSION_4, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('positive: addressFromPublicKey func compiles', (version, byteVector) => {
-        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -28,7 +28,7 @@ describe('addressFromPublicKey',  () => {
         [data.STDLIB_VERSION_4, random.getRandomAlias()],
         [data.STDLIB_VERSION_5, 1],
     ])('negative: invalid byteVector in addressFromPublicKey', (version, byteVector) => {
-        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Non-matching types: expected: ByteVector`);
@@ -39,7 +39,7 @@ describe('addressFromPublicKey',  () => {
         [data.STDLIB_VERSION_4, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('negative: invalid function for v%i', (version, byteVector) => {
-        let contract = precondition.generateOnlyMatcherContract
+        const contract = precondition.generateOnlyMatcherContract
         (version, byteVector, invalidAddressFromPublicKey);
         const compiled = compiler.compile(contract);
         expect(compiled.error)

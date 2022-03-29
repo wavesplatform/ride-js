@@ -20,7 +20,7 @@ describe('wavesBalance',  () => {
         [data.STDLIB_VERSION_4, random.getRandomAlias()],
         [data.STDLIB_VERSION_5, random.getRandomAlias()],
     ])('positive: wavesBalance gets all types of WAVES balances. for v%i', (version, byteVector) => {
-        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -30,7 +30,7 @@ describe('wavesBalance',  () => {
         [data.STDLIB_VERSION_3, random.getRandomAlias()],
     ])('positive: wavesBalance gets all types of WAVES balances. for v%i', (version, byteVector) => {
         precondition.setData("Int");
-        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -39,7 +39,7 @@ describe('wavesBalance',  () => {
         [data.STDLIB_VERSION_3, random.getRandomByteVector()],
     ])('negative: invalid arg by wavesBalance for v%i', (version, invalidData) => {
         precondition.setData("Int");
-        let contract = precondition.generateOnlyMatcherContract(version, invalidData);
+        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Non-matching types: expected: Address|Alias`);
     });
@@ -48,7 +48,7 @@ describe('wavesBalance',  () => {
         [data.STDLIB_VERSION_4, random.getRandomIssuesArray()],
         [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('negative: invalid arg by wavesBalance for v%i', (version, invalidData) => {
-        let contract = precondition.generateOnlyMatcherContract(version, invalidData);
+        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Non-matching types: expected: Address|Alias`);
     });

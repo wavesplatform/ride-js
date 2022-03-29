@@ -19,7 +19,7 @@ describe('getBinary',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
     ])('positive: get byte array by address', (version, scriptResult, address) => {
-        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, address);
+        const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, address);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -29,7 +29,7 @@ describe('getBinary',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
     ])('positive: get byte array by alias', (version, scriptResult, alias) => {
-        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, alias);
+        const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, alias);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -37,7 +37,7 @@ describe('getBinary',  () => {
     test.each([
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry],
     ])('positive: getting a binary from your own data', (version, scriptResult) => {
-        let contract = precondition.generateContractOwnData(version, scriptResult);
+        const contract = precondition.generateContractOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -47,7 +47,7 @@ describe('getBinary',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, ''],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, ''],
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
-        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
+        const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Parsed.Failure`);
     });
@@ -59,7 +59,7 @@ describe('getBinary',  () => {
         [data.STDLIB_VERSION_5, invalidGetBinaryGreaterV3, random.getRandomAlias(), `'getBinary'(Alias)`],
     ])("negative: Can't find a function overload 'getBinary'(Address) or 'getBinary'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
-        let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
+        const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Compilation failed: [Can't find a function overload ${funcError}`);
@@ -69,7 +69,7 @@ describe('getBinary',  () => {
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
     ])("negative: Can't find a function overload 'getBinary'(String)", (version, scriptResult) => {
-        let contract = precondition.generateContractOwnData(version, scriptResult);
+        const contract = precondition.generateContractOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);
         expect(compiled.error)
             .toContain(`Compilation failed: [Can't find a function overload 'getBinary'(String)`);

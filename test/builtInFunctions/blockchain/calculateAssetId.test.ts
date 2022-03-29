@@ -9,7 +9,7 @@ describe('calculateAssetId',  () => {
         [data.STDLIB_VERSION_4, random.getRandomIssuesArray()],
         [data.STDLIB_VERSION_5, random.getRandomIssuesArray()],
     ])(`positive: calculate asset id for ride v%i`, (version, byteVector) => {
-        let contract = generateContract(version, byteVector);
+        const contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -17,7 +17,7 @@ describe('calculateAssetId',  () => {
     test.each([
         [data.STDLIB_VERSION_3, random.getRandomIssuesArray()],
     ])('negative: calculateAssetId function is missing in version v%i', (version, byteVector) => {
-        let contract = generateContract(version, byteVector);
+        const contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain("Can't find a function 'calculateAssetId'");
     });

@@ -18,7 +18,7 @@ describe('takeRight',  () => {
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector()],
     ])('positive: takeRight func compiles. v%i',
         (version, caseForVersions, byteVector) => {
-            let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, byteVector);
+            const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, byteVector);
             const compiled = compiler.compile(contract);
             expect(compiled.error).toBeUndefined();
         });
@@ -26,7 +26,7 @@ describe('takeRight',  () => {
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
     ])('negative: invalid data Address', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
+        const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Can't find a function overload 'takeRight'(Address, Int)`);
     });
@@ -34,7 +34,7 @@ describe('takeRight',  () => {
     test.each([
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
     ])('negative: invalid data Alias', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
+        const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Can't find a function overload 'takeRight'(Alias, Int)`);
     });
@@ -42,7 +42,7 @@ describe('takeRight',  () => {
     test.each([
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomIssuesArray()],
     ])('negative: invalid data Issue', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
+        const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Can't find a function overload 'takeRight'(Issue, Int)`);
     });
@@ -52,7 +52,7 @@ describe('takeRight',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomInt()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomInt()],
     ])('negative: invalid function for v%i', (version, caseForVersions, invalidData) => {
-        let contract = precondition.generateContractWithoutMatcher
+        const contract = precondition.generateContractWithoutMatcher
         (version, caseForVersions, invalidData, invalidTakeRightFunc);
 
         const compiled = compiler.compile(contract);

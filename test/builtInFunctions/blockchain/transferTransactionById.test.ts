@@ -19,7 +19,7 @@ describe('transferTransactionById',  () => {
         [data.STDLIB_VERSION_4, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('positive: gets the transfer transaction data.', (version, byteVector) => {
-        let contract = precondition.generateOnlyMatcherContract(version, byteVector);
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toBeUndefined();
     });
@@ -29,7 +29,7 @@ describe('transferTransactionById',  () => {
         [data.STDLIB_VERSION_4, random.getRandomAlias()],
         [data.STDLIB_VERSION_5, `"string"`],
     ])('negative: invalid arg by transferTransactionById', (version, invalidData) => {
-        let contract = precondition.generateOnlyMatcherContract(version, invalidData);
+        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
         const compiled = compiler.compile(contract);
         expect(compiled.error).toContain(`Non-matching types: expected: ByteVector`);
     });

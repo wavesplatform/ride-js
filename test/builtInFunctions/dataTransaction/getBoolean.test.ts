@@ -42,7 +42,7 @@ describe('dataTransaction - getBoolean',  () => {
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomAddress()],
-    ])("negative: invalid data for getBoolean(List[], Int) ride v$i", (version, scriptResult, invalidData) => {
+    ])("negative: invalid data for getBoolean(List[], Int) ride v%i", (version, scriptResult, invalidData) => {
         let contract = precondition.generateContractFromMatchingAndCase
         (version, scriptResult, invalidData, defaultGetBooleanIndex);
 
@@ -54,7 +54,7 @@ describe('dataTransaction - getBoolean',  () => {
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomIssuesArray()],
-    ])("negative: invalid data for getBoolean(List[], key) ride v$i", (version, scriptResult, invalidData) => {
+    ])("negative: invalid data for getBoolean(List[], key) ride v%i", (version, scriptResult, invalidData) => {
         let contract = precondition.generateContractFromMatchingAndCase
         (version, scriptResult, invalidData, defaultGetBooleanKey);
 

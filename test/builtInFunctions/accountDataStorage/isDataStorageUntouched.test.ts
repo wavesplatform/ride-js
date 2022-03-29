@@ -34,7 +34,7 @@ describe('isDataStorageUntouched',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, ''],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, ''],
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
         let contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias);
         const compiled = compiler.compile(contract);

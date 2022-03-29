@@ -14,8 +14,8 @@ describe('size',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector()],
     ])('positive: size func compiles. v%i',
         (version, caseForVersions, byteVector) => {
             const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, byteVector);
@@ -32,7 +32,7 @@ describe('size',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAlias()],
     ])('negative: invalid data Alias', (version, caseForVersions, invalidData) => {
         const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
@@ -40,7 +40,7 @@ describe('size',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomIssuesArray()],
     ])('negative: invalid data Issue', (version, caseForVersions, invalidData) => {
         const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
@@ -49,8 +49,8 @@ describe('size',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomInt()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomInt()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomInt()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomInt()],
     ])('negative: invalid function for v%i', (version, caseForVersions, invalidData) => {
         const contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData, invalidSizeFunc);
         const compiled = compiler.compile(contract);

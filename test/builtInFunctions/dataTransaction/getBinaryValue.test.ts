@@ -42,7 +42,7 @@ describe('dataTransaction - getBinaryValue',  () => {
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
-    ])("negative: invalid data for getBinaryValue(List[], Int) ride v$i", (version, scriptResult, invalidData) => {
+    ])("negative: invalid data for getBinaryValue(List[], Int) ride v%i", (version, scriptResult, invalidData) => {
         let contract = precondition.generateContractFromMatchingAndCase
         (version, scriptResult, invalidData, defaultGetBinaryValueIndex);
 
@@ -54,7 +54,7 @@ describe('dataTransaction - getBinaryValue',  () => {
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
         [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector()],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomIssuesArray()],
-    ])("negative: invalid data for getBinaryValue(List[], key) ride v$i", (version, scriptResult, invalidData) => {
+    ])("negative: invalid data for getBinaryValue(List[], key) ride v%i", (version, scriptResult, invalidData) => {
         let contract = precondition.generateContractFromMatchingAndCase
         (version, scriptResult, invalidData, defaultGetBinaryValueKey);
 

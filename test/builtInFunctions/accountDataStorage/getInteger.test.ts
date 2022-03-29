@@ -16,8 +16,8 @@ describe('getInteger',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAddress()],
     ])('positive: getInteger - get byte array by address', (version, scriptResult, address) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, address);
         const compiled = compiler.compile(contract);
@@ -26,8 +26,8 @@ describe('getInteger',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAlias()],
     ])('positive: getInteger - get byte array by alias', (version, scriptResult, alias) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, alias);
         const compiled = compiler.compile(contract);
@@ -35,7 +35,7 @@ describe('getInteger',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry],
     ])('positive: getInteger - getting a boolean from your own data', (version, scriptResult) => {
         let contract = precondition.generateContractOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);
@@ -44,8 +44,8 @@ describe('getInteger',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, ''],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, ''],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, ''],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, ''],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, ''],
     ])("negative: invalid address or alias", (version, scriptResult, addressOrAlias) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
         const compiled = compiler.compile(contract);
@@ -68,7 +68,7 @@ describe('getInteger',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAddress()],
     ])("negative: Can't find a function overload 'getInteger'(String)", (version, scriptResult) => {
         let contract = precondition.generateContractOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);

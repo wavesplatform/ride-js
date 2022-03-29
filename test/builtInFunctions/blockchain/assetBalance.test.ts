@@ -12,11 +12,11 @@ describe('assetBalance',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress(), random.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAddress(), random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAddress(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), random.getRandomByteVector()],
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias(), random.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAlias(), random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAlias(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), random.getRandomByteVector()],
     ])('positive: Checking the address in a transfer transaction',
         (version, scriptResult, addressOrAlias, byteVector) => {
 
@@ -30,11 +30,11 @@ describe('assetBalance',  () => {
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAddress()],
         [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAlias()],
         ])('negative: incorrect function args assetBalance',
         (version, scriptResult, addressOrAlias) => {
 

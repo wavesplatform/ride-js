@@ -26,7 +26,7 @@ export const GreaterV3ResultBooleanEntry = `
     BooleanEntry("boolean", val)
 ]`;
 
-export const GreaterV3ResultIntEntry = `
+export const GreaterV3ResultIntegerEntry = `
 [
     IntegerEntry("integer", val)
 ]`;

@@ -1,4 +1,6 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
+
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
@@ -13,9 +15,9 @@ describe('assetInfo',  () => {
         (defaultScriptHashFunction, incorrectFunction, 'Asset');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('positive: Checking asset info', (version, byteVector) => {
         let contract = precondition.generateOnlyMatcherContract(version, byteVector);
         const compiled = compiler.compile(contract);
@@ -23,8 +25,8 @@ describe('assetInfo',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.getRandomAlias()],
+        [data.STDLIB_VERSION_3, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, random.getRandomAlias()],
         [data.STDLIB_VERSION_5, 1],
     ])('negative: invalid asset in assetInfo', (version, byteVector) => {
         let contract = precondition.generateOnlyMatcherContract(version, byteVector);

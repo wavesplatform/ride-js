@@ -1,4 +1,6 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
+
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
@@ -11,8 +13,8 @@ describe('isDataStorageUntouched',  () => {
     (defaultIsDataStorageUntouched, 'isDataStorageUntouched(callerTestData)', 'Int');
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomAlias()],
     ])('positive: isDataStorageUntouched compiled', (version, scriptResult, address) => {
         let contract = precondition.generateContractWithoutMatcher(version, scriptResult, address);
         const compiled = compiler.compile(contract);
@@ -20,10 +22,10 @@ describe('isDataStorageUntouched',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAlias(), "isDataStorageUntouched'(Alias)"],
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress(), "isDataStorageUntouched'(Address)"],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAlias(), "isDataStorageUntouched'(Alias)"],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAddress(), "isDataStorageUntouched'(Address)"],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias(), "isDataStorageUntouched'(Alias)"],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress(), "isDataStorageUntouched'(Address)"],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), "isDataStorageUntouched'(Alias)"],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), "isDataStorageUntouched'(Address)"],
     ])('negative: missing isDataStorageUntouched() for Ride V3 & V4', (version, scriptResult, alias, funcError) => {
         let contract = precondition.generateContractWithoutMatcher(version, scriptResult, alias);
         const compiled = compiler.compile(contract);

@@ -1,4 +1,6 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
+
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
@@ -9,12 +11,12 @@ describe('assetBalance',  () => {
     let precondition;
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress(), data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, data.getRandomAddress(), data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, data.getRandomAddress(), data.getRandomByteVector()],
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAlias(), data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, data.getRandomAlias(), data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, data.getRandomAlias(), data.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAddress(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAddress(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAlias(), random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAlias(), random.getRandomByteVector()],
     ])('positive: Checking the address in a transfer transaction',
         (version, scriptResult, addressOrAlias, byteVector) => {
 
@@ -27,12 +29,12 @@ describe('assetBalance',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAlias()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntEntry, random.getRandomAlias()],
         ])('negative: incorrect function args assetBalance',
         (version, scriptResult, addressOrAlias) => {
 

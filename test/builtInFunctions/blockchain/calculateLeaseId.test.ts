@@ -1,12 +1,13 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
 
 const compiler = require('../../../src');
 
 describe('calculateLeaseId',  () => {
 
     test.each([
-        [data.STDLIB_VERSION_5, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.getRandomAlias()],
+        [data.STDLIB_VERSION_5, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, random.getRandomAlias()],
     ])(`positive: calculate lease id for ride v%i`, (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
@@ -14,8 +15,8 @@ describe('calculateLeaseId',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomIssuesArray()],
-        [data.STDLIB_VERSION_4, data.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_3, random.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_4, random.getRandomIssuesArray()],
     ])('negative: calculateLeaseId function is missing in version v%i', (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);

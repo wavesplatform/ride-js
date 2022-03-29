@@ -1,12 +1,13 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
 
 const compiler = require('../../../src');
 
 describe('calculateAssetId',  () => {
 
     test.each([
-        [data.STDLIB_VERSION_4, data.getRandomIssuesArray()],
-        [data.STDLIB_VERSION_5, data.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_4, random.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_5, random.getRandomIssuesArray()],
     ])(`positive: calculate asset id for ride v%i`, (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
@@ -14,7 +15,7 @@ describe('calculateAssetId',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_3, random.getRandomIssuesArray()],
     ])('negative: calculateAssetId function is missing in version v%i', (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);
@@ -22,8 +23,8 @@ describe('calculateAssetId',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_4, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.getRandomAddress()],
+        [data.STDLIB_VERSION_4, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, random.getRandomAddress()],
     ])('negative: invalid issue in calculateAssetId', (version, byteVector) => {
         let contract = generateContract(version, byteVector);
         const compiled = compiler.compile(contract);

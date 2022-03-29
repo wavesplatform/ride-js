@@ -1,4 +1,6 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
+
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
@@ -13,9 +15,9 @@ describe('getBinary',  () => {
     (defaultGetBinary, 'getBinary("LJKaSADfHH127gd")', 'ByteVector');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
     ])('positive: get byte array by address', (version, scriptResult, address) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, address);
         const compiled = compiler.compile(contract);
@@ -23,9 +25,9 @@ describe('getBinary',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAlias()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
     ])('positive: get byte array by alias', (version, scriptResult, alias) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, alias);
         const compiled = compiler.compile(contract);
@@ -51,10 +53,10 @@ describe('getBinary',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, invalidGetBinaryV3, data.getRandomAddress(), `'getBinary'(Address)`],
-        [data.STDLIB_VERSION_3, invalidGetBinaryV3, data.getRandomAlias(), `'getBinary'(Alias)`],
-        [data.STDLIB_VERSION_4, invalidGetBinaryGreaterV3, data.getRandomAddress(), `'getBinary'(Address)`],
-        [data.STDLIB_VERSION_5, invalidGetBinaryGreaterV3, data.getRandomAlias(), `'getBinary'(Alias)`],
+        [data.STDLIB_VERSION_3, invalidGetBinaryV3, random.getRandomAddress(), `'getBinary'(Address)`],
+        [data.STDLIB_VERSION_3, invalidGetBinaryV3, random.getRandomAlias(), `'getBinary'(Alias)`],
+        [data.STDLIB_VERSION_4, invalidGetBinaryGreaterV3, random.getRandomAddress(), `'getBinary'(Address)`],
+        [data.STDLIB_VERSION_5, invalidGetBinaryGreaterV3, random.getRandomAlias(), `'getBinary'(Alias)`],
     ])("negative: Can't find a function overload 'getBinary'(Address) or 'getBinary'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
@@ -64,8 +66,8 @@ describe('getBinary',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
     ])("negative: Can't find a function overload 'getBinary'(String)", (version, scriptResult) => {
         let contract = precondition.generateContractOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);

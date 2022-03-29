@@ -1,4 +1,5 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
@@ -13,9 +14,9 @@ describe('toUtf8String',  () => {
     (defaultToUtf8StringFunction, null, 'String');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('positive: toUtf8String func compiles for ride v%i at ByteVector', (version, testData) => {
         let contract = precondition.generateOnlyMatcherContract(version, testData);
         const compiled = compiler.compile(contract);
@@ -23,10 +24,10 @@ describe('toUtf8String',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.getRandomIssuesArray()],
-        [data.STDLIB_VERSION_3, data.getRandomInt()],
+        [data.STDLIB_VERSION_3, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, random.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_3, random.getRandomInt()],
         [data.STDLIB_VERSION_4, true],
         [data.STDLIB_VERSION_5, `"string"`],
     ])('negative: invalid data in toUtf8String for ride v%i', (version, invalidData) => {
@@ -37,9 +38,9 @@ describe('toUtf8String',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('negative: invalid function for v%i', (version, testData) => {
         let contract = precondition.generateOnlyMatcherContract(version, testData, invalidToUtf8String);
         const compiled = compiler.compile(contract);

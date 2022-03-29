@@ -1,4 +1,5 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
@@ -14,9 +15,9 @@ describe('parseIntValue',  () => {
     (defaultParseIntValue, null, 'Int');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.getRandomInt()],
-        [data.STDLIB_VERSION_5, data.getRandomInt()],
+        [data.STDLIB_VERSION_3, random.getRandomInt()],
+        [data.STDLIB_VERSION_4, random.getRandomInt()],
+        [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('positive: parseIntValue func compiles for ride v%i', (version, int) => {
         let intToStringForTest = `"${int}"`;
         let contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
@@ -25,9 +26,9 @@ describe('parseIntValue',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.getRandomInt()],
-        [data.STDLIB_VERSION_5, data.getRandomInt()],
+        [data.STDLIB_VERSION_3, random.getRandomInt()],
+        [data.STDLIB_VERSION_4, random.getRandomInt()],
+        [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('negative: invalid data in parseIntValue for ride v%i', (version, int) => {
         let contract = precondition.generateOnlyMatcherContract(version, int);
         const compiled = compiler.compile(contract);
@@ -47,9 +48,9 @@ describe('parseIntValue',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.getRandomInt()],
-        [data.STDLIB_VERSION_5, data.getRandomInt()],
+        [data.STDLIB_VERSION_3, random.getRandomInt()],
+        [data.STDLIB_VERSION_4, random.getRandomInt()],
+        [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('negative: invalid function for v%i', (version, int) => {
         let contract = precondition.generateOnlyMatcherContract(version, int, invalidParseIntValue);
         const compiled = compiler.compile(contract);

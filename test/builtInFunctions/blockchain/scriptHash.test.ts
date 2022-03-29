@@ -1,4 +1,6 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
+
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
@@ -13,8 +15,8 @@ describe('scriptHash',  () => {
         (defaultScriptHashFunction, null, 'ByteVector');
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
     ])('positive: scriptHash script is as expected',
         (version, scriptResult, addressOrAlias) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
@@ -23,8 +25,8 @@ describe('scriptHash',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_3, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
     ])(`negative: Can't find a function scriptHash`, (version, scriptResult, addressOrAlias) => {
             let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
             const compiled = compiler.compile(contract);
@@ -32,8 +34,8 @@ describe('scriptHash',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
     ])('negative: incorrect function args scriptHash',
         (version, scriptResult, addressOrAlias) => {
             let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias, incorrectFunction);

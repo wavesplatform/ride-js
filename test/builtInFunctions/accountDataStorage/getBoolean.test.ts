@@ -1,4 +1,6 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
+
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
 const compiler = require('../../../src');
@@ -13,9 +15,9 @@ describe('getBoolean',  () => {
     (defaultGetBoolean, 'getBoolean("LJKaSADfHH127gd")', 'Boolean');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomAddress()],
     ])('positive: getBoolean - get byte array by address', (version, scriptResult, address) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, address);
         const compiled = compiler.compile(contract);
@@ -23,9 +25,9 @@ describe('getBoolean',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAlias()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAlias()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomAlias()],
     ])('positive: getBoolean - get byte array by alias', (version, scriptResult, alias) => {
         let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, alias);
         console.log(contract)
@@ -53,10 +55,10 @@ describe('getBoolean',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.getRandomAddress(), `'getBoolean'(Address)`],
-        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.getRandomAlias(), `'getBoolean'(Alias)`],
-        [data.STDLIB_VERSION_4, invalidGetBooleanGreaterV3, data.getRandomAddress(), `'getBoolean'(Address)`],
-        [data.STDLIB_VERSION_5, invalidGetBooleanGreaterV3, data.getRandomAlias(), `'getBoolean'(Alias)`],
+        [data.STDLIB_VERSION_3, invalidGetBooleanV3, random.getRandomAddress(), `'getBoolean'(Address)`],
+        [data.STDLIB_VERSION_3, invalidGetBooleanV3, random.getRandomAlias(), `'getBoolean'(Alias)`],
+        [data.STDLIB_VERSION_4, invalidGetBooleanGreaterV3, random.getRandomAddress(), `'getBoolean'(Address)`],
+        [data.STDLIB_VERSION_5, invalidGetBooleanGreaterV3, random.getRandomAlias(), `'getBoolean'(Alias)`],
     ])("negative: Can't find a function overload 'getBoolean'(Address) or 'getBoolean'(Alias)",
         (version, scriptResult, addressOrAlias, funcError) => {
             let contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
@@ -66,8 +68,8 @@ describe('getBoolean',  () => {
         });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomAddress()],
     ])("negative: Can't find a function overload 'getBoolean'(String)", (version, scriptResult) => {
         let contract = precondition.generateContractOwnData(version, scriptResult);
         const compiled = compiler.compile(contract);

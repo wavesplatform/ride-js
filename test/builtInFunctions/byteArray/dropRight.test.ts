@@ -1,4 +1,5 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
@@ -12,9 +13,9 @@ describe('dropRight',  () => {
     const precondition = new GenerateContractForBuiltInFunctions(defaultDropFunc);
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector()],
     ])('positive: dropRight func compiles', (version, caseForVersions, byteVector) => {
         let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, byteVector);
         const compiled = compiler.compile(contract);
@@ -22,7 +23,7 @@ describe('dropRight',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomAddress()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomAddress()],
     ])('negative: invalid data Address', (version, caseForVersions, invalidData) => {
         let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
@@ -30,7 +31,7 @@ describe('dropRight',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomAlias()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
     ])('negative: invalid data Alias', (version, caseForVersions, invalidData) => {
         let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
@@ -38,7 +39,7 @@ describe('dropRight',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomIssuesArray()],
     ])('negative: invalid data Issue', (version, caseForVersions, invalidData) => {
         let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData);
         const compiled = compiler.compile(contract);
@@ -46,9 +47,9 @@ describe('dropRight',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.getRandomInt()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.getRandomInt()],
+        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomInt()],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomInt()],
     ])('negative: invalid function for v%i', (version, caseForVersions, invalidData) => {
         let contract = precondition.generateContractWithoutMatcher(version, caseForVersions, invalidData, invalidDropFunc);
         const compiled = compiler.compile(contract);

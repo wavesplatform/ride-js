@@ -1,4 +1,5 @@
 import * as data from "../../testData/data";
+import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 
@@ -14,9 +15,9 @@ describe('toInt',  () => {
     (defaultToIntFunction, null, 'Int');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('positive: toInt func compiles for ride v%i at ByteVector', (version, testData) => {
         let contract = precondition.generateOnlyMatcherContract(version, testData);
         const compiled = compiler.compile(contract);
@@ -24,9 +25,9 @@ describe('toInt',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, data.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.getRandomByteVector()],
+        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
+        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
     ])('positive: toInt func compiles for ride v%i at ByteVector on index', (version, testData) => {
         let contract = precondition.generateOnlyMatcherContract(version, testData, toIntFromByteVectorOnIndex);
         const compiled = compiler.compile(contract);
@@ -34,7 +35,7 @@ describe('toInt',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.getRandomInt()],
+        [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('positive: toInt func compiles for ride v%i at bigInt', (version, bigInt) => {
         let contract = precondition.generateOnlyMatcherContract(version, `toBigInt(${bigInt})`);
         const compiled = compiler.compile(contract);
@@ -42,9 +43,9 @@ describe('toInt',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.getRandomAlias()],
-        [data.STDLIB_VERSION_5, data.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.getRandomIssuesArray()],
+        [data.STDLIB_VERSION_5, random.getRandomAlias()],
+        [data.STDLIB_VERSION_5, random.getRandomAddress()],
+        [data.STDLIB_VERSION_5, random.getRandomIssuesArray()],
     ])('negative: invalid data in toInt for ride v%i', (version, invalidData) => {
         let contract = precondition.generateOnlyMatcherContract(version, invalidData);
         const compiled = compiler.compile(contract);
@@ -53,9 +54,9 @@ describe('toInt',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, data.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.getRandomInt()],
-        [data.STDLIB_VERSION_5, data.getRandomInt()],
+        [data.STDLIB_VERSION_3, random.getRandomInt()],
+        [data.STDLIB_VERSION_4, random.getRandomInt()],
+        [data.STDLIB_VERSION_5, random.getRandomInt()],
     ])('negative: invalid function for v%i', (version, int) => {
         let contract = precondition.generateOnlyMatcherContract(version, int, invalidToInt);
         const compiled = compiler.compile(contract);

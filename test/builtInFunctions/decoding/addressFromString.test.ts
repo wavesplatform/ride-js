@@ -2,47 +2,36 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('addressFromString',  () => {
 
     const defaultAddressFromString = `addressFromString(callerTestData)`;
     const invalidAddressFromString = `addressFromString()`;
 
+    const defaultAddressFromStringValue = `addressFromStringValue(callerTestData)`;
+    const invalidAddressFromStringValue = `addressFromStringValue()`;
+
     const precondition = new GenerateContractForBuiltInFunctions
     (defaultAddressFromString, null, 'Address');
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomStringArray()],
-        [data.STDLIB_VERSION_4, random.getRandomStringArray()],
-        [data.STDLIB_VERSION_5, random.getRandomStringArray()],
-    ])('positive: addressFromString func compiles', (version, testString) => {
-        const contract = precondition.generateOnlyMatcherContract(version, testString);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, 1],
-    ])('negative: invalid byteVector in addressFromString', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Non-matching types: expected: String`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomStringArray()],
-        [data.STDLIB_VERSION_4, random.getRandomStringArray()],
-        [data.STDLIB_VERSION_5, random.getRandomStringArray()],
-    ])('negative: invalid function for v%i', (version, testString) => {
-        const contract = precondition.generateOnlyMatcherContract
-        (version, testString, invalidAddressFromString);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Function 'addressFromString' requires 1 arguments, but 0 are provided`);
+        [data.STDLIB_VERSION_3, defaultAddressFromString, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, defaultAddressFromString, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, defaultAddressFromString, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, defaultAddressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, defaultAddressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, defaultAddressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
+        // negative: invalid byteVector
+        [data.STDLIB_VERSION_3, invalidAddressFromStringValue, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidAddressFromString, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, invalidAddressFromStringValue, random.getRandomInt(), data.negativeTestType],
+        // negative: invalid function
+        [data.STDLIB_VERSION_3, invalidAddressFromString, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidAddressFromStringValue, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, invalidAddressFromString, random.getRandomByteVector(), data.negativeTestType],
+    ])('check ride v%i function %s compiles', (version, testFunction, testString, testType) => {
+        const contract = precondition.generateOnlyMatcherContract(version, testString, testFunction);
+        checkCompileResult(contract, testType);
     });
 });

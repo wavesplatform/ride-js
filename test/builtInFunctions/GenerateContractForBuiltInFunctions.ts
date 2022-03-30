@@ -30,7 +30,7 @@ export class GenerateContractForBuiltInFunctions {
         }`;
     };
 
-    public generateContractOwnData(libVersion, caseForVersions):string {
+    public generateContractOwnData(libVersion, caseForVersions, ownDataFunction = this.ownDataFunction):string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -38,7 +38,7 @@ export class GenerateContractForBuiltInFunctions {
  
         @Callable(i)
         func expression() = {
-            let valueOrUnit = ${this.ownDataFunction}
+            let valueOrUnit = ${ownDataFunction}
             let val = match(valueOrUnit) {
               case b:${this.dataType} => b
               case _ => throw("not ${this.dataType}")
@@ -62,7 +62,8 @@ export class GenerateContractForBuiltInFunctions {
         }`;
     };
 
-    public generateContractOwnDataWithoutMatcher(libVersion, caseForVersions):string {
+    public generateContractOwnDataWithoutMatcher
+    (libVersion, caseForVersions, ownDataFunction = this.ownDataFunction):string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -70,7 +71,7 @@ export class GenerateContractForBuiltInFunctions {
  
         @Callable(i)
         func expression() = {
-            let val = ${this.ownDataFunction}
+            let val = ${ownDataFunction}
             ${caseForVersions}
         }`;
     };

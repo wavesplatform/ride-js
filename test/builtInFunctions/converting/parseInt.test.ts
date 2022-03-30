@@ -2,59 +2,43 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
+import {checkCompileResult} from "../testResult";
 
-const compiler = require('../../../src');
+describe('parseInt functions',  () => {
 
-describe('parseInt',  () => {
-
-    const defaultParseInt = `parseInt(callerTestData)`;
+    const parseInt = `parseInt(callerTestData)`;
     const invalidParseInt = `parseInt()`;
-    const invalidStringForTests = 'invalid string';
+
+    const parseIntValue = `parseIntValue(callerTestData)`;
+    const invalidParseIntValue = `parseIntValue()`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultParseInt, null, 'Int');
+    (parseInt, null, 'Int');
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, random.getRandomInt()],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('positive: parseInt func compiles for ride v%i', (version, int) => {
+        [data.STDLIB_VERSION_3, parseInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, parseInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, parseInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomInt(), data.positiveTestType],
+        // invalid data
+        [data.STDLIB_VERSION_3, parseInt, random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, parseInt, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, parseInt, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomStringArray(), data.negativeTestType],
+        // invalid function
+        [data.STDLIB_VERSION_3, invalidParseInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, invalidParseInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, invalidParseInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
+    ])('check ride v%i function %s compiles', (version, testFunction, int, testType) => {
         let intToStringForTest = `"${int}"`;
         const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, random.getRandomInt()],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('negative: invalid data in parseInt for ride v%i', (version, int) => {
-        const contract = precondition.generateOnlyMatcherContract(version, int);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Non-matching types: expected: String, actual: Int`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, invalidStringForTests],
-        [data.STDLIB_VERSION_4, invalidStringForTests],
-        [data.STDLIB_VERSION_5, invalidStringForTests],
-    ])('negative: invalid string in parseInt for ride v%i', (version, str) => {
-        const contract = precondition.generateOnlyMatcherContract(version, str);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Parsed.Failure`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, random.getRandomInt()],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('negative: invalid function for v%i', (version, int) => {
-        const contract = precondition.generateOnlyMatcherContract(version, int, invalidParseInt);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Function 'parseInt' requires 1 arguments, but 0 are provided`);
+        checkCompileResult(contract, testType);
     });
 });

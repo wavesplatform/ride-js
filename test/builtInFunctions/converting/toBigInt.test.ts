@@ -2,8 +2,7 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('toBigInt',  () => {
 
@@ -15,56 +14,20 @@ describe('toBigInt',  () => {
     let precondition = new GenerateContractForBuiltInFunctions(toBigIntFromByteVector, null, 'BigInt');
 
     test.each([
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('positive: toBigInt(byteVector) func compiles for ride v%i', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('positive: toBigInt(byteVector) func compiles for ride v%i on index', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector, toBigIntFromByteVectorOnIndex);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('positive: toBigInt(Int) func compiles for ride v%i on index', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector, toBigIntFromInt);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
-    ])('negative: Undefined type: `BigInt` for ride v%i', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain('Undefined type: `BigInt`');
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, random.getRandomIssuesArray()],
-    ])('negative: invalid data in toBigInt for ride v%i', (version, invalidData) => {
-        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Can't find a function overload 'toBigInt'`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('negative: invalid function for v%i', (version, int) => {
-        const contract = precondition.generateOnlyMatcherContract(version, int, invalidToBigInt);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Can't find a function overload 'toBigInt'()`);
+        [data.STDLIB_VERSION_5, toBigIntFromByteVector, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, toBigIntFromByteVectorOnIndex, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, toBigIntFromInt, random.getRandomByteVector(), data.positiveTestType],
+        // invalid data in toBigInt
+        [data.STDLIB_VERSION_5, toBigIntFromByteVector, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, toBigIntFromByteVectorOnIndex, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, toBigIntFromInt, random.getRandomIssuesArray(), data.negativeTestType],
+        // invalid function
+        [data.STDLIB_VERSION_5, invalidToBigInt, random.getRandomByteVector(), data.negativeTestType],
+        // Undefined type: `BigInt`
+        [data.STDLIB_VERSION_3, toBigIntFromByteVector, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, toBigIntFromByteVectorOnIndex, random.getRandomByteVector(), data.negativeTestType],
+    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, testType) => {
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
+        checkCompileResult(contract, testType);
     });
 });

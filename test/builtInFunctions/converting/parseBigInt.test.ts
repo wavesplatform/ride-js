@@ -2,53 +2,34 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('parseBigInt ',  () => {
 
-    const defaultParseBigInt = `parseBigInt(callerTestData)`;
+    const parseBigInt = `parseBigInt(callerTestData)`;
     const invalidParseBigInt = `parseBigInt()`;
+    const parseBigIntValue = `parseBigIntValue(callerTestData)`;
+    const invalidParseBigIntValue = `parseBigIntValue()`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-        (defaultParseBigInt, null, 'BigInt');
+        (parseBigInt, null, 'BigInt');
 
     test.each([
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('positive: parseBigInt func compiles', (version, int) => {
+        [data.STDLIB_VERSION_5, parseBigInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, parseBigIntValue, random.getRandomInt(), data.positiveTestType],
+
+        // Undefined type: `BigInt` for v3 and v4
+        [data.STDLIB_VERSION_3, parseBigInt, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, parseBigIntValue, random.getRandomInt(), data.negativeTestType],
+        // invalid data
+        [data.STDLIB_VERSION_5, parseBigInt, random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, parseBigIntValue, random.getRandomIssuesArray(), data.negativeTestType],
+        // invalid function
+        [data.STDLIB_VERSION_5, invalidParseBigInt, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, invalidParseBigIntValue, random.getRandomInt(), data.negativeTestType],
+    ])('check ride v%i function %s compiles', (version, testFunction, int, testType) => {
         let intToStringForTest = `"${int}"`;
-        const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, random.getRandomInt()],
-    ])('negative: Undefined type: `BigInt` for ride v%i', (version, int) => {
-        let intToStringForTest = `"${int}"`;
-        const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain('Undefined type: `BigInt`');
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('negative: invalid data in parseBigInt', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Non-matching types: expected: String, actual: Int`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('negative: invalid function for v%i', (version, int) => {
-        const contract = precondition.generateOnlyMatcherContract
-        (version, int, invalidParseBigInt);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Function 'parseBigInt' requires 1 arguments, but 0 are provided`);
+        const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest, testFunction);
+        checkCompileResult(contract, testType);
     });
 });

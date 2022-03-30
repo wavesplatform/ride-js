@@ -6,22 +6,22 @@ import {checkCompileResult} from "../testResult";
 
 describe('addressFromString',  () => {
 
-    const defaultAddressFromString = `addressFromString(callerTestData)`;
-    const invalidAddressFromString = `addressFromString()`;
+    const addressFromString = `addressFromString(callerTestData)`;
+    const addressFromStringValue = `addressFromStringValue(callerTestData)`;
 
-    const defaultAddressFromStringValue = `addressFromStringValue(callerTestData)`;
+    const invalidAddressFromString = `addressFromString()`;
     const invalidAddressFromStringValue = `addressFromStringValue()`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultAddressFromString, null, 'Address');
+    (addressFromString, null, 'Address');
 
     test.each([
-        [data.STDLIB_VERSION_3, defaultAddressFromString, random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, defaultAddressFromString, random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, defaultAddressFromString, random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_3, defaultAddressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, defaultAddressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, defaultAddressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, addressFromString, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, addressFromString, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, addressFromString, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, addressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, addressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, addressFromStringValue, random.getRandomStringArray(), data.positiveTestType],
         // negative: invalid byteVector
         [data.STDLIB_VERSION_3, invalidAddressFromStringValue, random.getRandomAddress(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidAddressFromString, random.getRandomAlias(), data.negativeTestType],

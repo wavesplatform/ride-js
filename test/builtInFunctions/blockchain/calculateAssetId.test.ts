@@ -1,35 +1,20 @@
 import * as data from "../../testData/data";
 import * as random from "../../testData/random";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('calculateAssetId',  () => {
 
     test.each([
-        [data.STDLIB_VERSION_4, random.getRandomIssuesArray()],
-        [data.STDLIB_VERSION_5, random.getRandomIssuesArray()],
-    ])(`positive: calculate asset id for ride v%i`, (version, byteVector) => {
+        [data.STDLIB_VERSION_4, random.getRandomIssuesArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, random.getRandomIssuesArray(), data.positiveTestType],
+        // negative: calculateAssetId function is missing
+        [data.STDLIB_VERSION_3, random.getRandomIssuesArray(), data.negativeTestType],
+        // negative: invalid issue in calculateAssetId
+        [data.STDLIB_VERSION_4, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, random.getRandomAddress(), data.negativeTestType],
+    ])(`check ride v%i calculateAssetId function compile`, (version, byteVector, testType) => {
         const contract = generateContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomIssuesArray()],
-    ])('negative: calculateAssetId function is missing in version v%i', (version, byteVector) => {
-        const contract = generateContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain("Can't find a function 'calculateAssetId'");
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_4, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, random.getRandomAddress()],
-    ])('negative: invalid issue in calculateAssetId', (version, byteVector) => {
-        let contract = generateContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Non-matching types: expected: Issue`);
+        checkCompileResult(contract, testType);
     });
 
     const generateContract = (libVersion, issue) => {

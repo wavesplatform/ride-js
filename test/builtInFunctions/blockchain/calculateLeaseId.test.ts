@@ -1,35 +1,20 @@
 import * as data from "../../testData/data";
 import * as random from "../../testData/random";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('calculateLeaseId',  () => {
 
     test.each([
-        [data.STDLIB_VERSION_5, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, random.getRandomAlias()],
-    ])(`positive: calculate lease id for ride v%i`, (version, byteVector) => {
+        [data.STDLIB_VERSION_5, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, random.getRandomAlias(), data.positiveTestType],
+        // calculateLeaseId function is missing in versions
+        [data.STDLIB_VERSION_3, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, random.getRandomIssuesArray(), data.negativeTestType],
+        // invalid address in calculateAssetId
+        [data.STDLIB_VERSION_5, random.getRandomStringArray(), data.negativeTestType],
+    ])(`check ride v%i calculateLeaseId function compile`, (version, byteVector, testType) => {
         const contract = generateContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomIssuesArray()],
-        [data.STDLIB_VERSION_4, random.getRandomIssuesArray()],
-    ])('negative: calculateLeaseId function is missing in version v%i', (version, byteVector) => {
-        const contract = generateContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain("Can't find a function 'calculateLeaseId'");
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, ''],
-    ])('negative: invalid address in calculateAssetId', (version, byteVector) => {
-        const contract = generateContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Parsed.Failure`);
+        checkCompileResult(contract, testType);
     });
 
     const generateContract = (libVersion, addressOrAlias) => {
@@ -40,15 +25,15 @@ describe('calculateLeaseId',  () => {
           
         @Callable(i)
         func foo() = {
-          let lease = Lease(${addressOrAlias},100000000)
-          let id = calculateLeaseId(lease)
-          (
-            [
-              lease,
-              BinaryEntry("lease", id)
-            ],
-            unit
-          )
+            let lease = Lease(${addressOrAlias},100000000)
+            let id = calculateLeaseId(lease)
+            (
+                [
+                    lease,
+                    BinaryEntry("lease", id)
+                ],
+                unit
+            )
         }`;
     };
 });

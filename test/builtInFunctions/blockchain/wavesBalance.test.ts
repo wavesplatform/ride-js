@@ -2,54 +2,37 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('wavesBalance',  () => {
 
-    const defaultScriptHashFunction = `wavesBalance(callerTestData)`;
-    const incorrectFunction = `wavesBalance()`
+    const wavesBalance = `wavesBalance(callerTestData)`;
 
     let precondition =
         new GenerateContractForBuiltInFunctions
-        (defaultScriptHashFunction, incorrectFunction, 'BalanceDetails');
+        (wavesBalance, null, 'BalanceDetails');
 
     test.each([
-        [data.STDLIB_VERSION_4, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, random.getRandomAlias()],
-    ])('positive: wavesBalance gets all types of WAVES balances. for v%i', (version, byteVector) => {
+        [data.STDLIB_VERSION_4, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, random.getRandomAlias(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, random.getRandomAlias(), data.positiveTestType],
+        // invalid arg by wavesBalance
+        [data.STDLIB_VERSION_4, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, random.getRandomInt(), data.negativeTestType],
+    ])('check ride v%i wavesBalance function compile', (version, byteVector, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
+        checkCompileResult(contract, testType);
     });
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomAddress()],
-        [data.STDLIB_VERSION_3, random.getRandomAlias()],
-    ])('positive: wavesBalance gets all types of WAVES balances. for v%i', (version, byteVector) => {
+        [data.STDLIB_VERSION_3, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, random.getRandomAlias(), data.positiveTestType],
+        // invalid arg by wavesBalance
+        [data.STDLIB_VERSION_3, random.getRandomByteVector(), data.negativeTestType],
+    ])('check ride v%i wavesBalance function compile', (version, byteVector, testType) => {
         precondition.setData("Int");
         const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
-    ])('negative: invalid arg by wavesBalance for v%i', (version, invalidData) => {
-        precondition.setData("Int");
-        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Non-matching types: expected: Address|Alias`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_4, random.getRandomIssuesArray()],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('negative: invalid arg by wavesBalance for v%i', (version, invalidData) => {
-        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Non-matching types: expected: Address|Alias`);
+        checkCompileResult(contract, testType);
     });
 })

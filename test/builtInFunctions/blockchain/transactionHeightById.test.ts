@@ -2,36 +2,26 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('transactionHeightById',  () => {
 
-    const defaultTransactionHeightByIdFunction = `transactionHeightById(callerTestData)`;
-    const incorrectFunction = `transactionHeightById()`
+    const transactionHeightByIdFunction = `transactionHeightById(callerTestData)`;
 
     const precondition =
         new GenerateContractForBuiltInFunctions
-        (defaultTransactionHeightByIdFunction, incorrectFunction, 'Int');
+        (transactionHeightByIdFunction, null, 'Int');
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('positive: get the height of the transaction block.', (version, byteVector) => {
+        [data.STDLIB_VERSION_3, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, random.getRandomByteVector(), data.positiveTestType],
+        // invalid arg by transactionHeightById
+        [data.STDLIB_VERSION_3, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, random.getRandomStringArray(), data.negativeTestType],
+    ])('check ride v%i transactionHeightById function compile', (version, byteVector, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, `"string"`],
-    ])('negative: invalid arg by transactionHeightById', (version, invalidData) => {
-        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Non-matching types: expected: ByteVector`);
+        checkCompileResult(contract, testType);
     });
 })

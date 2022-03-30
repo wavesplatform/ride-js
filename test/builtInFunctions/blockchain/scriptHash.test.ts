@@ -2,45 +2,26 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('scriptHash',  () => {
 
-    const defaultScriptHashFunction = `scriptHash(callerTestData)`;
-    const incorrectFunction = `scriptHash()`
+    const scriptHashFunction = `scriptHash(callerTestData)`;
 
-    const precondition =
-        new GenerateContractForBuiltInFunctions
-        (defaultScriptHashFunction, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions
+        (scriptHashFunction, null, 'ByteVector');
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
-    ])('positive: scriptHash script is as expected',
-        (version, scriptResult, addressOrAlias) => {
-        const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
-    ])(`negative: Can't find a function scriptHash`, (version, scriptResult, addressOrAlias) => {
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAlias(), data.positiveTestType],
+        // Can't find a function scriptHash
+        [data.STDLIB_VERSION_3, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomAlias(), data.negativeTestType],
+        // incorrect function args scriptHash
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomInt(), data.negativeTestType],
+    ])('check ride v%i scriptHash function compile',(version, scriptResult, addressOrAlias, testType) => {
             const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias);
-            const compiled = compiler.compile(contract);
-            expect(compiled.error).toContain("Can't find a function 'scriptHash'");
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAlias()],
-    ])('negative: incorrect function args scriptHash',
-        (version, scriptResult, addressOrAlias) => {
-            const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias, incorrectFunction);
-            const compiled = compiler.compile(contract);
-            expect(compiled.error)
-                .toContain(`Function 'scriptHash' requires 1 arguments, but 0 are provided`);
+            checkCompileResult(contract, testType);
     });
 });

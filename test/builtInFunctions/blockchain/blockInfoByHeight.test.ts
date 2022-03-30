@@ -2,8 +2,7 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('blockInfoByHeight',  () => {
 
@@ -15,23 +14,15 @@ describe('blockInfoByHeight',  () => {
         (defaultScriptHashFunction, incorrectFunction, 'BlockInfo');
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, random.getRandomInt()],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('positive: check block info by height', (version, num) => {
+        [data.STDLIB_VERSION_3, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, random.getRandomInt(), data.positiveTestType],
+        // invalid arg by blockInfoByHeight
+        [data.STDLIB_VERSION_3, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, random.getRandomStringArray(), data.negativeTestType],
+    ])('check ride v%i blockInfoByHeight function compile', (version, num, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, num);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, `"string"`],
-    ])('negative: invalid arg by blockInfoByHeight', (version, num) => {
-        const contract = precondition.generateOnlyMatcherContract(version, num);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Non-matching types: expected: Int`);
+        checkCompileResult(contract, testType);
     });
 });

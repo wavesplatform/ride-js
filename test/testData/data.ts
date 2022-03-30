@@ -1,5 +1,8 @@
 import * as random from "./random";
 
+export const positiveTestType = 'positive';
+export const negativeTestType = 'negative';
+
 export const STDLIB_VERSION_3 = 3;
 export const STDLIB_VERSION_4 = 4;
 export const STDLIB_VERSION_5 = 5;

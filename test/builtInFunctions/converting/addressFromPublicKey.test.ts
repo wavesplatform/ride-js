@@ -2,47 +2,30 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('addressFromPublicKey',  () => {
 
-    const defaultAddressFromPublicKey = `addressFromPublicKey(callerTestData)`;
+    const addressFromPublicKey = `addressFromPublicKey(callerTestData)`;
     const invalidAddressFromPublicKey = `addressFromPublicKey()`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-        (defaultAddressFromPublicKey, null, 'Address');
+        (addressFromPublicKey, null, 'Address');
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('positive: addressFromPublicKey func compiles', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, 1],
-    ])('negative: invalid byteVector in addressFromPublicKey', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Non-matching types: expected: ByteVector`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3,random.getRandomByteVector()],
-        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('negative: invalid function for v%i', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract
-        (version, byteVector, invalidAddressFromPublicKey);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Function 'addressFromPublicKey' requires 1 arguments, but 0 are provided`);
+        [data.STDLIB_VERSION_3, addressFromPublicKey, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, addressFromPublicKey, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, addressFromPublicKey, random.getRandomByteVector(), data.positiveTestType],
+        // invalid data
+        [data.STDLIB_VERSION_3, addressFromPublicKey, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, addressFromPublicKey, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, addressFromPublicKey, random.getRandomInt(), data.negativeTestType],
+        // invalid function
+        [data.STDLIB_VERSION_3, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
+    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, testType) => {
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
+        checkCompileResult(contract, testType);
     });
 });

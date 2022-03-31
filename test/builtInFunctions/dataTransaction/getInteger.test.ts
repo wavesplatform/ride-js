@@ -1,64 +1,63 @@
 import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
+import {checkCompileResult} from "../testResult";
 
-const compiler = require('../../../src');
+describe('dataTransaction - getInteger / getIntegerValue',  () => {
 
-describe('dataTransaction - getInteger',  () => {
-
-    const defaultGetIntegerKey = `getInteger(callerTestData, "key")`;
-    const defaultGetIntegerIndex = `getInteger(callerTestData, ${random.getRandomInt()})`;
+    const getIntegerKey = `getInteger(callerTestData, "key")`;
+    const getIntegerIndex = `getInteger(callerTestData, ${random.getRandomInt()})`;
+    const getIntegerValueKey = `getIntegerValue(callerTestData, "key")`;
+    const getIntegerValueIndex = `getIntegerValue(callerTestData, ${random.getRandomInt()})`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultGetIntegerKey, null, 'Int');
+    (getIntegerKey, null, 'Int');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.dataEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry,data.binaryEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, data.integerEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, data.stringEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, data.booleanEntryForTests],
-    ])('positive: getInteger(List[], key) compiled for ride v%i', (version, caseForVersions, callerTestData) => {
-        const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
+        // getIntegerKey - getInteger(callerTestData, "key")
+        [data.STDLIB_VERSION_3, getIntegerKey, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerKey, data.GreaterV3ResultIntegerEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerKey, data.GreaterV3ResultIntegerEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerKey, data.GreaterV3ResultIntegerEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerKey, data.GreaterV3ResultIntegerEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getIntegerKey - invalid data for getInteger(List[], key)
+        [data.STDLIB_VERSION_3, getIntegerKey, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getIntegerKey, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getIntegerKey, data.GreaterV3ResultIntegerEntry, random.getRandomIssuesArray(), data.negativeTestType],
+        // getIntegerIndex - getInteger(List[], Int)
+        [data.STDLIB_VERSION_3, getIntegerIndex, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerIndex, data.GreaterV3ResultIntegerEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerIndex, data.GreaterV3ResultIntegerEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerIndex, data.GreaterV3ResultIntegerEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerIndex, data.GreaterV3ResultIntegerEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getIntegerIndex - invalid data for getInteger(List[], Int)
+        [data.STDLIB_VERSION_3, getIntegerIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getIntegerIndex, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getIntegerIndex, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.negativeTestType],
 
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result,data.dataEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, data.binaryEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, data.integerEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, data.stringEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, data.booleanEntryForTests],
-    ])('positive: getInteger(List[], Int) compiled for ride v%i', (version, caseForVersions, callerTestData) => {
-        const contract = precondition.generateContractFromMatchingAndCase
-        (version, caseForVersions, callerTestData, defaultGetIntegerIndex);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAddress()],
-    ])("negative: invalid data for getInteger(List[], Int) ride v%i", (version, scriptResult, invalidData) => {
-        let contract = precondition.generateContractFromMatchingAndCase
-        (version, scriptResult, invalidData, defaultGetIntegerIndex);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Can't find a function overload 'getInteger'`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomIssuesArray()],
-    ])("negative: invalid data for getInteger(List[], key) ride v%i", (version, scriptResult, invalidData) => {
-        let contract = precondition.generateContractFromMatchingAndCase
-        (version, scriptResult, invalidData, defaultGetIntegerKey);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Can't find a function overload 'getInteger'`);
+        // getIntegerValueKey - getIntegerValue(callerTestData, "key")
+        [data.STDLIB_VERSION_3, getIntegerValueKey, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerValueKey, data.GreaterV3ResultIntegerEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerValueKey, data.GreaterV3ResultIntegerEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerValueKey, data.GreaterV3ResultIntegerEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerValueKey, data.GreaterV3ResultIntegerEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getIntegerValueKey - invalid data for getIntegerValueKey(List[], key)
+        [data.STDLIB_VERSION_3, getIntegerValueKey, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getIntegerValueKey, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getIntegerValueKey, data.GreaterV3ResultIntegerEntry, random.getRandomIssuesArray(), data.negativeTestType],
+        // getIntegerValueIndex - getIntegerValue(List[], Int)
+        [data.STDLIB_VERSION_3, getIntegerValueIndex, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getIntegerValueIndex - invalid data for getIntegerValue(List[], Int)
+        [data.STDLIB_VERSION_3, getIntegerValueIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.negativeTestType],
+    ])('positive: for ride v%i compiled %s',
+        (version, testFunction, caseForVersions, callerTestData, testType) => {
+            const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData, testFunction);
+            checkCompileResult(contract, testType);
     });
 });

@@ -1,64 +1,63 @@
 import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
+import {checkCompileResult} from "../testResult";
 
-const compiler = require('../../../src');
+describe('dataTransaction - getBinary / getBinaryValue',  () => {
 
-describe('dataTransaction - getBinary',  () => {
-
-    const defaultGetBinaryKey = `getBinary(callerTestData, "key")`;
-    const defaultGetBinaryIndex = `getBinary(callerTestData, ${random.getRandomInt()})`;
+    const getBinaryKey = `getBinary(callerTestData, "key")`;
+    const getBinaryIndex = `getBinary(callerTestData, ${random.getRandomInt()})`;
+    const getBinaryValueKey = `getBinaryValue(callerTestData, "key")`;
+    const getBinaryValueIndex = `getBinaryValue(callerTestData, ${random.getRandomInt()})`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultGetBinaryKey, null, 'ByteVector');
+    (getBinaryKey, null, 'ByteVector');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.dataEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.binaryEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.integerEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.stringEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.booleanEntryForTests],
-    ])('positive: getBinary(List[], key) compiled for ride v%i', (version, caseForVersions, callerTestData) => {
-        const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
+        // getBinaryKey - getBinary(callerTestData, "key")
+        [data.STDLIB_VERSION_3, getBinaryKey, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryKey, data.GreaterV3ResultBinaryEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryKey, data.GreaterV3ResultBinaryEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryKey, data.GreaterV3ResultBinaryEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryKey, data.GreaterV3ResultBinaryEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBinaryKey - invalid data for getBinary(List[], key)
+        [data.STDLIB_VERSION_3, getBinaryKey, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBinaryKey, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBinaryKey, data.GreaterV3ResultBinaryEntry, random.getRandomIssuesArray(), data.negativeTestType],
+        // getBinaryIndex - getBinary(List[], Int)
+        [data.STDLIB_VERSION_3, getBinaryIndex, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryIndex, data.GreaterV3ResultBinaryEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryIndex, data.GreaterV3ResultBinaryEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryIndex, data.GreaterV3ResultBinaryEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryIndex, data.GreaterV3ResultBinaryEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBinaryIndex - invalid data for getBinary(List[], Int)
+        [data.STDLIB_VERSION_3, getBinaryIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBinaryIndex, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBinaryIndex, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), data.negativeTestType],
 
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.dataEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.binaryEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, data.integerEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.stringEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, data.booleanEntryForTests],
-    ])('positive: getBinary(List[], Int) compiled for ride v%i', (version, caseForVersions, callerTestData) => {
-        const contract = precondition.generateContractFromMatchingAndCase
-        (version, caseForVersions, callerTestData, defaultGetBinaryIndex);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress()],
-    ])("negative: invalid data for getBinary(List[], Int) ride v%i", (version, scriptResult, invalidData) => {
-        let contract = precondition.generateContractFromMatchingAndCase
-        (version, scriptResult, invalidData, defaultGetBinaryIndex);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Can't find a function overload 'getBinary'`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomIssuesArray()],
-    ])("negative: invalid data for getBinary(List[], key) ride v%i", (version, scriptResult, invalidData) => {
-        let contract = precondition.generateContractFromMatchingAndCase
-        (version, scriptResult, invalidData, defaultGetBinaryKey);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Can't find a function overload 'getBinary'`);
+        // getBinaryValueKey - getBinaryValue(callerTestData, "key")
+        [data.STDLIB_VERSION_3, getBinaryValueKey, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryValueKey, data.GreaterV3ResultBinaryEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryValueKey, data.GreaterV3ResultBinaryEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryValueKey, data.GreaterV3ResultBinaryEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryValueKey, data.GreaterV3ResultBinaryEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBinaryValueKey - invalid data for getBinaryValueKey(List[], key)
+        [data.STDLIB_VERSION_3, getBinaryValueKey, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBinaryValueKey, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBinaryValueKey, data.GreaterV3ResultBinaryEntry, random.getRandomIssuesArray(), data.negativeTestType],
+        // getBinaryValueIndex - getBinaryValue(List[], Int)
+        [data.STDLIB_VERSION_3, getBinaryValueIndex, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryValueIndex, data.GreaterV3ResultBinaryEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBinaryValueIndex, data.GreaterV3ResultBinaryEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryValueIndex, data.GreaterV3ResultBinaryEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBinaryValueIndex, data.GreaterV3ResultBinaryEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBinaryValueIndex - invalid data for getBinaryValue(List[], Int)
+        [data.STDLIB_VERSION_3, getBinaryValueIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBinaryValueIndex, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBinaryValueIndex, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), data.negativeTestType],
+    ])('positive: for ride v%i compiled %s',
+        (version, testFunction, caseForVersions, callerTestData, testType) => {
+        const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData, testFunction);
+        checkCompileResult(contract, testType);
     });
 });

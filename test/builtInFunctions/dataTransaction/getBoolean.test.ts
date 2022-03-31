@@ -1,64 +1,63 @@
 import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
+import {checkCompileResult} from "../testResult";
 
-const compiler = require('../../../src');
+describe('dataTransaction - getBoolean / getBooleanValue',  () => {
 
-describe('dataTransaction - getBoolean',  () => {
-
-    const defaultGetBooleanKey = `getBoolean(callerTestData, "key")`;
-    const defaultGetBooleanIndex = `getBoolean(callerTestData, ${random.getRandomInt()})`;
+    const getBooleanKey = `getBoolean(callerTestData, "key")`;
+    const getBooleanIndex = `getBoolean(callerTestData, ${random.getRandomInt()})`;
+    const getBooleanValueKey = `getBooleanValue(callerTestData, "key")`;
+    const getBooleanValueIndex = `getBooleanValue(callerTestData, ${random.getRandomInt()})`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultGetBooleanKey, null, 'Boolean');
+    (getBooleanKey, null, 'Boolean');
 
     test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.dataEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry,data.binaryEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.integerEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.stringEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.booleanEntryForTests],
-    ])('positive: getBoolean(List[], key) compiled for ride v%i', (version, caseForVersions, callerTestData) => {
-        const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
+        // getBooleanKey - getBoolean(callerTestData, "key")
+        [data.STDLIB_VERSION_3, getBooleanKey, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanKey, data.GreaterV3ResultBooleanEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanKey, data.GreaterV3ResultBooleanEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanKey, data.GreaterV3ResultBooleanEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanKey, data.GreaterV3ResultBooleanEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBooleanKey - invalid data for getBoolean(List[], key)
+        [data.STDLIB_VERSION_3, getBooleanKey, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBooleanKey, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBooleanKey, data.GreaterV3ResultBooleanEntry, random.getRandomIssuesArray(), data.negativeTestType],
+        // getBooleanIndex - getBoolean(List[], Int)
+        [data.STDLIB_VERSION_3, getBooleanIndex, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanIndex, data.GreaterV3ResultBooleanEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanIndex, data.GreaterV3ResultBooleanEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanIndex, data.GreaterV3ResultBooleanEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanIndex, data.GreaterV3ResultBooleanEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBooleanIndex - invalid data for getBoolean(List[], Int)
+        [data.STDLIB_VERSION_3, getBooleanIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBooleanIndex, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBooleanIndex, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.negativeTestType],
 
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result,data.dataEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.binaryEntryForTests],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.integerEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.stringEntryForTests],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.booleanEntryForTests],
-    ])('positive: getBoolean(List[], Int) compiled for ride v%i', (version, caseForVersions, callerTestData) => {
-        const contract = precondition.generateContractFromMatchingAndCase
-        (version, caseForVersions, callerTestData, defaultGetBooleanIndex);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomAddress()],
-    ])("negative: invalid data for getBoolean(List[], Int) ride v%i", (version, scriptResult, invalidData) => {
-        let contract = precondition.generateContractFromMatchingAndCase
-        (version, scriptResult, invalidData, defaultGetBooleanIndex);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Can't find a function overload 'getBoolean'`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, data.RideV3Result, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, random.getRandomIssuesArray()],
-    ])("negative: invalid data for getBoolean(List[], key) ride v%i", (version, scriptResult, invalidData) => {
-        let contract = precondition.generateContractFromMatchingAndCase
-        (version, scriptResult, invalidData, defaultGetBooleanKey);
-
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Can't find a function overload 'getBoolean'`);
+        // getBooleanValueKey - getBooleanValue(callerTestData, "key")
+        [data.STDLIB_VERSION_3, getBooleanValueKey, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanValueKey, data.GreaterV3ResultBooleanEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanValueKey, data.GreaterV3ResultBooleanEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanValueKey, data.GreaterV3ResultBooleanEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanValueKey, data.GreaterV3ResultBooleanEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBooleanValueKey - invalid data for getBooleanValueKey(List[], key)
+        [data.STDLIB_VERSION_3, getBooleanValueKey, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBooleanValueKey, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBooleanValueKey, data.GreaterV3ResultBooleanEntry, random.getRandomIssuesArray(), data.negativeTestType],
+        // getBooleanValueIndex - getBooleanValue(List[], Int)
+        [data.STDLIB_VERSION_3, getBooleanValueIndex, data.RideV3Result, data.dataEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, data.binaryEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_4, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, data.integerEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, data.stringEntryForTests, data.positiveTestType],
+        [data.STDLIB_VERSION_5, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, data.booleanEntryForTests, data.positiveTestType],
+        // getBooleanValueIndex - invalid data for getBooleanValue(List[], Int)
+        [data.STDLIB_VERSION_3, getBooleanValueIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.negativeTestType],
+    ])('positive: for ride v%i compiled %s',
+        (version, testFunction, caseForVersions, callerTestData, testType) => {
+            const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData, testFunction);
+            checkCompileResult(contract, testType);
     });
 });

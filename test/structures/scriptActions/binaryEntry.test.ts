@@ -8,7 +8,7 @@ describe('binaryEntry',  () => {
         [data.STDLIB_VERSION_4],
         [data.STDLIB_VERSION_5],
     ])("invalid BinaryEntry", (version) => {
-        let contract = `
+        const contract = `
             {-# STDLIB_VERSION ${version} #-}
             {-# CONTENT_TYPE DAPP #-}
             {-# SCRIPT_TYPE ACCOUNT #-}

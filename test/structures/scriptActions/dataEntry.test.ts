@@ -5,7 +5,7 @@ const compiler = require('../../../src');
 describe('dataEntry',  () => {
 
     test.only("invalid DataEntry", () => {
-        let contract = `
+        const contract = `
         {-# STDLIB_VERSION ${data.STDLIB_VERSION_3} #-}
         {-# CONTENT_TYPE DAPP #-}
         {-# SCRIPT_TYPE ACCOUNT #-}

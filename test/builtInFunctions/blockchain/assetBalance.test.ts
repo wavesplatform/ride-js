@@ -21,7 +21,7 @@ describe('assetBalance',  () => {
         (version, scriptResult, addressOrAlias, byteVector, testType) => {
         defaultFunction = `assetBalance(${addressOrAlias}, ${byteVector})`;
         precondition = new GenerateContractForBuiltInFunctions(defaultFunction);
-        let contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, defaultFunction);
+        const contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, defaultFunction);
         checkCompileResult(contract, testType);
     });
 
@@ -34,7 +34,7 @@ describe('assetBalance',  () => {
         [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.negativeTestType],
         ])('negative: incorrect function args assetBalance',
         (version, scriptResult, addressOrAlias, testType) => {
-            const contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, incorrectFunction);
-            checkCompileResult(contract, testType);
-        });
+        const contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, incorrectFunction);
+        checkCompileResult(contract, testType);
+    });
 });

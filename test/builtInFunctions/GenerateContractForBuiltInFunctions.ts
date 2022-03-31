@@ -89,6 +89,18 @@ export class GenerateContractForBuiltInFunctions {
         }`
     }
 
+    public generateContractForList(version, testFunction, randomData, randomList):string {
+        return `
+        {-# STDLIB_VERSION ${version} #-}
+        {-# CONTENT_TYPE DAPP #-}
+        {-# SCRIPT_TYPE ACCOUNT #-}
+        
+        let list = ${randomList}
+        let randomData = ${randomData}
+        let callerTestData = ${testFunction}
+`
+    }
+
     public generateContractForDAppInvocation
     (libVersion, byteVector, payment, getFunctionName = this.defaultFunction):string {
         return `

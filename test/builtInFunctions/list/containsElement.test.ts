@@ -29,5 +29,5 @@ describe('containsElement functions',  () => {
         (version, testFunction, randomData, randomList, testType) => {
             const contract = precondition.generateContractForList(version, randomData, randomList, testFunction);
             checkCompileResult(contract, testType);
-        });
+    });
 });

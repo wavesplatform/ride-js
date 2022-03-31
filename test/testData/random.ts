@@ -40,7 +40,7 @@ export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * a
 export const getRandomByteVector = () => byteVectorArray[Math.floor((Math.random() * byteVectorArray.length))];
 export const getRandomIssuesArray = () => issuesArray[Math.floor((Math.random() * issuesArray.length))];
 export const getRandomStringArray = () => stringArray[Math.floor((Math.random() * stringArray.length))];
-export const getRandomInt = () => Math.floor(Math.random() * 1_000_000_000);
+export const getRandomInt = () => Math.floor(1 + Math.random() * 1000);
 
 
 /**

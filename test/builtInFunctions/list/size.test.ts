@@ -24,7 +24,6 @@ describe('size function',  () => {
         [data.STDLIB_VERSION_3, invalidSize, data.stringList, data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidSize, data.intList, data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidSize, data.intList, data.negativeTestType],
-        // Can't find a function 'size' for ride v3
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, liat, testType) => {
             const contract = precondition.generateOnlyMatcherContract(version, liat, testFunction);

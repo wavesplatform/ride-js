@@ -21,7 +21,7 @@ describe('isDataStorageUntouched',  () => {
         [data.STDLIB_VERSION_3, invalidFunctionFromAddress, data.RideV3Result, random.getRandomAddress(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidFunctionFromAlias, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidFunctionFromAddress, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, scriptResult, address, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, scriptResult, address, testType) => {
         let contract = precondition.generateContractWithoutMatcher(version, scriptResult, address, testFunction);
         checkCompileResult(contract, testType);
     });

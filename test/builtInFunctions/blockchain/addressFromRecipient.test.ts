@@ -16,7 +16,7 @@ describe('addressFromRecipient',  () => {
         [data.STDLIB_VERSION_3, random.getRandomInt(), random.getRandomAddress(), data.negativeTestType],
         [data.STDLIB_VERSION_4, random.getRandomByteVector(), random.getRandomAddress(), data.negativeTestType],
         [data.STDLIB_VERSION_5, random.getRandomIssuesArray(), random.getRandomAddress(), data.negativeTestType],
-    ])('check ride v%i addressFromRecipient function compiles', (version, addressOrAlias, address, testType) => {
+    ])('check ride v%i addressFromRecipient function compiles or failed', (version, addressOrAlias, address, testType) => {
         const contract = generateContract(version, addressOrAlias, address);
         checkCompileResult(contract, testType);
     });

@@ -30,7 +30,7 @@ describe('addressFromString',  () => {
         [data.STDLIB_VERSION_3, invalidAddressFromString, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidAddressFromStringValue, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidAddressFromString, random.getRandomByteVector(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, testString, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, testString, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testString, testFunction);
         checkCompileResult(contract, testType);
     });

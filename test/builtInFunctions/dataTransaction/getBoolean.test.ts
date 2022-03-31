@@ -55,7 +55,7 @@ describe('dataTransaction - getBoolean / getBooleanValue',  () => {
         [data.STDLIB_VERSION_3, getBooleanValueIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
         [data.STDLIB_VERSION_4, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_5, getBooleanValueIndex, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.negativeTestType],
-    ])('positive: for ride v%i compiled %s',
+    ])('check ride v%i function %s compiles or failed',
         (version, testFunction, caseForVersions, callerTestData, testType) => {
             const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData, testFunction);
             checkCompileResult(contract, testType);

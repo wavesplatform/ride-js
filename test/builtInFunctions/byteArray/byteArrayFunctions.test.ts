@@ -80,7 +80,7 @@ describe('byteArray functions',  () => {
         [data.STDLIB_VERSION_3, invalidTakeRight, data.RideV3Result, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidTakeRight, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidTakeRight, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector(), data.negativeTestType],
-    ])('check ride v%i function %s compiles',
+    ])('check ride v%i function %s compiles or failed',
         (version, testFunction, scriptResult, testString, testType) => {
         const contract = precondition.generateContractWithoutMatcher(version, scriptResult, testString, testFunction);
         checkCompileResult(contract, testType);

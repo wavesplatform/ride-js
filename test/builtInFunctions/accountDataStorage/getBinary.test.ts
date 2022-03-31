@@ -46,7 +46,7 @@ describe('getBinary',  () => {
         [data.STDLIB_VERSION_3, invalidGetBinaryValueV3, data.GreaterV3ResultBinaryEntry, random.getRandomAlias(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidGetBinaryValueGreaterV3, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidGetBinaryValueGreaterV3, data.GreaterV3ResultBinaryEntry, random.getRandomAlias(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, scriptResult, testString, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, scriptResult, testString, testType) => {
         const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, testString, testFunction);
         checkCompileResult(contract, testType);
     });

@@ -27,7 +27,7 @@ describe('parseBigInt ',  () => {
         // invalid function
         [data.STDLIB_VERSION_5, invalidParseBigInt, random.getRandomInt(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidParseBigIntValue, random.getRandomInt(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, int, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, int, testType) => {
         let intToStringForTest = `"${int}"`;
         const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest, testFunction);
         checkCompileResult(contract, testType);

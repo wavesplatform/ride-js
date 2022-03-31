@@ -55,7 +55,7 @@ describe('dataTransaction - getInteger / getIntegerValue',  () => {
         [data.STDLIB_VERSION_3, getIntegerValueIndex, data.RideV3Result, random.getRandomInt(), data.negativeTestType],
         [data.STDLIB_VERSION_4, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_5, getIntegerValueIndex, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.negativeTestType],
-    ])('positive: for ride v%i compiled %s',
+    ])('check ride v%i function %s compiles or failed',
         (version, testFunction, caseForVersions, callerTestData, testType) => {
             const contract = precondition.generateContractFromMatchingAndCase(version, caseForVersions, callerTestData, testFunction);
             checkCompileResult(contract, testType);

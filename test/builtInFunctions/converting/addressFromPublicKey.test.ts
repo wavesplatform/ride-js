@@ -24,7 +24,7 @@ describe('addressFromPublicKey',  () => {
         [data.STDLIB_VERSION_3, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, byteVector, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
         checkCompileResult(contract, testType);
     });

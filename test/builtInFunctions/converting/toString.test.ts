@@ -44,7 +44,7 @@ describe('toString & toUtf8String',  () => {
         [data.STDLIB_VERSION_3, invalidToUtf8String, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidToUtf8String, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidToUtf8String, random.getRandomByteVector(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, byteVector, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
         checkCompileResult(contract, testType);
     });

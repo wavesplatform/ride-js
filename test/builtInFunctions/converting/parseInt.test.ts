@@ -36,7 +36,7 @@ describe('parseInt functions',  () => {
         [data.STDLIB_VERSION_3, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
         [data.STDLIB_VERSION_4, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
         [data.STDLIB_VERSION_5, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, int, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, int, testType) => {
         let intToStringForTest = `"${int}"`;
         const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
         checkCompileResult(contract, testType);

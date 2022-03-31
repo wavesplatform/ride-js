@@ -26,7 +26,7 @@ describe('toBigInt',  () => {
         // Undefined type: `BigInt`
         [data.STDLIB_VERSION_3, toBigIntFromByteVector, random.getRandomByteVector(), data.negativeTestType],
         [data.STDLIB_VERSION_4, toBigIntFromByteVectorOnIndex, random.getRandomByteVector(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, byteVector, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
         checkCompileResult(contract, testType);
     });

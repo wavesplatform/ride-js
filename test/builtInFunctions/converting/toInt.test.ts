@@ -29,14 +29,14 @@ describe('toInt',  () => {
         [data.STDLIB_VERSION_3, invalidToInt, random.getRandomInt(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidToInt, random.getRandomInt(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidToInt, random.getRandomInt(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, testData, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, testData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testData, testFunction);
         checkCompileResult(contract, testType);
     });
 
     test.each([
         [data.STDLIB_VERSION_5, toIntFunction, random.getRandomInt(), data.positiveTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, intData, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, intData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, `toBigInt(${intData})`, testFunction);
         checkCompileResult(contract, testType);
     });

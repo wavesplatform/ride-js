@@ -46,7 +46,7 @@ describe('getBoolean',  () => {
         [data.STDLIB_VERSION_3, invalidGetBooleanValueV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.negativeTestType],
         [data.STDLIB_VERSION_4, invalidGetBooleanValueGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidGetBooleanValueGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, scriptResult, testString, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, scriptResult, testString, testType) => {
         const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, testString, testFunction);
         checkCompileResult(contract, testType);
     });

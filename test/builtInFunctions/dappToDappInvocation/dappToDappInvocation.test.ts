@@ -21,7 +21,7 @@ describe('dappToDappInvocation functions',  () => {
         // can't find a function 'reentrantInvoke' for ride v3 & v4
         [data.STDLIB_VERSION_3, reentrantInvoke, random.getRandomByteVector(), random.getRandomInt(), data.negativeTestType],
         [data.STDLIB_VERSION_4, reentrantInvoke, random.getRandomByteVector(), random.getRandomInt(), data.negativeTestType],
-    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, payment, testType) => {
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, byteVector, payment, testType) => {
         const contract = precondition.generateContractForDAppInvocation(version, byteVector, payment, testFunction);
         checkCompileResult(contract, testType);
     });

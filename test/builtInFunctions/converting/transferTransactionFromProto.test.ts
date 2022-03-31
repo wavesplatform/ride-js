@@ -2,53 +2,30 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
-
-const compiler = require('../../../src');
+import {checkCompileResult} from "../testResult";
 
 describe('transferTransactionFromProto',  () => {
 
-    const defaultTransferTransactionFromProtoFunction = `transferTransactionFromProto(callerTestData)`;
+    const transferTransactionFromProto = `transferTransactionFromProto(callerTestData)`;
     const incorrectFunction = `transferTransactionFromProto()`
 
     const precondition =
         new GenerateContractForBuiltInFunctions
-        (defaultTransferTransactionFromProtoFunction, incorrectFunction, 'TransferTransaction');
+        (transferTransactionFromProto, incorrectFunction, 'TransferTransaction');
 
     test.each([
-        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('positive: gets the transfer transaction data.', (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-
-    test.each([
-        [data.STDLIB_VERSION_3, random.getRandomByteVector()],
-    ])(`negative: Can't find a function for ride v%i`, (version, byteVector) => {
-        const contract = precondition.generateOnlyMatcherContract(version, byteVector);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Can't find a function 'transferTransactionFromProto'(ByteVector)`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_4, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('negative: invalid arg by transferTransactionFromProto for ride v%i', (version, invalidData) => {
-        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toContain(`Non-matching types: expected: ByteVector`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_4, random.getRandomByteVector()],
-        [data.STDLIB_VERSION_5, random.getRandomByteVector()],
-    ])('negative: invalid function for ride v%i', (version, testData) => {
-        const contract = precondition.generateOnlyMatcherContract(version, testData, incorrectFunction);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Function 'transferTransactionFromProto' requires 1 arguments, but 0 are provided`);
+        [data.STDLIB_VERSION_4, transferTransactionFromProto, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, transferTransactionFromProto, random.getRandomByteVector(), data.positiveTestType],
+        // Can't find a function for v3
+        [data.STDLIB_VERSION_3, transferTransactionFromProto, random.getRandomByteVector(), data.negativeTestType],
+        // invalid arg by transferTransactionFromProto
+        [data.STDLIB_VERSION_4, transferTransactionFromProto, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, transferTransactionFromProto, random.getRandomInt(), data.negativeTestType],
+        // invalid function
+        [data.STDLIB_VERSION_4, incorrectFunction, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, incorrectFunction, random.getRandomByteVector(), data.negativeTestType],
+    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, testType) => {
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
+        checkCompileResult(contract, testType);
     });
 })

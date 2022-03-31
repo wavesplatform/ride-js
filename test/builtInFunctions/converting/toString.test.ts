@@ -2,59 +2,57 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
+import {checkCompileResult} from "../testResult";
 
-const compiler = require('../../../src');
+describe('toString & toUtf8String',  () => {
 
-describe('toString',  () => {
-
-    const defaultToStringFunction = `toString(callerTestData)`;
+    const toString = `toString(callerTestData)`;
     const invalidToString = 'toString()';
+    const toUtf8StringFunction = `toUtf8String(callerTestData)`;
+    const invalidToUtf8String = 'toUtf8String()';
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (defaultToStringFunction, null, 'String');
+    (toString, null, 'String');
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomAddress()],
-        [data.STDLIB_VERSION_3, false],
-        [data.STDLIB_VERSION_3, random.getRandomInt()],
-        [data.STDLIB_VERSION_4, random.getRandomAddress()],
-        [data.STDLIB_VERSION_4, true],
-        [data.STDLIB_VERSION_4, random.getRandomInt()],
-        [data.STDLIB_VERSION_5, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, false],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('positive: toString func compiles for ride v%i at correct data structures', (version, testData) => {
-        const contract = precondition.generateOnlyMatcherContract(version, testData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
+        // toString
+        [data.STDLIB_VERSION_3, toString, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, toString, false, data.positiveTestType],
+        [data.STDLIB_VERSION_3, toString, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, toString, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, toString, true, data.positiveTestType],
+        [data.STDLIB_VERSION_4, toString, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, toString, random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, toString, false, data.positiveTestType],
+        [data.STDLIB_VERSION_5, toString, random.getRandomInt(), data.positiveTestType],
+        // invalid data in toString
+        [data.STDLIB_VERSION_5, toString, random.getRandomAlias(), data.negativeTestType],
+        // invalid function toString
+        [data.STDLIB_VERSION_3, invalidToString, true, data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidToString, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, invalidToString, random.getRandomInt(), data.negativeTestType],
+
+        // toUtf8StringFunction
+        [data.STDLIB_VERSION_3, toUtf8StringFunction, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, toUtf8StringFunction, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, toUtf8StringFunction, random.getRandomByteVector(), data.positiveTestType],
+        // invalid data in toUtf8StringFunction
+        [data.STDLIB_VERSION_3, toUtf8StringFunction, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, toUtf8StringFunction, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, toUtf8StringFunction, random.getRandomAlias(), data.negativeTestType],
+        // invalid function toUtf8StringFunction
+        [data.STDLIB_VERSION_3, invalidToUtf8String, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidToUtf8String, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, invalidToUtf8String, random.getRandomByteVector(), data.negativeTestType],
+    ])('check ride v%i function %s compiles', (version, testFunction, byteVector, testType) => {
+        const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
+        checkCompileResult(contract, testType);
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('positive: toString func compiles for ride v%i at bigInt', (version, bigInt) => {
-        const contract = precondition.generateOnlyMatcherContract(version, `toBigInt(${bigInt})`);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error).toBeUndefined();
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_5, random.getRandomAlias()],
-        [data.STDLIB_VERSION_5, random.getRandomIssuesArray()],
-    ])('negative: invalid data in toString for ride v%i', (version, invalidData) => {
-        const contract = precondition.generateOnlyMatcherContract(version, invalidData);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Can't find a function overload 'toString'`);
-    });
-
-    test.each([
-        [data.STDLIB_VERSION_3, true],
-        [data.STDLIB_VERSION_4, random.getRandomAddress()],
-        [data.STDLIB_VERSION_5, random.getRandomInt()],
-    ])('negative: invalid function for v%i', (version, int) => {
-        const contract = precondition.generateOnlyMatcherContract(version, int, invalidToString);
-        const compiled = compiler.compile(contract);
-        expect(compiled.error)
-            .toContain(`Can't find a function overload 'toString'()`);
+        [data.STDLIB_VERSION_5, toString, random.getRandomInt(), data.positiveTestType],
+    ])('check ride v%i function %s compiles with bigInt', (version, testFunction, testInt, testType) => {
+        const contract = precondition.generateOnlyMatcherContract(version, `toBigInt(${testInt})`, testFunction);
+        checkCompileResult(contract, testType);
     });
 });

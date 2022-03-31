@@ -6,10 +6,10 @@ import {checkCompileResult} from "../testResult";
 
 describe('indexOf and lastIndexOf functions',  () => {
 
-    const indexOf = `indexOf(list, randomData)`;
-    const invalidIndexOf = `indexOf(randomData)`;
-    const lastIndexOf = `lastIndexOf(list, randomData)`;
-    const invalidLastIndexOf = `lastIndexOf(randomData)`;
+    const indexOf = `indexOf(list, data)`;
+    const invalidIndexOf = `indexOf(data)`;
+    const lastIndexOf = `lastIndexOf(list, data)`;
+    const invalidLastIndexOf = `lastIndexOf(data)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(indexOf);
 
@@ -38,8 +38,8 @@ describe('indexOf and lastIndexOf functions',  () => {
         // Can't find a function 'lastIndexOf' for ride v3
         [data.STDLIB_VERSION_3, lastIndexOf, random.getRandomStringArray(), data.stringList, data.negativeTestType],
     ])('check ride v%i function %s compiles or failed',
-        (version, testFunction, randomData, randomList, testType) => {
-            const contract = precondition.generateContractForList(version, randomData, randomList, testFunction);
+        (version, testFunction, index, randomList, testType) => {
+            const contract = precondition.generateContractForList(version, index, randomList, testFunction);
             checkCompileResult(contract, testType);
     });
 });

@@ -6,8 +6,8 @@ import {checkCompileResult} from "../testResult";
 
 describe('getElement functions',  () => {
 
-    const getElement = `getElement(list, randomData)`;
-    const invalidGetElement = `getElement(randomData)`;
+    const getElement = `getElement(list, data)`;
+    const invalidGetElement = `getElement(data)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(getElement);
 
@@ -25,9 +25,8 @@ describe('getElement functions',  () => {
         [data.STDLIB_VERSION_4, invalidGetElement, random.getRandomInt(), data.stringList, data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidGetElement, random.getRandomInt(), data.intList, data.negativeTestType],
     ])('check ride v%i function %s compiles or failed',
-        (version, testFunction, randomData, randomList, testType) => {
-            const contract = precondition.generateContractForList(version, randomData, randomList, testFunction);
-            console.log(randomData)
+        (version, testFunction, index, randomList, testType) => {
+            const contract = precondition.generateContractForList(version, index, randomList, testFunction);
             checkCompileResult(contract, testType);
     });
 });

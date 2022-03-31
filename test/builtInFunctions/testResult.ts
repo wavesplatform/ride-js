@@ -8,5 +8,6 @@ export const checkCompileResult = (contract, testType) => {
         expect(compiled.error).toBeUndefined();
     } else if(testType == data.negativeTestType) {
         expect(compiled.error).toBeDefined()
+        console.log(compiled.error)
     }
 }

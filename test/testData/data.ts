@@ -3,6 +3,9 @@ import * as random from "./random";
 export const positiveTestType = 'positive';
 export const negativeTestType = 'negative';
 
+export const stringList = `["a", "b", "c", "d", "e", "f", "g"]`;
+export const intList = `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`;
+
 export const STDLIB_VERSION_3 = 3;
 export const STDLIB_VERSION_4 = 4;
 export const STDLIB_VERSION_5 = 5;

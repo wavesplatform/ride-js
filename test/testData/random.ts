@@ -35,22 +35,12 @@ const stringArray = [
     `"091"`,
 ]
 
-const list = [
-    `["a", "b", "c", "d", "e", "f", "g"]`,
-    `[1, 2, 3, 4, 5]`,
-    `["a", "b", "c", 21, true]`,
-]
-
 export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
 export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];
 export const getRandomByteVector = () => byteVectorArray[Math.floor((Math.random() * byteVectorArray.length))];
 export const getRandomIssuesArray = () => issuesArray[Math.floor((Math.random() * issuesArray.length))];
 export const getRandomStringArray = () => stringArray[Math.floor((Math.random() * stringArray.length))];
 export const getRandomInt = () => Math.floor(Math.random() * 1_000_000_000);
-
-export const getRandomList = () => {
-    return list[Math.floor((Math.random() * list.length))];
-}
 
 
 /**

@@ -89,7 +89,7 @@ export class GenerateContractForBuiltInFunctions {
         }`
     }
 
-    public generateContractForList(version, testFunction, randomData, randomList):string {
+    public generateContractForList(version, randomData, randomList, testFunction):string {
         return `
         {-# STDLIB_VERSION ${version} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -97,8 +97,7 @@ export class GenerateContractForBuiltInFunctions {
         
         let list = ${randomList}
         let randomData = ${randomData}
-        let callerTestData = ${testFunction}
-`
+        let callerTestData = ${testFunction}`
     }
 
     public generateContractForDAppInvocation

@@ -6,15 +6,17 @@ import {checkCompileResult} from "../testResult";
 
 describe('math functions tests',  () => {
 
-    const union = random.getRandomUnionArray();
+    let union = random.getRandomUnionArray();
     const fractionInt = `fraction(callerTestData, ${random.getRandomInt()}, ${random.getRandomInt()})`;
     const fractionIntAndUnion = `fraction(callerTestData, ${random.getRandomInt()}, ${random.getRandomInt()}, ${union})`;
     const invalidFractionInt = `fraction(callerTestData)`;
 
+    union = random.getRandomUnionArray();
     const fractionBigInt = `fraction(callerTestData, callerTestData, callerTestData)`;
     const fractionBigIntAndUnion = `fraction(callerTestData, callerTestData, callerTestData, ${union})`;
     const invalidFractionBigInt = `fraction(callerTestData)`;
 
+    union = random.getRandomUnionArray();
     const logInt = `log(callerTestData, 6, ${random.getRandomInt()}, 4, 2, ${union})`;
     const logBigInt = `log(callerTestData, 6, callerTestData, 4, 2, ${union})`;
     const invalidLogInt = `log(callerTestData, 10, ${random.getRandomInt()}, 15, 22, ${union})`;
@@ -23,6 +25,7 @@ describe('math functions tests',  () => {
     const medianBigInt = `median(callerTestData)`;
     const invalidMedianInt = `median()`;
 
+    union = random.getRandomUnionArray();
     const powInt = `pow(callerTestData, 6, ${random.getRandomInt()}, 4, 2, ${union})`;
     const powBigInt = `pow(callerTestData, 6, callerTestData, 4, 2, ${union})`;
     const invalidPowInt = `pow(callerTestData, 10, ${random.getRandomInt()}, 15, 22, ${union})`;

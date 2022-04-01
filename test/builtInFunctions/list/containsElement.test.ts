@@ -6,8 +6,8 @@ import {checkCompileResult} from "../testResult";
 
 describe('containsElement functions',  () => {
 
-    const containsElement = `containsElement(list, data)`;
-    const invalidContainsElement = `containsElement(data)`;
+    const containsElement = `containsElement(bar, foo)`;
+    const invalidContainsElement = `containsElement(foo)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(containsElement);
 

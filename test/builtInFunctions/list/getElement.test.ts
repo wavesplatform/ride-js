@@ -6,8 +6,8 @@ import {checkCompileResult} from "../testResult";
 
 describe('getElement functions',  () => {
 
-    const getElement = `getElement(list, data)`;
-    const invalidGetElement = `getElement(data)`;
+    const getElement = `getElement(bar, foo)`;
+    const invalidGetElement = `getElement(foo)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(getElement);
 

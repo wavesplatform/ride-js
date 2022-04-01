@@ -6,8 +6,8 @@ import {checkCompileResult} from "../testResult";
 
 describe('cons functions',  () => {
 
-    const cons = `cons(data, list)`;
-    const invalidCons = `cons(data)`;
+    const cons = `cons(foo, bar)`;
+    const invalidCons = `cons(foo)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(cons);
 

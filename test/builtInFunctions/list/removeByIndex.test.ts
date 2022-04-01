@@ -6,8 +6,8 @@ import {checkCompileResult} from "../testResult";
 
 describe('removeByIndex function',  () => {
 
-    const removeByIndex = `removeByIndex(list, data)`;
-    const invalidRemoveByIndex = `removeByIndex(data)`;
+    const removeByIndex = `removeByIndex(bar, foo)`;
+    const invalidRemoveByIndex = `removeByIndex(foo)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(removeByIndex);
 

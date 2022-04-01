@@ -6,10 +6,10 @@ import {checkCompileResult} from "../testResult";
 
 describe('indexOf and lastIndexOf functions',  () => {
 
-    const indexOf = `indexOf(list, data)`;
-    const invalidIndexOf = `indexOf(data)`;
-    const lastIndexOf = `lastIndexOf(list, data)`;
-    const invalidLastIndexOf = `lastIndexOf(data)`;
+    const indexOf = `indexOf(bar, foo)`;
+    const invalidIndexOf = `indexOf(foo)`;
+    const lastIndexOf = `lastIndexOf(bar, foo)`;
+    const invalidLastIndexOf = `lastIndexOf(foo)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(indexOf);
 

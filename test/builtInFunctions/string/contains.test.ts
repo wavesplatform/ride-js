@@ -25,7 +25,7 @@ describe('contains functions',  () => {
         [data.STDLIB_VERSION_3, contains, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomData, randomSecondData, testType) => {
-            const contract = precondition.generateContractForList(version, randomData, randomSecondData, testFunction);
+            const contract = precondition.generateContract(version, randomData, randomSecondData, testFunction);
             checkCompileResult(contract, testType);
     });
 });

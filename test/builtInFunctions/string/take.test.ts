@@ -26,7 +26,7 @@ describe('String take functions',  () => {
         [data.STDLIB_VERSION_5, invalidTake, random.getRandomStringArray(), random.getRandomInt(), data.negativeTestType],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomData, randomList, testType) => {
-        const contract = precondition.generateContractForList(version, randomData, randomList, testFunction);
+        const contract = precondition.generateContract(version, randomData, randomList, testFunction);
         checkCompileResult(contract, testType);
     });
 });

@@ -37,7 +37,7 @@ describe('String indexOf and lastIndexOf functions',  () => {
         [data.STDLIB_VERSION_5, invalidLastIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomIndexInt, randomString, testType) => {
-            const contract = precondition.generateContractForList(version, randomIndexInt, randomString, testFunction);
+            const contract = precondition.generateContract(version, randomIndexInt, randomString, testFunction);
             checkCompileResult(contract, testType);
     });
 });

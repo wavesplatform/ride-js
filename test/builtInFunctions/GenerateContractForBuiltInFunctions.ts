@@ -89,7 +89,7 @@ export class GenerateContractForBuiltInFunctions {
         }`
     }
 
-    public generateContractForList(version, foo, bar, testFunction):string {
+    public generateContract(version, foo, bar, testFunction):string {
         return `
         {-# STDLIB_VERSION ${version} #-}
         {-# CONTENT_TYPE DAPP #-}

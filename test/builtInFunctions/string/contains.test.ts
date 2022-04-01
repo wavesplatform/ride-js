@@ -9,7 +9,7 @@ describe('contains functions',  () => {
     const contains = `contains(bar, foo)`;
     const invalidContains = `contains(foo)`;
 
-    const precondition = new GenerateContractForBuiltInFunctions(contains, null, "Boolean");
+    const precondition = new GenerateContractForBuiltInFunctions(contains);
 
     test.each([
         // contains

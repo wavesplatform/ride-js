@@ -35,11 +35,20 @@ const stringArray = [
     `"091"`,
 ]
 
+const unionArray = [
+    'DOWN',
+    'CEILING',
+    'FLOOR',
+    'HALFUP',
+    'HALFEVEN',
+]
+
 export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
 export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];
 export const getRandomByteVector = () => byteVectorArray[Math.floor((Math.random() * byteVectorArray.length))];
 export const getRandomIssuesArray = () => issuesArray[Math.floor((Math.random() * issuesArray.length))];
 export const getRandomStringArray = () => stringArray[Math.floor((Math.random() * stringArray.length))];
+export const getRandomUnionArray = () => unionArray[Math.floor((Math.random() * unionArray.length))];
 export const getRandomInt = () => Math.floor(1 + Math.random() * 1000);
 
 

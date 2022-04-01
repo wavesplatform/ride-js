@@ -7,8 +7,11 @@ import {checkCompileResult} from "../testResult";
 describe('min and max function',  () => {
 
     const min = `min(callerTestData)`;
+    const minForBigInt = `min([callerTestData])`;
     const invalidMin = `min()`;
+
     const max = `max(callerTestData)`;
+    const maxForBigInt = `max([callerTestData])`;
     const invalidMax = `max()`;
 
     const precondition = new GenerateContractForBuiltInFunctions(min, null, "Int");
@@ -42,8 +45,23 @@ describe('min and max function',  () => {
         // Can't find a function 'max' for ride v3
         [data.STDLIB_VERSION_3, max, data.intList, data.negativeTestType],
     ])('check ride v%i function %s compiles or failed',
-        (version, testFunction, liat, testType) => {
-            const contract = precondition.generateOnlyMatcherContract(version, liat, testFunction);
+        (version, testFunction, list, testType) => {
+            const contract = precondition.generateOnlyMatcherContract(version, list, testFunction);
             checkCompileResult(contract, testType);
+    });
+
+    test.each([
+        [data.STDLIB_VERSION_5, minForBigInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, maxForBigInt, random.getRandomInt(), data.positiveTestType],
+        // Compilation failed: Undefined type: `BigInt`
+        [data.STDLIB_VERSION_3, minForBigInt, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, maxForBigInt, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, minForBigInt, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, maxForBigInt, random.getRandomInt(), data.negativeTestType],
+    ])('check ride v%i function %s compiles with bigInt', (version, testFunction, testInt, testType) => {
+        const bigInt = `toBigInt(${testInt})`;
+        precondition.setData('BigInt')
+        const contract = precondition.generateOnlyMatcherContract(version, bigInt, testFunction);
+        checkCompileResult(contract, testType);
     });
 });

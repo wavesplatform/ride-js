@@ -25,8 +25,8 @@ describe('size function',  () => {
         [data.STDLIB_VERSION_4, invalidSize, data.intList, data.negativeTestType],
         [data.STDLIB_VERSION_5, invalidSize, data.intList, data.negativeTestType],
     ])('check ride v%i function %s compiles or failed',
-        (version, testFunction, liat, testType) => {
-            const contract = precondition.generateOnlyMatcherContract(version, liat, testFunction);
+        (version, testFunction, list, testType) => {
+            const contract = precondition.generateOnlyMatcherContract(version, list, testFunction);
             checkCompileResult(contract, testType);
     });
 });

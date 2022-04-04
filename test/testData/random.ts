@@ -43,6 +43,20 @@ const unionArray = [
     'HALFEVEN',
 ]
 
+const digestAlgorithmTypeArray = [
+    'NOALG',
+    'MD5',
+    'SHA1',
+    'SHA224',
+    'SHA256',
+    'SHA384',
+    'SHA512',
+    'SHA3224',
+    'SHA3256',
+    'SHA3384',
+    'SHA3512',
+]
+
 export const getRandomAddress = () => addressDataArray[Math.floor((Math.random() * addressDataArray.length))];
 export const getRandomAlias = () => aliasDataArray[Math.floor((Math.random() * aliasDataArray.length))];
 export const getRandomByteVector = () => byteVectorArray[Math.floor((Math.random() * byteVectorArray.length))];
@@ -50,6 +64,8 @@ export const getRandomIssuesArray = () => issuesArray[Math.floor((Math.random() 
 export const getRandomStringArray = () => stringArray[Math.floor((Math.random() * stringArray.length))];
 export const getRandomUnionArray = () => unionArray[Math.floor((Math.random() * unionArray.length))];
 export const getRandomInt = () => Math.floor(1 + Math.random() * 1000);
+export const getRandomDigestAlgorithmTypeArray = () => digestAlgorithmTypeArray[
+    Math.floor((Math.random() * digestAlgorithmTypeArray.length))];
 
 
 /**

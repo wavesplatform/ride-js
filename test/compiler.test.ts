@@ -228,20 +228,6 @@ func multiply(a: Int, b: Int) = a * b
         tests.forEach(async test => expect('result' in await evaluate(test)).toEqual(true))
     });
 
-    test.only('checkMerkleProof', async () => {
-        const {evaluate} = compiler.repl();
-        const code = `
-            let rootHash = base64'eh9fm3HeHZ3XA/UfMpC9HSwLVMyBLgkAJL0MIVBIoYk='
-            let leafData = base64'AAAm+w=='
-            let merkleProof = base64'ACBSs2di6rY+9N3mrpQVRNZLGAdRX2WBD6XkrOXuhh42XwEgKhB3Aiij6jqLRuQhrwqv6e05kr89tyxkuFYwUuMCQB8AIKLhp/AFQkokTe/NMQnKFL5eTMvDlFejApmJxPY6Rp8XACAWrdgB8DwvPA8D04E9HgUjhKghAn5aqtZnuKcmpLHztQAgd2OG15WYz90r1WipgXwjdq9WhvMIAtvGlm6E3WYY12oAIJXPPVIdbwOTdUJvCgMI4iape2gvR55vsrO2OmJJtZUNASAya23YyBl+EpKytL9+7cPdkeMMWSjk0Bc0GNnqIisofQ=='
-            createMerkleRoot(rootHash, merkleProof, leafData)
-        `;
-        const compiled = await evaluate(code);
-        console.log(compiled)
-        expect(compiled.error).toBeUndefined();
-        expect(compiled.result.slice(-4)).toEqual('true')
-    });
-
     test.only('testHttp', async () => {
         expect((await https.get( 'https://nodes.wavesplatform.com/transactions/info/asd')
             .getHeader("body")))

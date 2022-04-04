@@ -14,7 +14,8 @@ describe('min and max function',  () => {
     const maxForBigInt = `max([callerTestData])`;
     const invalidMax = `max()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions(min, null, "Int");
+    const precondition = new GenerateContractForBuiltInFunctions(min);
+    precondition.setData("Int");
 
     test.each([
         // min

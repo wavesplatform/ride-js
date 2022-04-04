@@ -10,8 +10,8 @@ describe('dataTransaction - getBoolean / getBooleanValue',  () => {
     const getBooleanValueKey = `getBooleanValue(callerTestData, "key")`;
     const getBooleanValueIndex = `getBooleanValue(callerTestData, ${random.getRandomInt()})`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (getBooleanKey, null, 'Boolean');
+    const precondition = new GenerateContractForBuiltInFunctions(getBooleanKey);
+    precondition.setData("Boolean");
 
     test.each([
         // getBooleanKey - getBoolean(callerTestData, "key")

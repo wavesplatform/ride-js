@@ -9,7 +9,8 @@ describe('isDefined functions',  () => {
     const isDefined = `isDefined(callerTestData)`;
     const invalidIsDefined = `isDefined()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions(isDefined, null, "Boolean");
+    const precondition = new GenerateContractForBuiltInFunctions(isDefined);
+    precondition.setData("Boolean");
 
     test.each([
         // isDefined

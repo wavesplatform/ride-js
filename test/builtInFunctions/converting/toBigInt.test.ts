@@ -11,7 +11,8 @@ describe('toBigInt',  () => {
     const toBigIntFromInt = 'toBigInt(callerTestData)';
     const invalidToBigInt = 'toBigInt()';
 
-    let precondition = new GenerateContractForBuiltInFunctions(toBigIntFromByteVector, null, 'BigInt');
+    let precondition = new GenerateContractForBuiltInFunctions(toBigIntFromByteVector);
+    precondition.setData("BigInt");
 
     test.each([
         [data.STDLIB_VERSION_5, toBigIntFromByteVector, random.getRandomByteVector(), data.positiveTestType],

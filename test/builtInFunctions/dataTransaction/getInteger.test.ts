@@ -10,8 +10,8 @@ describe('dataTransaction - getInteger / getIntegerValue',  () => {
     const getIntegerValueKey = `getIntegerValue(callerTestData, "key")`;
     const getIntegerValueIndex = `getIntegerValue(callerTestData, ${random.getRandomInt()})`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (getIntegerKey, null, 'Int');
+    const precondition = new GenerateContractForBuiltInFunctions(getIntegerKey);
+    precondition.setData("Int");
 
     test.each([
         // getIntegerKey - getInteger(callerTestData, "key")

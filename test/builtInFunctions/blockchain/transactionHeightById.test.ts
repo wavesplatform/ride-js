@@ -8,9 +8,8 @@ describe('transactionHeightById',  () => {
 
     const transactionHeightByIdFunction = `transactionHeightById(callerTestData)`;
 
-    const precondition =
-        new GenerateContractForBuiltInFunctions
-        (transactionHeightByIdFunction, null, 'Int');
+    const precondition = new GenerateContractForBuiltInFunctions(transactionHeightByIdFunction);
+    precondition.setData("Int");
 
     test.each([
         [data.STDLIB_VERSION_3, random.getRandomByteVector(), data.positiveTestType],

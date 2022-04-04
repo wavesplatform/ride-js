@@ -8,8 +8,8 @@ describe('scriptHash',  () => {
 
     const scriptHashFunction = `scriptHash(callerTestData)`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-        (scriptHashFunction, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions(scriptHashFunction);
+    precondition.setData("ByteVector");
 
     test.each([
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), data.positiveTestType],

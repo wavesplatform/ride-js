@@ -11,8 +11,8 @@ describe('parseBigInt ',  () => {
     const parseBigIntValue = `parseBigIntValue(callerTestData)`;
     const invalidParseBigIntValue = `parseBigIntValue()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-        (parseBigInt, null, 'BigInt');
+    const precondition = new GenerateContractForBuiltInFunctions(parseBigInt);
+    precondition.setData("BigInt");
 
     test.each([
         [data.STDLIB_VERSION_5, parseBigInt, random.getRandomInt(), data.positiveTestType],

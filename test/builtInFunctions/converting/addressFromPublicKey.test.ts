@@ -9,8 +9,8 @@ describe('addressFromPublicKey',  () => {
     const addressFromPublicKey = `addressFromPublicKey(callerTestData)`;
     const invalidAddressFromPublicKey = `addressFromPublicKey()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-        (addressFromPublicKey, null, 'Address');
+    const precondition = new GenerateContractForBuiltInFunctions(addressFromPublicKey);
+    precondition.setData("Address");
 
     test.each([
         [data.STDLIB_VERSION_3, addressFromPublicKey, random.getRandomByteVector(), data.positiveTestType],

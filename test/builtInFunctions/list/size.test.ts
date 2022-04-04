@@ -9,7 +9,8 @@ describe('size function',  () => {
     const size = `size(callerTestData)`;
     const invalidSize = `size()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions(size, null, "Int");
+    const precondition = new GenerateContractForBuiltInFunctions(size);
+    precondition.setData("Int");
 
     test.each([
         // size

@@ -10,8 +10,8 @@ describe('toInt',  () => {
     const toIntFromByteVectorOnIndex = `toInt(callerTestData, 2)`;
     const invalidToInt = 'toInt()';
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (toIntFunction, null, 'Int');
+    const precondition = new GenerateContractForBuiltInFunctions(toIntFunction);
+    precondition.setData("Int");
 
     test.each([
         [data.STDLIB_VERSION_3, toIntFunction, random.getRandomByteVector(), data.positiveTestType],

@@ -17,8 +17,8 @@ describe('sha256 Range of functions.',  () => {
     const sha256_128Kb = `sha256_128Kb(callerTestData)`;
     const invalidSha256_128Kb = `sha256_128Kb()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (sha256, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions(sha256);
+    precondition.setData("ByteVector");
 
     test.each([
         // positive sha256 tests

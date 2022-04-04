@@ -19,8 +19,8 @@ describe('sigVerify functions.',  () => {
     const sigVerify_128Kb = `sigVerify_128Kb(callerTestData, callerTestData, callerTestData)`;
     const invalidSigVerify_128Kb = `sigVerify_128Kb()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (sigVerify, null, 'Boolean');
+    const precondition = new GenerateContractForBuiltInFunctions(sigVerify);
+    precondition.setData("Boolean");
 
     test.each([
         // positive sigVerify tests

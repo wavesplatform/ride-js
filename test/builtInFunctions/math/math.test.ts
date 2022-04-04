@@ -30,8 +30,8 @@ describe('math functions tests',  () => {
     const powBigInt = `pow(callerTestData, 6, callerTestData, 4, 2, ${union})`;
     const invalidPowInt = `pow(callerTestData, 10, ${random.getRandomInt()}, 15, 22, ${union})`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (fractionInt, null, 'Int');
+    const precondition = new GenerateContractForBuiltInFunctions(fractionInt);
+    precondition.setData("Int");
 
     test.each([
         // positive fractionInt tests

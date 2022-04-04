@@ -14,8 +14,8 @@ describe('fromBaseString',  () => {
     const invalidFromBase58String = `fromBase58String()`;
     const invalidFromBase64String = `fromBase64String()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (fromBase16String, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions(fromBase16String);
+    precondition.setData("ByteVector");
 
     test.each([
         [data.STDLIB_VERSION_3, fromBase16String, random.getRandomStringArray(), data.positiveTestType],

@@ -8,8 +8,8 @@ describe('transferTransactionById',  () => {
 
     const transferTransactionById = `transferTransactionById(callerTestData)`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-        (transferTransactionById, null, 'TransferTransaction');
+    const precondition = new GenerateContractForBuiltInFunctions(transferTransactionById);
+    precondition.setData("TransferTransaction");
 
     test.each([
         [data.STDLIB_VERSION_3, random.getRandomByteVector(), data.positiveTestType],

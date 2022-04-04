@@ -10,8 +10,8 @@ describe('dataTransaction - getString / getStringValue',  () => {
     const getStringValueKey = `getStringValue(callerTestData, "key")`;
     const getStringValueIndex = `getStringValue(callerTestData, ${random.getRandomInt()})`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (getStringKey, null, 'String');
+    const precondition = new GenerateContractForBuiltInFunctions(getStringKey);
+    precondition.setData("String");
 
     test.each([
         // getStringKey - getString(callerTestData, "key")

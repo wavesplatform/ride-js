@@ -8,9 +8,8 @@ describe('wavesBalance',  () => {
 
     const wavesBalance = `wavesBalance(callerTestData)`;
 
-    let precondition =
-        new GenerateContractForBuiltInFunctions
-        (wavesBalance, null, 'BalanceDetails');
+    let precondition = new GenerateContractForBuiltInFunctions(wavesBalance);
+    precondition.setData("BalanceDetails");
 
     test.each([
         [data.STDLIB_VERSION_4, random.getRandomAddress(), data.positiveTestType],

@@ -10,8 +10,8 @@ describe('isDataStorageUntouched',  () => {
     const invalidFunctionFromAddress = `isDataStorageUntouched'(Address)`;
     const invalidFunctionFromAlias = `isDataStorageUntouched'(Alias)`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (isDataStorageUntouched, null, 'Int');
+    const precondition = new GenerateContractForBuiltInFunctions(isDataStorageUntouched);
+    precondition.setData("Int");
 
     test.each([
         [data.STDLIB_VERSION_5, isDataStorageUntouched, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.positiveTestType],

@@ -10,8 +10,8 @@ describe('dataTransaction - getBinary / getBinaryValue',  () => {
     const getBinaryValueKey = `getBinaryValue(callerTestData, "key")`;
     const getBinaryValueIndex = `getBinaryValue(callerTestData, ${random.getRandomInt()})`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (getBinaryKey, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions(getBinaryKey);
+    precondition.setData("ByteVector");
 
     test.each([
         // getBinaryKey - getBinary(callerTestData, "key")

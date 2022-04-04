@@ -11,8 +11,8 @@ describe('toString & toUtf8String',  () => {
     const toUtf8StringFunction = `toUtf8String(callerTestData)`;
     const invalidToUtf8String = 'toUtf8String()';
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (toString, null, 'String');
+    const precondition = new GenerateContractForBuiltInFunctions(toString);
+    precondition.setData("String");
 
     test.each([
         // toString

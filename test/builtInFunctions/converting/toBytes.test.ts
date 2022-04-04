@@ -9,8 +9,8 @@ describe('toBytes',  () => {
     const defaultToBytesFunction = `toBytes(callerTestData)`;
     const invalidToBytes = 'toBytes()';
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (defaultToBytesFunction, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions(defaultToBytesFunction);
+    precondition.setData("ByteVector");
 
     test.each([
         [data.STDLIB_VERSION_3, defaultToBytesFunction, true, data.positiveTestType],

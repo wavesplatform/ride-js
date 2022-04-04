@@ -22,8 +22,8 @@ describe('rsaVerify functions.',  () => {
         `rsaVerify_128Kb(${random.getRandomDigestAlgorithmTypeArray()}, callerTestData, callerTestData, callerTestData)`;
     const invalidRsaVerify_128Kb = `rsaVerify_128Kb()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (rsaVerify, null, 'Boolean');
+    const precondition = new GenerateContractForBuiltInFunctions(rsaVerify);
+    precondition.setData("Boolean");
 
     test.each([
         // positive rsaVerify tests

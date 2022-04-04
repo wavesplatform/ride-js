@@ -12,8 +12,8 @@ describe('addressFromString',  () => {
     const invalidAddressFromString = `addressFromString()`;
     const invalidAddressFromStringValue = `addressFromStringValue()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (addressFromString, null, 'Address');
+    const precondition = new GenerateContractForBuiltInFunctions(addressFromString);
+    precondition.setData("Address");
 
     test.each([
         [data.STDLIB_VERSION_3, addressFromString, random.getRandomStringArray(), data.positiveTestType],

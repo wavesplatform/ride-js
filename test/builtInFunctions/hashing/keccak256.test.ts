@@ -17,8 +17,8 @@ describe('keccak256 Range of functions.',  () => {
     const keccak256_128Kb = `keccak256_128Kb(callerTestData)`;
     const invalidKeccak256_128Kb = `keccak256_128Kb()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (keccak256, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions(keccak256);
+    precondition.setData("ByteVector");
 
     test.each([
         // positive keccak256 tests

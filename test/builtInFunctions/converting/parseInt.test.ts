@@ -12,8 +12,8 @@ describe('parseInt functions',  () => {
     const parseIntValue = `parseIntValue(callerTestData)`;
     const invalidParseIntValue = `parseIntValue()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (parseInt, null, 'Int');
+    const precondition = new GenerateContractForBuiltInFunctions(parseInt);
+    precondition.setData("Int");
 
     test.each([
         [data.STDLIB_VERSION_3, parseInt, random.getRandomInt(), data.positiveTestType],

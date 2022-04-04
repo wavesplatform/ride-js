@@ -17,8 +17,8 @@ describe('blake2b256 Range of functions.',  () => {
     const blake2b256_128Kb = `blake2b256_128Kb(callerTestData)`;
     const invalidBlake2b256_128Kb = `blake2b256_128Kb()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (blake2b256, null, 'ByteVector');
+    const precondition = new GenerateContractForBuiltInFunctions(blake2b256);
+    precondition.setData("ByteVector");
 
     test.each([
         // positive blake2b256 tests

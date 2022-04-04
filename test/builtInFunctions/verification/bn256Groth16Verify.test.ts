@@ -54,8 +54,8 @@ describe('bn256Groth16Verify functions.',  () => {
     const bn256Groth16Verify_15inputs = `bn256Groth16Verify_15inputs(callerTestData, callerTestData, callerTestData)`;
     const invalidn256Groth16Verify_15inputs = `bn256Groth16Verify_15inputs()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (bn256Groth16Verify, null, 'Boolean');
+    const precondition = new GenerateContractForBuiltInFunctions(bn256Groth16Verify);
+    precondition.setData("Boolean");
 
     test.each([
         // positive bn256Groth16Verify tests

@@ -14,8 +14,8 @@ describe('toBaseString',  () => {
     const invalidToBase58String = `toBase58String()`;
     const invalidToBase64String = `toBase64String()`;
 
-    const precondition = new GenerateContractForBuiltInFunctions
-    (toBase58String, null, 'String');
+    const precondition = new GenerateContractForBuiltInFunctions(toBase58String);
+    precondition.setData("String");
 
     test.each([
         [data.STDLIB_VERSION_3, toBase16String, random.getRandomByteVector(), data.positiveTestType],

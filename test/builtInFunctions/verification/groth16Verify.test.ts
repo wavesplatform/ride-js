@@ -55,7 +55,8 @@ describe('groth16Verify functions.',  () => {
     const invalidGroth16Verify_15inputs = `groth16Verify_15inputs()`;
 
     const precondition = new GenerateContractForBuiltInFunctions
-    (groth16Verify, null, 'Boolean');
+    (groth16Verify);
+    precondition.setData("Boolean");
 
     test.each([
         // positive groth16Verify tests

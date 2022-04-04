@@ -121,58 +121,6 @@ func bar() = WriteSet([])`;
         expect(res.result).toEqual('res1: ByteVector = base58\'Fyru2hk6gk2e7mqLDbvuafEiAQSiTYJGRcL3s8kDkAhp\'')
     })
 
-    test.only('Imports', () => {
-        const script = `
-{-# STDLIB_VERSION 3 #-}
-{-# SCRIPT_TYPE ACCOUNT #-}
-{-# IMPORT lib2,lib1,lib3 #-}
-let a = 5
-multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
-            `;
-
-        const info = compiler.scriptInfo(script);
-        expect(info.imports.toString()).toEqual('lib2,lib1,lib3');
-        const files = [
-            {
-                name: "lib1",
-                content: `
-{-# SCRIPT_TYPE  ACCOUNT #-}
-{-# CONTENT_TYPE LIBRARY #-}
-{-# STDLIB_VERSION 3 #-}
-func inc(a: Int) = a + 1
-`
-            },
-            {
-                name: "lib2",
-                content: `
-{-# SCRIPT_TYPE  ACCOUNT #-}
-{-# CONTENT_TYPE LIBRARY #-}
-{-# STDLIB_VERSION 3 #-}
-func dec(a: Int) = a - 1
-`
-            },
-            {
-                name: "lib3",
-                content: `
-{-# SCRIPT_TYPE  ACCOUNT #-}
-{-# CONTENT_TYPE LIBRARY #-}
-{-# STDLIB_VERSION 3 #-}
-func multiply(a: Int, b: Int) = a * b
-`
-            }
-        ];
-
-        const libs = files.filter(({name}) => info.imports.includes(name)).reduce((acc, val) => ({
-            ...acc,
-            [val.name]: val.content
-        }), {});
-        console.log('libs', libs)
-        let res = compiler.compile(script, 3, libs);
-        console.log('res', res)
-        if ('error' in res) console.log(res.error);
-        expect(res.error).toBeUndefined()
-    })
-
     test.only('Should sign and verify via global curve25519verify', async function () {
         const res = await compiler.repl().evaluate(`sigVerify(
        base58'59Su1K4KSU',
@@ -245,7 +193,6 @@ func multiply(a: Int, b: Int) = a * b
         expect('result' in res).toEqual(true);
         expect(res.result).toEqual("res1: Int|Unit = 661401");
     })
-
 
     test.only('reconfigure', async () => {
         let
@@ -381,7 +328,7 @@ func asd() = {
         expect(result.imports.toString()).toEqual('lib1,lib2')
     });
 
-    test.only('use libs', async () => {
+    test.only('Imports and use libs', async () => {
         const lib1 = `
 {-# SCRIPT_TYPE  ACCOUNT #-}
 {-# CONTENT_TYPE LIBRARY #-}
@@ -414,7 +361,8 @@ multiply(inc(a), dec(a)) == (5 + 1) * (5 - 1)
             'lib-2.ride': lib2,
             'lib.3.ride': lib3
         }
-        const res = compiler.compile(code,3, false, false, libMap)
+        const compiled = compiler.compile(code,3, false, false, libMap)
+        expect(compiled.error).toBeUndefined()
     })
 
     test.only('compiler version', () => {

@@ -30,7 +30,7 @@ describe('math functions tests',  () => {
     const invalidPowInt = `pow(callerTestData, 10, ${random.getRandomInt()}, 15, 22, ${union})`;
 
     const sqrtIntAndUnion = `sqrt(callerTestData, ${random.getRandomInt()}, ${random.getRandomInt()}, ${union})`;
-    const sqrtBigIntAndUnion = `sqrt(callerTestData, callerTestData, callerTestData, ${union})`;
+    const sqrtBigIntAndUnion = `sqrt(callerTestData, ${random.getRandomInt()}, ${random.getRandomInt()}, ${union})`;
     const invalidSqrtFunction = `fraction(callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(fractionInt);
@@ -109,6 +109,17 @@ describe('math functions tests',  () => {
         [data.STDLIB_VERSION_4, invalidPowInt, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidPowInt, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_6, invalidPowInt, random.getRandomByteVector(), data.NEGATIVE_TEST],
+
+        // positive tests sqrt(Int, Int, Int, Union): Int
+        [data.STDLIB_VERSION_6, sqrtIntAndUnion, random.getRandomInt(), data.POSITIVE_TEST],
+        // Can't find a function sqrt(Int, Int, Int, Union): Int
+        [data.STDLIB_VERSION_6, sqrtIntAndUnion, random.getRandomAddress(), data.NEGATIVE_TEST],
+        // Can't find a function
+        [data.STDLIB_VERSION_3, sqrtIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, sqrtIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sqrtIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
+        // invalid function sqrt
+        [data.STDLIB_VERSION_6, invalidSqrtFunction, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, testInt, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testInt, testFunction);
         checkCompileResult(contract, testType);
@@ -152,6 +163,17 @@ describe('math functions tests',  () => {
         // compilation failed: Undefined type: `BigInt`
         [data.STDLIB_VERSION_3, powBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, powBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
+
+        // positive tests sqrt(BigInt, Int, Int, Union): BigInt
+        [data.STDLIB_VERSION_6, sqrtBigIntAndUnion, random.getRandomInt(), data.POSITIVE_TEST],
+        // Non-matching types in sqrt(BigInt, Int, Int, Union): BigInt
+        [data.STDLIB_VERSION_6, sqrtBigIntAndUnion, random.getRandomString(), data.NEGATIVE_TEST],
+        // Can't find a function sqrt(BigInt, Int, Int, Union): BigInt
+        [data.STDLIB_VERSION_3, sqrtBigIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, sqrtBigIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sqrtBigIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
+        // Can't find a function overload 'fraction'(ByteVector)
+        [data.STDLIB_VERSION_6, invalidSqrtFunction, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s:BigInt compiles or failed', (version, testFunction, testInt, testType) => {
         const bigInt = `toBigInt(${testInt})`;
         precondition.setData('BigInt')

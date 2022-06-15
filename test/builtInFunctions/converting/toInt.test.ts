@@ -14,28 +14,28 @@ describe('toInt',  () => {
     precondition.setData("Int");
 
     test.each([
-        [data.STDLIB_VERSION_3, toIntFunction, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, toIntFunction, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, toIntFunction, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, toIntFunction, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, toIntFunction, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, toIntFunction, random.getRandomByteVector(), data.POSITIVE_TEST],
         // toInt func compiles for ride v%i at ByteVector on index
-        [data.STDLIB_VERSION_3, toIntFromByteVectorOnIndex, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, toIntFromByteVectorOnIndex, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, toIntFromByteVectorOnIndex, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, toIntFromByteVectorOnIndex, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, toIntFromByteVectorOnIndex, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, toIntFromByteVectorOnIndex, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid data in toInt for ride
-        [data.STDLIB_VERSION_3, toIntFunction, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, toIntFromByteVectorOnIndex, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, toIntFunction, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, toIntFunction, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, toIntFromByteVectorOnIndex, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, toIntFunction, random.getRandomIssue(), data.NEGATIVE_TEST],
         // invalid function
-        [data.STDLIB_VERSION_3, invalidToInt, random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidToInt, random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidToInt, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidToInt, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidToInt, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidToInt, random.getRandomInt(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, testData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testData, testFunction);
         checkCompileResult(contract, testType);
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, toIntFunction, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, toIntFunction, random.getRandomInt(), data.POSITIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, intData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, `toBigInt(${intData})`, testFunction);
         checkCompileResult(contract, testType);

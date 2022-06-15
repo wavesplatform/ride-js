@@ -14,17 +14,17 @@ describe('size function',  () => {
 
     test.each([
         // size
-        [data.STDLIB_VERSION_3, size, data.stringList, data.positiveTestType],
-        [data.STDLIB_VERSION_4, size, data.intList, data.positiveTestType],
-        [data.STDLIB_VERSION_5, size, data.stringList, data.positiveTestType],
+        [data.STDLIB_VERSION_3, size, data.stringList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, size, data.intList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, size, data.stringList, data.POSITIVE_TEST],
         // invalid data size
-        [data.STDLIB_VERSION_3, size, random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, size, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, size, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, size, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, size, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, size, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function size
-        [data.STDLIB_VERSION_3, invalidSize, data.stringList, data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidSize, data.intList, data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidSize, data.intList, data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidSize, data.stringList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidSize, data.intList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidSize, data.intList, data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, list, testType) => {
             const contract = precondition.generateOnlyMatcherContract(version, list, testFunction);

@@ -13,14 +13,14 @@ describe('extract functions',  () => {
 
     test.each([
         // extract
-        [data.STDLIB_VERSION_3, extract, random.getRandomInt(), data.positiveTestType, "Int"],
+        [data.STDLIB_VERSION_3, extract, random.getRandomInt(), data.POSITIVE_TEST, "Int"],
         //Can't find a function 'extract'
-        [data.STDLIB_VERSION_4, extract, random.getRandomInt(), data.negativeTestType, "Int"],
-        [data.STDLIB_VERSION_5, extract, random.getRandomStringArray(), data.negativeTestType, "String"],
+        [data.STDLIB_VERSION_4, extract, random.getRandomInt(), data.NEGATIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_5, extract, random.getRandomString(), data.NEGATIVE_TEST, "String"],
         // invalid data extract
-        [data.STDLIB_VERSION_3, extract, random.getRandomAlias(), data.negativeTestType, "Int"],
+        [data.STDLIB_VERSION_3, extract, random.getRandomAlias(), data.NEGATIVE_TEST, "Int"],
         // invalid function extract
-        [data.STDLIB_VERSION_3, invalidExtract, random.getRandomInt(), data.negativeTestType, "Int"],
+        [data.STDLIB_VERSION_3, invalidExtract, random.getRandomInt(), data.NEGATIVE_TEST, "Int"],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomData, testType, dataType) => {
         precondition.setData(dataType);

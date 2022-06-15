@@ -16,26 +16,26 @@ describe('parseInt functions',  () => {
     precondition.setData("Int");
 
     test.each([
-        [data.STDLIB_VERSION_3, parseInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, parseInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, parseInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, parseInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, parseInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, parseInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
         // invalid data
-        [data.STDLIB_VERSION_3, parseInt, random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, parseInt, random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, parseInt, random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, parseInt, random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, parseInt, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, parseInt, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomString(), data.NEGATIVE_TEST],
         // invalid function
-        [data.STDLIB_VERSION_3, invalidParseInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, invalidParseInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, invalidParseInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_3, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, invalidParseIntValue, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, invalidParseInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidParseInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidParseInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_3, invalidParseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidParseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidParseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, int, testType) => {
         let intToStringForTest = `"${int}"`;
         const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);

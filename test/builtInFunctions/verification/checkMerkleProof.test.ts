@@ -14,14 +14,14 @@ describe('checkMerkleProof functions',  () => {
 
     test.each([
         // checkMerkleProof
-        [data.STDLIB_VERSION_3, checkMerkleProof, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, checkMerkleProof, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid data checkMerkleProof
-        [data.STDLIB_VERSION_3, checkMerkleProof, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, checkMerkleProof, random.getRandomAlias(), data.NEGATIVE_TEST],
         // invalid function checkMerkleProof
-        [data.STDLIB_VERSION_3, invalidCheckMerkleProof, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidCheckMerkleProof, random.getRandomByteVector(), data.NEGATIVE_TEST],
         // can't find a function 'checkMerkleProof'
-        [data.STDLIB_VERSION_4, checkMerkleProof, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, checkMerkleProof, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, checkMerkleProof, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, checkMerkleProof, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',(version, testFunction, randomData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, randomData, testFunction);
         checkCompileResult(contract, testType);

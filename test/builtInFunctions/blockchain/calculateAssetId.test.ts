@@ -5,13 +5,13 @@ import {checkCompileResult} from "../testResult";
 describe('calculateAssetId',  () => {
 
     test.each([
-        [data.STDLIB_VERSION_4, random.getRandomIssuesArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, random.getRandomIssuesArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, random.getRandomIssue(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, random.getRandomIssue(), data.POSITIVE_TEST],
         // negative: calculateAssetId function is missing
-        [data.STDLIB_VERSION_3, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, random.getRandomIssue(), data.NEGATIVE_TEST],
         // negative: invalid issue in calculateAssetId
-        [data.STDLIB_VERSION_4, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, random.getRandomAddress(), data.NEGATIVE_TEST],
     ])(`check ride v%i calculateAssetId function compile`, (version, byteVector, testType) => {
         const contract = generateContract(version, byteVector);
         checkCompileResult(contract, testType);

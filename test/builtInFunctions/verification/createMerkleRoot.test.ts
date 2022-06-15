@@ -14,16 +14,16 @@ describe('createMerkleRoot functions',  () => {
 
     test.each([
         // createMerkleRoot
-        [data.STDLIB_VERSION_4, createMerkleRoot, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, createMerkleRoot, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, createMerkleRoot, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, createMerkleRoot, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid data createMerkleRoot
-        [data.STDLIB_VERSION_4, createMerkleRoot, random.getRandomUnionArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, createMerkleRoot, random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, createMerkleRoot, random.getRandomUnion(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, createMerkleRoot, random.getRandomAddress(), data.NEGATIVE_TEST],
         // invalid function createMerkleRoot
-        [data.STDLIB_VERSION_4, invalidCreateMerkleRoot, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidCreateMerkleRoot, random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidCreateMerkleRoot, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidCreateMerkleRoot, random.getRandomString(), data.NEGATIVE_TEST],
         // can't find a function 'createMerkleRoot'
-        [data.STDLIB_VERSION_3, createMerkleRoot, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, createMerkleRoot, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',(version, testFunction, randomData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, randomData, testFunction);
         checkCompileResult(contract, testType);

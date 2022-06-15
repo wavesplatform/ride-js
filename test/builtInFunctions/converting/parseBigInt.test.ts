@@ -15,18 +15,18 @@ describe('parseBigInt ',  () => {
     precondition.setData("BigInt");
 
     test.each([
-        [data.STDLIB_VERSION_5, parseBigInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, parseBigIntValue, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, parseBigInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, parseBigIntValue, random.getRandomInt(), data.POSITIVE_TEST],
 
         // Undefined type: `BigInt` for v3 and v4
-        [data.STDLIB_VERSION_3, parseBigInt, random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, parseBigIntValue, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, parseBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, parseBigIntValue, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid data
-        [data.STDLIB_VERSION_5, parseBigInt, random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, parseBigIntValue, random.getRandomIssuesArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, parseBigInt, random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, parseBigIntValue, random.getRandomIssue(), data.NEGATIVE_TEST],
         // invalid function
-        [data.STDLIB_VERSION_5, invalidParseBigInt, random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidParseBigIntValue, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_5, invalidParseBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidParseBigIntValue, random.getRandomInt(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, int, testType) => {
         let intToStringForTest = `"${int}"`;
         const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest, testFunction);

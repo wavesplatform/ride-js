@@ -5,17 +5,17 @@ import {checkCompileResult} from "../testResult";
 describe('addressFromRecipient',  () => {
 
     test.each([
-        [data.STDLIB_VERSION_3, random.getRandomAddress(), random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, random.getRandomAddress(), random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, random.getRandomAddress(), random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_3, random.getRandomAlias(), random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, random.getRandomAlias(), random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, random.getRandomAlias(), random.getRandomAddress(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, random.getRandomAddress(), random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, random.getRandomAddress(), random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, random.getRandomAddress(), random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_3, random.getRandomAlias(), random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, random.getRandomAlias(), random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, random.getRandomAlias(), random.getRandomAddress(), data.POSITIVE_TEST],
 
         //invalid address
-        [data.STDLIB_VERSION_3, random.getRandomInt(), random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, random.getRandomByteVector(), random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, random.getRandomIssuesArray(), random.getRandomAddress(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, random.getRandomInt(), random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector(), random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, random.getRandomIssue(), random.getRandomAddress(), data.NEGATIVE_TEST],
     ])('check ride v%i addressFromRecipient function compiles or failed', (version, addressOrAlias, address, testType) => {
         const contract = generateContract(version, addressOrAlias, address);
         checkCompileResult(contract, testType);

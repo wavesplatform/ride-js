@@ -21,51 +21,51 @@ describe('getBoolean',  () => {
 
     test.each([
         // getBoolean
-        [data.STDLIB_VERSION_3, getBoolean, data.RideV3Result, random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_3, getBoolean, data.RideV3Result, random.getRandomAlias(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, getBoolean, data.RideV3Result, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_3, getBoolean, data.RideV3Result, random.getRandomAlias(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, getBoolean, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.POSITIVE_TEST],
         // getBooleanValue
-        [data.STDLIB_VERSION_3, getBooleanValue, data.RideV3Result, random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.positiveTestType],
-        [data.STDLIB_VERSION_3, getBooleanValue, data.RideV3Result, random.getRandomAlias(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, getBooleanValue, data.RideV3Result, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_3, getBooleanValue, data.RideV3Result, random.getRandomAlias(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, getBooleanValue, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.POSITIVE_TEST],
 
         // negative: invalid function getBoolean
-        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.RideV3Result, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidGetBooleanGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidGetBooleanGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.RideV3Result, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, invalidGetBooleanV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidGetBooleanGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidGetBooleanGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
 
         // negative: invalid function getBooleanValue
-        [data.STDLIB_VERSION_3, invalidGetBooleanValueV3, data.RideV3Result, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_3, invalidGetBooleanValueV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidGetBooleanValueGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidGetBooleanValueGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidGetBooleanValueV3, data.RideV3Result, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, invalidGetBooleanValueV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidGetBooleanValueGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidGetBooleanValueGreaterV3, data.GreaterV3ResultBooleanEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, scriptResult, testString, testType) => {
         const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, testString, testFunction);
         checkCompileResult(contract, testType);
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.positiveTestType],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.POSITIVE_TEST],
         // Can't find a function overload getBoolean
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.negativeTestType],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.negativeTestType],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.NEGATIVE_TEST],
     ])('getBoolean own data tests', (version, scriptResult, testType) => {
         const contract = precondition.generateContractOwnData(version, scriptResult);
         checkCompileResult(contract, testType);
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.positiveTestType,],
+        [data.STDLIB_VERSION_5, data.GreaterV3ResultBooleanEntry, data.POSITIVE_TEST,],
         // Can't find a function overload getBooleanValue
-        [data.STDLIB_VERSION_3, data.RideV3Result, data.negativeTestType],
-        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.negativeTestType],
+        [data.STDLIB_VERSION_3, data.RideV3Result, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, data.GreaterV3ResultBooleanEntry, data.NEGATIVE_TEST],
     ])('getBooleanValue own data tests', (version, scriptResult, testType) => {
         const contract = precondition.generateContractOwnDataWithoutMatcher(version, scriptResult, ownDataGetBooleanValue);
         checkCompileResult(contract, testType);

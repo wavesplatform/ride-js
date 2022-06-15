@@ -15,26 +15,26 @@ describe('String indexOf and lastIndexOf functions',  () => {
 
     test.each([
         // indexOf
-        [data.STDLIB_VERSION_3, indexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, indexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, indexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, indexOf, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, indexOf, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, indexOf, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
         // invalid data indexOf
-        [data.STDLIB_VERSION_4, indexOf, random.getRandomStringArray(), random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, indexOf, random.getRandomStringArray(), random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, indexOf, random.getRandomString(), random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, indexOf, random.getRandomString(), random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function indexOf
-        [data.STDLIB_VERSION_4, invalidIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidIndexOf, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidIndexOf, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
 
         // lastIndexOf
-        [data.STDLIB_VERSION_3, lastIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, lastIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, lastIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, lastIndexOf, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, lastIndexOf, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, lastIndexOf, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
         // invalid data lastIndexOf
-        [data.STDLIB_VERSION_4, lastIndexOf, random.getRandomStringArray(), random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, lastIndexOf, random.getRandomStringArray(), random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, lastIndexOf, random.getRandomString(), random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, lastIndexOf, random.getRandomString(), random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function lastIndexOf
-        [data.STDLIB_VERSION_4, invalidLastIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidLastIndexOf, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidLastIndexOf, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidLastIndexOf, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomIndexInt, randomString, testType) => {
             const contract = precondition.generateContract(version, randomIndexInt, randomString, testFunction);

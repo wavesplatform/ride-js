@@ -13,16 +13,16 @@ describe('removeByIndex function',  () => {
 
     test.each([
         // removeByIndex
-        [data.STDLIB_VERSION_4, removeByIndex, random.getRandomInt(), data.intList, data.positiveTestType],
-        [data.STDLIB_VERSION_5, removeByIndex, random.getRandomInt(), data.stringList, data.positiveTestType],
+        [data.STDLIB_VERSION_4, removeByIndex, random.getRandomInt(), data.intList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, removeByIndex, random.getRandomInt(), data.stringList, data.POSITIVE_TEST],
         // invalid data removeByIndex
-        [data.STDLIB_VERSION_4, removeByIndex, random.getRandomAlias(), data.intList, data.negativeTestType],
-        [data.STDLIB_VERSION_5, removeByIndex, random.getRandomIssuesArray(), data.stringList, data.negativeTestType],
+        [data.STDLIB_VERSION_4, removeByIndex, random.getRandomAlias(), data.intList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, removeByIndex, random.getRandomIssue(), data.stringList, data.NEGATIVE_TEST],
         // invalid function removeByIndex
-        [data.STDLIB_VERSION_4, invalidRemoveByIndex, random.getRandomAlias(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidRemoveByIndex, random.getRandomIssuesArray(), random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidRemoveByIndex, random.getRandomAlias(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidRemoveByIndex, random.getRandomIssue(), random.getRandomAlias(), data.NEGATIVE_TEST],
         // Can't find a function 'removeByIndex' for ride v3
-        [data.STDLIB_VERSION_3, removeByIndex, random.getRandomStringArray(), data.stringList, data.negativeTestType],
+        [data.STDLIB_VERSION_3, removeByIndex, random.getRandomString(), data.stringList, data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, index, randomList, testType) => {
             const contract = precondition.generateContract(version, index, randomList, testFunction);

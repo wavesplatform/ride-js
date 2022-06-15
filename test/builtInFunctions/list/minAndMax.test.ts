@@ -19,32 +19,32 @@ describe('min and max function',  () => {
 
     test.each([
         // min
-        [data.STDLIB_VERSION_4, min, data.intList, data.positiveTestType],
-        [data.STDLIB_VERSION_5, min, data.intList, data.positiveTestType],
+        [data.STDLIB_VERSION_4, min, data.intList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, min, data.intList, data.POSITIVE_TEST],
         // invalid data min
-        [data.STDLIB_VERSION_3, min, random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, min, data.stringList, data.negativeTestType],
-        [data.STDLIB_VERSION_5, min, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, min, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, min, data.stringList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, min, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function min
-        [data.STDLIB_VERSION_3, invalidMin, data.stringList, data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidMin, data.intList, data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidMin, data.intList, data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidMin, data.stringList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidMin, data.intList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidMin, data.intList, data.NEGATIVE_TEST],
         // Can't find a function 'min' for ride v3
-        [data.STDLIB_VERSION_3, min, data.intList, data.negativeTestType],
+        [data.STDLIB_VERSION_3, min, data.intList, data.NEGATIVE_TEST],
 
         // max
-        [data.STDLIB_VERSION_4, max, data.intList, data.positiveTestType],
-        [data.STDLIB_VERSION_5, max, data.intList, data.positiveTestType],
+        [data.STDLIB_VERSION_4, max, data.intList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, max, data.intList, data.POSITIVE_TEST],
         // invalid data max
-        [data.STDLIB_VERSION_3, max, random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, max, data.stringList, data.negativeTestType],
-        [data.STDLIB_VERSION_5, max, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, max, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, max, data.stringList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, max, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function max
-        [data.STDLIB_VERSION_3, invalidMax, data.stringList, data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidMax, data.intList, data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidMax, data.intList, data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidMax, data.stringList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidMax, data.intList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidMax, data.intList, data.NEGATIVE_TEST],
         // Can't find a function 'max' for ride v3
-        [data.STDLIB_VERSION_3, max, data.intList, data.negativeTestType],
+        [data.STDLIB_VERSION_3, max, data.intList, data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, list, testType) => {
             const contract = precondition.generateOnlyMatcherContract(version, list, testFunction);
@@ -52,13 +52,13 @@ describe('min and max function',  () => {
     });
 
     test.each([
-        [data.STDLIB_VERSION_5, minForBigInt, random.getRandomInt(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, maxForBigInt, random.getRandomInt(), data.positiveTestType],
+        [data.STDLIB_VERSION_5, minForBigInt, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, maxForBigInt, random.getRandomInt(), data.POSITIVE_TEST],
         // Compilation failed: Undefined type: `BigInt`
-        [data.STDLIB_VERSION_3, minForBigInt, random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_3, maxForBigInt, random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, minForBigInt, random.getRandomInt(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, maxForBigInt, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, minForBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, maxForBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, minForBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, maxForBigInt, random.getRandomInt(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles with bigInt', (version, testFunction, testInt, testType) => {
         const bigInt = `toBigInt(${testInt})`;
         precondition.setData('BigInt')

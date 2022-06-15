@@ -13,17 +13,17 @@ describe('addressFromPublicKey',  () => {
     precondition.setData("Address");
 
     test.each([
-        [data.STDLIB_VERSION_3, addressFromPublicKey, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, addressFromPublicKey, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, addressFromPublicKey, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, addressFromPublicKey, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, addressFromPublicKey, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, addressFromPublicKey, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid data
-        [data.STDLIB_VERSION_3, addressFromPublicKey, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, addressFromPublicKey, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, addressFromPublicKey, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, addressFromPublicKey, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, addressFromPublicKey, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, addressFromPublicKey, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function
-        [data.STDLIB_VERSION_3, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidAddressFromPublicKey, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidAddressFromPublicKey, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidAddressFromPublicKey, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidAddressFromPublicKey, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, byteVector, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, byteVector, testFunction);
         checkCompileResult(contract, testType);

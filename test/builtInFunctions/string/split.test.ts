@@ -13,17 +13,17 @@ describe('split functions',  () => {
 
     test.each([
         // split
-        [data.STDLIB_VERSION_3, split, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, split, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, split, random.getRandomStringArray(), random.getRandomStringArray(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, split, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, split, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, split, random.getRandomString(), random.getRandomString(), data.POSITIVE_TEST],
         // invalid data split
-        [data.STDLIB_VERSION_3, split, random.getRandomInt(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, split, random.getRandomInt(), data.stringList, data.negativeTestType],
-        [data.STDLIB_VERSION_5, split, random.getRandomInt(), data.stringList, data.negativeTestType],
+        [data.STDLIB_VERSION_3, split, random.getRandomInt(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, split, random.getRandomInt(), data.stringList, data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, split, random.getRandomInt(), data.stringList, data.NEGATIVE_TEST],
         // invalid function split
-        [data.STDLIB_VERSION_3, invalidSplit, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidSplit, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidSplit, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidSplit, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidSplit, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidSplit, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomData, randomList, testType) => {
         const contract = precondition.generateContract(version, randomData, randomList, testFunction);

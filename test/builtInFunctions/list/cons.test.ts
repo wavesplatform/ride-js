@@ -13,19 +13,19 @@ describe('cons functions',  () => {
 
     test.each([
         // cons
-        [data.STDLIB_VERSION_3, cons, random.getRandomStringArray(), data.stringList, data.positiveTestType],
-        [data.STDLIB_VERSION_4, cons, random.getRandomInt(), data.intList, data.positiveTestType],
-        [data.STDLIB_VERSION_4, cons, random.getRandomStringArray(), data.stringList, data.positiveTestType],
-        [data.STDLIB_VERSION_5, cons, random.getRandomInt(), data.intList, data.positiveTestType],
-        [data.STDLIB_VERSION_5, cons, random.getRandomStringArray(), data.stringList, data.positiveTestType],
+        [data.STDLIB_VERSION_3, cons, random.getRandomString(), data.stringList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, cons, random.getRandomInt(), data.intList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, cons, random.getRandomString(), data.stringList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, cons, random.getRandomInt(), data.intList, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, cons, random.getRandomString(), data.stringList, data.POSITIVE_TEST],
         // invalid data cons
-        [data.STDLIB_VERSION_3, cons, random.getRandomInt(), random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, cons, random.getRandomStringArray(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, cons, random.getRandomInt(), random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, cons, random.getRandomInt(), random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, cons, random.getRandomString(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, cons, random.getRandomInt(), random.getRandomAlias(), data.NEGATIVE_TEST],
         // invalid function cons
-        [data.STDLIB_VERSION_3, invalidCons, random.getRandomInt(), random.getRandomIssuesArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidCons, random.getRandomAlias(), random.getRandomStringArray(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidCons, random.getRandomIssuesArray(), random.getRandomAlias(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidCons, random.getRandomInt(), random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidCons, random.getRandomAlias(), random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidCons, random.getRandomIssue(), random.getRandomAlias(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomData, randomList, testType) => {
             const contract = precondition.generateContract(version, randomData, randomList, testFunction);

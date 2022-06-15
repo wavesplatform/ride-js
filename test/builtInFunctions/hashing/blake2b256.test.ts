@@ -22,63 +22,63 @@ describe('blake2b256 Range of functions.',  () => {
 
     test.each([
         // positive blake2b256 tests
-        [data.STDLIB_VERSION_3, blake2b256, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_4, blake2b256, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, blake2b256, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_3, blake2b256, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, blake2b256, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, blake2b256, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in blake2b256
-        [data.STDLIB_VERSION_3, invalidBlake2b256, random.getRandomAddress(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidBlake2b256, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidBlake2b256, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidBlake2b256, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function blake2b256
-        [data.STDLIB_VERSION_3, invalidBlake2b256, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_4, invalidBlake2b256, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, invalidBlake2b256, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidBlake2b256, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive blake2b256_16Kb tests
-        [data.STDLIB_VERSION_4, blake2b256_16Kb, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, blake2b256_16Kb, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, blake2b256_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, blake2b256_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in blake2b256_16Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_16Kb, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_16Kb, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_16Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_16Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function blake2b256_16Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_16Kb, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_16Kb, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive blake2b256_32Kb tests
-        [data.STDLIB_VERSION_4, blake2b256_32Kb, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, blake2b256_32Kb, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, blake2b256_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, blake2b256_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in blake2b256_32Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_32Kb, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_32Kb, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_32Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_32Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function Blake2b256_32Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_32Kb, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_32Kb, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive blake2b256_64Kb tests
-        [data.STDLIB_VERSION_4, blake2b256_64Kb, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, blake2b256_64Kb, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, blake2b256_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, blake2b256_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in blake2b256_64Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_64Kb, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_64Kb, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_64Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_64Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function blake2b256_64Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_64Kb, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_64Kb, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive blake2b256_128Kb tests
-        [data.STDLIB_VERSION_4, blake2b256_128Kb, random.getRandomByteVector(), data.positiveTestType],
-        [data.STDLIB_VERSION_5, blake2b256_128Kb, random.getRandomByteVector(), data.positiveTestType],
+        [data.STDLIB_VERSION_4, blake2b256_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, blake2b256_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in blake2b256_128Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_128Kb, random.getRandomAlias(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_128Kb, random.getRandomInt(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_128Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_128Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function blake2b256_128Kb
-        [data.STDLIB_VERSION_4, invalidBlake2b256_128Kb, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_5, invalidBlake2b256_128Kb, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_4, invalidBlake2b256_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidBlake2b256_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // negative Can't find a function blake2b256_16Kb, blake2b256_32Kb, blake2b256_64Kb, blake2b256_128Kb for v3
-        [data.STDLIB_VERSION_3, blake2b256_16Kb, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_3, blake2b256_32Kb, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_3, blake2b256_64Kb, random.getRandomByteVector(), data.negativeTestType],
-        [data.STDLIB_VERSION_3, blake2b256_128Kb, random.getRandomByteVector(), data.negativeTestType],
+        [data.STDLIB_VERSION_3, blake2b256_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, blake2b256_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, blake2b256_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, blake2b256_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, testString, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testString, testFunction);
         checkCompileResult(contract, testType);

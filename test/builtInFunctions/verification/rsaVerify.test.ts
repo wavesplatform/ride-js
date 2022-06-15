@@ -30,54 +30,69 @@ describe('rsaVerify functions.',  () => {
         [data.STDLIB_VERSION_3, rsaVerify, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, rsaVerify, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in rsaVerify
         [data.STDLIB_VERSION_3, rsaVerify, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, rsaVerify, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify, random.getRandomString(), data.NEGATIVE_TEST],
         // invalid function rsaVerify
         [data.STDLIB_VERSION_3, invalidRsaVerify, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidRsaVerify, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidRsaVerify, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidRsaVerify, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive rsaVerify_16Kb tests
         [data.STDLIB_VERSION_4, rsaVerify_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in rsaVerify_16Kb
         [data.STDLIB_VERSION_4, rsaVerify_16Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_16Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_16Kb, random.getRandomUnion(), data.NEGATIVE_TEST],
         // invalid function rsaVerify_16Kb
         [data.STDLIB_VERSION_4, invalidRsaVerify_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidRsaVerify_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidRsaVerify_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive rsaVerify_32Kb tests
         [data.STDLIB_VERSION_4, rsaVerify_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in rsaVerify_32Kb
         [data.STDLIB_VERSION_4, rsaVerify_32Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_32Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_32Kb, random.getRandomDigestAlgorithmType(), data.NEGATIVE_TEST],
         // invalid function rsaVerify_32Kb
         [data.STDLIB_VERSION_4, invalidRsaVerify_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidRsaVerify_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidRsaVerify_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive rsaVerify_64Kb tests
         [data.STDLIB_VERSION_4, rsaVerify_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in rsaVerify_64Kb
         [data.STDLIB_VERSION_4, rsaVerify_64Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_64Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_64Kb, random.getRandomString(), data.NEGATIVE_TEST],
         // invalid function rsaVerify_64Kb
         [data.STDLIB_VERSION_4, invalidRsaVerify_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidRsaVerify_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidRsaVerify_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive rsaVerify_128Kb tests
         [data.STDLIB_VERSION_4, rsaVerify_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid byteVector in rsaVerify_128Kb
         [data.STDLIB_VERSION_4, rsaVerify_128Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, rsaVerify_128Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, rsaVerify_128Kb, random.getRandomUnion(), data.NEGATIVE_TEST],
         // invalid function rsaVerify_128Kb
         [data.STDLIB_VERSION_4, invalidRsaVerify_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidRsaVerify_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidRsaVerify_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // negative Can't find a function rsaVerify_16Kb, rsaVerify_32Kb, rsaVerify_64Kb, rsaVerify_128Kb for v3
         [data.STDLIB_VERSION_3, rsaVerify_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],

@@ -16,20 +16,25 @@ describe('toBytes',  () => {
         [data.STDLIB_VERSION_3, defaultToBytesFunction, true, data.POSITIVE_TEST],
         [data.STDLIB_VERSION_3, defaultToBytesFunction, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_3, defaultToBytesFunction, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_4, defaultToBytesFunction, true, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, defaultToBytesFunction, false, data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, defaultToBytesFunction, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, defaultToBytesFunction, random.getRandomInt(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, defaultToBytesFunction, true, data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, defaultToBytesFunction, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, defaultToBytesFunction, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, defaultToBytesFunction, false, data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, defaultToBytesFunction, random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, defaultToBytesFunction, random.getRandomInt(), data.POSITIVE_TEST],
         // invalid data
         [data.STDLIB_VERSION_3, defaultToBytesFunction, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, defaultToBytesFunction, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, defaultToBytesFunction, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, defaultToBytesFunction, random.getRandomDigestAlgorithmType(), data.NEGATIVE_TEST],
         // invalid function
         [data.STDLIB_VERSION_3, invalidToBytes, true, data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidToBytes, random.getRandomString(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidToBytes, random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidToBytes, random.getRandomDigestAlgorithmType(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, testData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testData, testFunction);
@@ -38,6 +43,10 @@ describe('toBytes',  () => {
 
     test.each([
         [data.STDLIB_VERSION_5, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, random.getRandomInt(), data.POSITIVE_TEST],
+        // Can't find a function 'toBigInt'
+        [data.STDLIB_VERSION_3, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, random.getRandomInt(), data.NEGATIVE_TEST],
     ])('positive: toBytes func compiles for ride v%i at bigInt', (version, bigInt, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, `toBigInt(${bigInt})`);
         checkCompileResult(contract, testType);

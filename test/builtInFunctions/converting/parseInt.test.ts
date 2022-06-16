@@ -10,35 +10,43 @@ describe('parseInt functions',  () => {
     const invalidParseInt = `parseInt()`;
 
     const parseIntValue = `parseIntValue(callerTestData)`;
-    const invalidParseIntValue = `parseIntValue()`;
+    const invalidParseIntValue = `parseIntValue(callerTestData,callerTestData,callerTestData,callerTestData)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(parseInt);
     precondition.setData("Int");
 
     test.each([
-        [data.STDLIB_VERSION_3, parseInt, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_4, parseInt, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_5, parseInt, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_3, parseInt, data.RideV3Result, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, parseInt, data.GreaterV3ResultIntegerEntry,  random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, parseInt, data.GreaterV3ResultIntegerEntry,  random.getRandomUnion(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, parseInt, data.GreaterV3ResultIntegerEntry,  random.getRandomDigestAlgorithmType(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_3, parseIntValue, data.RideV3Result, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_4, parseIntValue, data.GreaterV3ResultIntegerEntry, random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_5, parseIntValue, data.GreaterV3ResultIntegerEntry, random.getRandomUnion(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, parseIntValue, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.POSITIVE_TEST],
         // invalid data
-        [data.STDLIB_VERSION_3, parseInt, random.getRandomString(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_4, parseInt, random.getRandomIssue(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, parseInt, random.getRandomIssue(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_3, parseIntValue, random.getRandomString(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_4, parseIntValue, random.getRandomIssue(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, parseIntValue, random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, parseInt, data.GreaterV3ResultIntegerEntry,  random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, parseInt, data.GreaterV3ResultIntegerEntry,  random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, parseInt, data.GreaterV3ResultIntegerEntry,  random.getRandomIssue(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, parseInt, data.GreaterV3ResultIntegerEntry,  random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, parseIntValue, data.GreaterV3ResultIntegerEntry, random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, parseIntValue, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, parseIntValue, data.GreaterV3ResultIntegerEntry, random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, parseIntValue, data.GreaterV3ResultIntegerEntry, random.getRandomString(), data.NEGATIVE_TEST],
         // invalid function
-        [data.STDLIB_VERSION_3, invalidParseInt, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_4, invalidParseInt, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_5, invalidParseInt, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_3, invalidParseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_4, invalidParseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
-        [data.STDLIB_VERSION_5, invalidParseIntValue, random.getRandomInt(), data.POSITIVE_TEST],
-    ])('check ride v%i function %s compiles or failed', (version, testFunction, int, testType) => {
+        [data.STDLIB_VERSION_3, invalidParseInt, data.RideV3Result, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidParseInt, data.GreaterV3ResultIntegerEntry, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidParseInt, data.GreaterV3ResultIntegerEntry, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidParseInt, data.GreaterV3ResultIntegerEntry, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_3, invalidParseIntValue, data.RideV3Result, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, invalidParseIntValue, data.GreaterV3ResultIntegerEntry,  random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, invalidParseIntValue, data.GreaterV3ResultIntegerEntry,  random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidParseIntValue, data.GreaterV3ResultIntegerEntry,  random.getRandomInt(), data.NEGATIVE_TEST],
+    ])('check ride v%i function %s compiles or failed', (version, testFunction, scriptResult, int, testType) => {
         let intToStringForTest = `"${int}"`;
-        const contract = precondition.generateOnlyMatcherContract(version, intToStringForTest);
+        const contract = precondition
+            .generateContractFromMatchingAndCase(version, scriptResult, intToStringForTest, testFunction);
+
         checkCompileResult(contract, testType);
     });
 });

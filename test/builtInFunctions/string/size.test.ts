@@ -17,14 +17,17 @@ describe('String size function',  () => {
         [data.STDLIB_VERSION_3, size, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, size, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, size, random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, size, random.getRandomString(), data.POSITIVE_TEST],
         // invalid data size
         [data.STDLIB_VERSION_3, size, random.getRandomIssue(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, size, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, size, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, size, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function size
         [data.STDLIB_VERSION_3, invalidSize, random.getRandomString(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidSize, random.getRandomString(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidSize, random.getRandomString(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidSize, random.getRandomString(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, list, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, list, testFunction);

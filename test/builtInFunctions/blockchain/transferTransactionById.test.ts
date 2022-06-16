@@ -15,6 +15,7 @@ describe('transferTransactionById',  () => {
         [data.STDLIB_VERSION_3, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, random.getRandomByteVector(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, random.getRandomByteVector(), data.POSITIVE_TEST],
         // invalid arg by transferTransactionById
         [data.STDLIB_VERSION_3, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, random.getRandomAlias(), data.NEGATIVE_TEST],

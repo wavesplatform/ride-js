@@ -14,6 +14,7 @@ describe('transferTransactionFromProto',  () => {
         (transferTransactionFromProto, incorrectFunction, 'TransferTransaction');
 
     test.each([
+        /* TODO    https://jira.wavesplatform.com/browse/NODE-2484      */
         [data.STDLIB_VERSION_4, transferTransactionFromProto, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, transferTransactionFromProto, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_6, transferTransactionFromProto, random.getRandomByteVector(), data.POSITIVE_TEST],

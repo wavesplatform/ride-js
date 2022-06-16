@@ -20,32 +20,37 @@ describe('getString',  () => {
     (getString, ownDataGetString, 'String');
 
     test.each([
-        // getString
+        // getString address
         [data.STDLIB_VERSION_3, getString, data.RideV3Result, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getString, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getString, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, getString, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        // getString alias
         [data.STDLIB_VERSION_3, getString, data.RideV3Result, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getString, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getString, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.POSITIVE_TEST],
-        // getStringValue
+        [data.STDLIB_VERSION_6, getString, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.POSITIVE_TEST],
+        // getStringValue address
         [data.STDLIB_VERSION_3, getStringValue, data.RideV3Result, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getStringValue, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getStringValue, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, getStringValue, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        // getStringValue alias
         [data.STDLIB_VERSION_3, getStringValue, data.RideV3Result, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getStringValue, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getStringValue, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, getStringValue, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.POSITIVE_TEST],
 
         // negative: invalid function getString
         [data.STDLIB_VERSION_3, invalidGetStringV3, data.RideV3Result, random.getRandomAddress(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_3, invalidGetStringV3, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidGetStringGreaterV3, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidGetStringGreaterV3, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
-
+        [data.STDLIB_VERSION_6, invalidGetStringGreaterV3, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
         // negative: invalid function getStringValue
         [data.STDLIB_VERSION_3, invalidGetStringValueV3, data.RideV3Result, random.getRandomAddress(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_3, invalidGetStringValueV3, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidGetStringValueGreaterV3, data.GreaterV3ResultStringEntry, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidGetStringValueGreaterV3, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidGetStringValueGreaterV3, data.GreaterV3ResultStringEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, scriptResult, testString, testType) => {
         const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, testString, testFunction);
         checkCompileResult(contract, testType);

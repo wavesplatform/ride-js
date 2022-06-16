@@ -20,32 +20,38 @@ describe('getInteger',  () => {
     (getInteger, ownDataGetInteger, 'Int');
 
     test.each([
-        // getInteger
+        // getInteger address
         [data.STDLIB_VERSION_3, getInteger, data.RideV3Result, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getInteger, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getInteger, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, getInteger, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        // getInteger alias
         [data.STDLIB_VERSION_3, getInteger, data.RideV3Result, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getInteger, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getInteger, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.POSITIVE_TEST],
-        // getIntegerValue
+        [data.STDLIB_VERSION_6, getInteger, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.POSITIVE_TEST],
+
+        // getIntegerValue address
         [data.STDLIB_VERSION_3, getIntegerValue, data.RideV3Result, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getIntegerValue, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getIntegerValue, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, getIntegerValue, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.POSITIVE_TEST],
+        // getIntegerValue alias
         [data.STDLIB_VERSION_3, getIntegerValue, data.RideV3Result, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, getIntegerValue, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, getIntegerValue, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, getIntegerValue, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.POSITIVE_TEST],
 
         // negative: invalid function getInteger
         [data.STDLIB_VERSION_3, invalidGetIntegerV3, data.RideV3Result, random.getRandomAddress(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_3, invalidGetIntegerV3, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidGetIntegerGreaterV3, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidGetIntegerGreaterV3, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
-
+        [data.STDLIB_VERSION_6, invalidGetIntegerGreaterV3, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
         // negative: invalid function getIntegerValue
         [data.STDLIB_VERSION_3, invalidGetIntegerValueV3, data.RideV3Result, random.getRandomAddress(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_3, invalidGetIntegerValueV3, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidGetIntegerValueGreaterV3, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidGetIntegerValueGreaterV3, data.GreaterV3ResultIntegerEntry, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidGetIntegerValueGreaterV3, data.GreaterV3ResultIntegerEntry, random.getRandomAddress(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, scriptResult, testString, testType) => {
         const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, testString, testFunction);
         checkCompileResult(contract, testType);

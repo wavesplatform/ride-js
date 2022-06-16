@@ -25,54 +25,69 @@ describe('sha256 Range of functions.',  () => {
         [data.STDLIB_VERSION_3, sha256, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, sha256, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, sha256, random.getRandomByteVector(), data.POSITIVE_TEST],
-        // invalid byteVector in sha256
-        [data.STDLIB_VERSION_3, invalidSha256, random.getRandomAddress(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_4, invalidSha256, random.getRandomAlias(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, invalidSha256, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256, random.getRandomByteVector(), data.POSITIVE_TEST],
+        // Non-matching types in sha256
+        [data.STDLIB_VERSION_3, sha256, random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, sha256, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sha256, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function sha256
         [data.STDLIB_VERSION_3, invalidSha256, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidSha256, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidSha256, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidSha256, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive sha256_16Kb tests
         [data.STDLIB_VERSION_4, sha256_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, sha256_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
-        // invalid byteVector in sha256_16Kb
-        [data.STDLIB_VERSION_4, invalidSha256_16Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, invalidSha256_16Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_16Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        // Non-matching types in sha256_16Kb
+        [data.STDLIB_VERSION_4, sha256_16Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sha256_16Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_16Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function sha256_16Kb
         [data.STDLIB_VERSION_4, invalidSha256_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidSha256_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidSha256_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive sha256_32Kb tests
         [data.STDLIB_VERSION_4, sha256_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, sha256_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
-        // invalid byteVector in sha256_32Kb
-        [data.STDLIB_VERSION_4, invalidSha256_32Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, invalidSha256_32Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_32Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        // Non-matching types in sha256_32Kb
+        [data.STDLIB_VERSION_4, sha256_32Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sha256_32Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_32Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function sha256_32Kb
         [data.STDLIB_VERSION_4, invalidSha256_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidSha256_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidSha256_32Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive sha256_64Kb tests
         [data.STDLIB_VERSION_4, sha256_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, sha256_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
-        // invalid byteVector in sha256_64Kb
-        [data.STDLIB_VERSION_4, invalidSha256_64Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, invalidSha256_64Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_64Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        // Non-matching types in sha256_64Kb
+        [data.STDLIB_VERSION_4, sha256_64Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sha256_64Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_64Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function sha256_64Kb
         [data.STDLIB_VERSION_4, invalidSha256_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidSha256_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidSha256_64Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // positive sha256_128Kb tests
         [data.STDLIB_VERSION_4, sha256_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, sha256_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
-        // invalid byteVector in sha256_128Kb
-        [data.STDLIB_VERSION_4, invalidSha256_128Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, invalidSha256_128Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_128Kb, random.getRandomByteVector(), data.POSITIVE_TEST],
+        // Non-matching types in sha256_128Kb
+        [data.STDLIB_VERSION_4, sha256_128Kb, random.getRandomAlias(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sha256_128Kb, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, sha256_128Kb, random.getRandomInt(), data.NEGATIVE_TEST],
         // invalid function sha256_128Kb
         [data.STDLIB_VERSION_4, invalidSha256_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidSha256_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidSha256_128Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
         // negative Can't find a function sha256_16Kb, sha256_32Kb, sha256_64Kb, sha256_128Kb for v3
         [data.STDLIB_VERSION_3, sha256_16Kb, random.getRandomByteVector(), data.NEGATIVE_TEST],

@@ -8,14 +8,16 @@ describe('addressFromRecipient',  () => {
         [data.STDLIB_VERSION_3, random.getRandomAddress(), random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, random.getRandomAddress(), random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, random.getRandomAddress(), random.getRandomAddress(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, random.getRandomAddress(), random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_3, random.getRandomAlias(), random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, random.getRandomAlias(), random.getRandomAddress(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, random.getRandomAlias(), random.getRandomAddress(), data.POSITIVE_TEST],
-
+        [data.STDLIB_VERSION_6, random.getRandomAlias(), random.getRandomAddress(), data.POSITIVE_TEST],
         //invalid address
         [data.STDLIB_VERSION_3, random.getRandomInt(), random.getRandomAddress(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_4, random.getRandomByteVector(), random.getRandomAddress(), data.NEGATIVE_TEST],
-        [data.STDLIB_VERSION_5, random.getRandomIssue(), random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, random.getRandomByteVector(), random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, random.getRandomDigestAlgorithmType(), random.getRandomAddress(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, random.getRandomIssue(), random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i addressFromRecipient function compiles or failed', (version, addressOrAlias, address, testType) => {
         const contract = generateContract(version, addressOrAlias, address);
         checkCompileResult(contract, testType);

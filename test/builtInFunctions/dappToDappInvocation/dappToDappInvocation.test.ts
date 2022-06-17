@@ -13,11 +13,13 @@ describe('dappToDappInvocation functions',  () => {
     test.each([
         // invoke
         [data.STDLIB_VERSION_5, invoke, random.getRandomByteVector(), random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, invoke, random.getRandomByteVector(), random.getRandomInt(), data.POSITIVE_TEST],
         // can't find a function 'invoke' for ride v3 & v4
         [data.STDLIB_VERSION_3, invoke, random.getRandomByteVector(), random.getRandomInt(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invoke, random.getRandomByteVector(), random.getRandomInt(), data.NEGATIVE_TEST],
         // reentrantInvoke
         [data.STDLIB_VERSION_5, reentrantInvoke, random.getRandomByteVector(), random.getRandomInt(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, reentrantInvoke, random.getRandomByteVector(), random.getRandomInt(), data.POSITIVE_TEST],
         // can't find a function 'reentrantInvoke' for ride v3 & v4
         [data.STDLIB_VERSION_3, reentrantInvoke, random.getRandomByteVector(), random.getRandomInt(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, reentrantInvoke, random.getRandomByteVector(), random.getRandomInt(), data.NEGATIVE_TEST],

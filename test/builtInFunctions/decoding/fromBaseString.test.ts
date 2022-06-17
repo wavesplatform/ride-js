@@ -21,20 +21,27 @@ describe('fromBaseString',  () => {
         [data.STDLIB_VERSION_3, fromBase16String, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, fromBase16String, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, fromBase16String, random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, fromBase16String, random.getRandomString(), data.POSITIVE_TEST],
+
         [data.STDLIB_VERSION_3, fromBase58String, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, fromBase58String, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, fromBase58String, random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, fromBase58String, random.getRandomString(), data.POSITIVE_TEST],
+
         [data.STDLIB_VERSION_3, fromBase64String, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_4, fromBase64String, random.getRandomString(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, fromBase64String, random.getRandomString(), data.POSITIVE_TEST],
+        [data.STDLIB_VERSION_6, fromBase64String, random.getRandomString(), data.POSITIVE_TEST],
         // negative: invalid byteVector
         [data.STDLIB_VERSION_3, invalidFromBase16String, random.getRandomAddress(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidFromBase58String, random.getRandomAlias(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidFromBase64String, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidFromBase16String, random.getRandomInt(), data.NEGATIVE_TEST],
         // negative: invalid function
         [data.STDLIB_VERSION_3, invalidFromBase16String, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, invalidFromBase58String, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidFromBase64String, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, invalidFromBase16String, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, testString, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testString, testFunction);
         checkCompileResult(contract, testType);

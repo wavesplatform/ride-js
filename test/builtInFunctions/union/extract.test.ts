@@ -16,7 +16,8 @@ describe('extract functions',  () => {
         [data.STDLIB_VERSION_3, extract, random.getRandomInt(), data.POSITIVE_TEST, "Int"],
         //Can't find a function 'extract'
         [data.STDLIB_VERSION_4, extract, random.getRandomInt(), data.NEGATIVE_TEST, "Int"],
-        [data.STDLIB_VERSION_5, extract, random.getRandomString(), data.NEGATIVE_TEST, "String"],
+        [data.STDLIB_VERSION_5, extract, random.getRandomInt(), data.NEGATIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_6, extract, random.getRandomInt(), data.NEGATIVE_TEST, "Int"],
         // invalid data extract
         [data.STDLIB_VERSION_3, extract, random.getRandomAlias(), data.NEGATIVE_TEST, "Int"],
         // invalid function extract

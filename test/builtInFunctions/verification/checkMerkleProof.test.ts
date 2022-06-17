@@ -22,6 +22,7 @@ describe('checkMerkleProof functions',  () => {
         // can't find a function 'checkMerkleProof'
         [data.STDLIB_VERSION_4, checkMerkleProof, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, checkMerkleProof, random.getRandomByteVector(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_6, checkMerkleProof, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',(version, testFunction, randomData, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, randomData, testFunction);
         checkCompileResult(contract, testType);

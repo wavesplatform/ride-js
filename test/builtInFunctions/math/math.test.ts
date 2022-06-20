@@ -279,6 +279,15 @@ describe('math functions tests',  () => {
         [data.STDLIB_VERSION_3, sqrtIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_4, sqrtIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, sqrtIntAndUnion, random.getRandomInt(), data.NEGATIVE_TEST],
+
+        // positive tests BigInt.sqrt(Int, Int, Union): BigInt
+        [data.STDLIB_VERSION_6, sqrtIntAndUnionArgBeforeFunc, random.getRandomInt(), data.POSITIVE_TEST],
+        // Non-matching types in BigInt.sqrt(Int, Int, Union): BigInt
+        [data.STDLIB_VERSION_6, sqrtIntAndUnionArgBeforeFunc, random.getRandomString(), data.NEGATIVE_TEST],
+        // Can't find a function BigInt.sqrt(Int, Int, Union): BigInt
+        [data.STDLIB_VERSION_3, sqrtIntAndUnionArgBeforeFunc, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_4, sqrtIntAndUnionArgBeforeFunc, random.getRandomInt(), data.NEGATIVE_TEST],
+        [data.STDLIB_VERSION_5, sqrtIntAndUnionArgBeforeFunc, random.getRandomInt(), data.NEGATIVE_TEST],
         // Can't find a function overload 'fraction'(ByteVector)
         [data.STDLIB_VERSION_6, invalidSqrtFunction, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_6, invalidSqrtFunctionArgBeforeFunc, random.getRandomByteVector(), data.NEGATIVE_TEST],

@@ -1,4 +1,3 @@
-
 export class GenerateContractForBuiltInFunctions {
 
     private readonly defaultFunction;
@@ -12,7 +11,7 @@ export class GenerateContractForBuiltInFunctions {
     }
 
     public generateContractFromMatchingAndCase
-    (libVersion, caseForVersions, testData, getFunction = this.defaultFunction):string {
+    (libVersion, caseForVersions, testData, getFunction = this.defaultFunction): string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -30,7 +29,7 @@ export class GenerateContractForBuiltInFunctions {
         }`;
     };
 
-    public generateContractOwnData(libVersion, caseForVersions, ownDataFunction = this.ownDataFunction):string {
+    public generateContractOwnData(libVersion, caseForVersions, ownDataFunction = this.ownDataFunction): string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -48,7 +47,7 @@ export class GenerateContractForBuiltInFunctions {
     };
 
     public generateContractWithoutMatcher
-    (libVersion, caseForVersions, testData, getFunction = this.defaultFunction):string {
+    (libVersion, caseForVersions, testData, getFunction = this.defaultFunction): string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -63,7 +62,7 @@ export class GenerateContractForBuiltInFunctions {
     };
 
     public generateContractOwnDataWithoutMatcher
-    (libVersion, caseForVersions, ownDataFunction = this.ownDataFunction):string {
+    (libVersion, caseForVersions, ownDataFunction = this.ownDataFunction): string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -76,8 +75,8 @@ export class GenerateContractForBuiltInFunctions {
         }`;
     };
 
-    public generateOnlyMatcherContract(libVersion, testData, getFunction = this.defaultFunction):string {
-        return `
+    public generateOnlyMatcherContract(libVersion, testData, getFunction = this.defaultFunction): string {
+        const result = (`
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
         {-# SCRIPT_TYPE ACCOUNT #-}
@@ -86,10 +85,12 @@ export class GenerateContractForBuiltInFunctions {
         let x = match ${getFunction} {
             case h:${this.dataType} => h
             case _ => throw("not ${this.dataType}")
-        }`
+        }`);
+
+        return result;
     }
 
-    public generateContract(version, foo, bar, testFunction):string {
+    public generateContract(version, foo, bar, testFunction): string {
         return `
         {-# STDLIB_VERSION ${version} #-}
         {-# CONTENT_TYPE DAPP #-}
@@ -101,14 +102,16 @@ export class GenerateContractForBuiltInFunctions {
     }
 
     public generateContractForDAppInvocation
-    (libVersion, byteVector, payment, getFunctionName = this.defaultFunction):string {
+    (libVersion, byteVector, payment, func = this.defaultFunction): string {
         return `
         {-# STDLIB_VERSION ${libVersion} #-}
         {-# CONTENT_TYPE DAPP #-}
         {-# SCRIPT_TYPE ACCOUNT #-}
 
         func foo(dapp2: String, a: Int, key1: String, key2: String) = {
-        strict res = ${getFunctionName}(addressFromStringValue(dapp2),"bar",[a],[AttachedPayment(${byteVector}, ${payment})])
+        let byteVector = ${byteVector}
+        let payment = ${payment}
+        strict res = ${func}
         match res {
             case r : Int => 
             (

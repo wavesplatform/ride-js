@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('toBigInt',  () => {
+describe('toBigInt', () => {
 
     const toBigInt = `toBigInt(callerTestData)`;
     const toBigIntOnIndex = `toBigInt(callerTestData, 1, ${random.getRandomInt()})`;

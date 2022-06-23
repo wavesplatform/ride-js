@@ -2,7 +2,7 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 import {checkCompileResult} from "../testResult";
 
-describe('calculateAssetId',  () => {
+describe('calculateAssetId', () => {
     const calculateAssetId = `calculateAssetId(issue)`;
     const invalidCalculateAssetId = `calculateAssetId()`;
 

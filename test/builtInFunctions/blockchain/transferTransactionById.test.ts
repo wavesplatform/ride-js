@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('transferTransactionById',  () => {
+describe('transferTransactionById', () => {
 
     const transferTransactionById = `transferTransactionById(callerTestData)`;
     const invalidFunctionTransferById = `transferTransactionById(callerTestData, callerTestData)`;

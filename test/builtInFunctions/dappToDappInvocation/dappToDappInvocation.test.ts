@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('dappToDappInvocation functions',  () => {
+describe('dappToDappInvocation functions', () => {
 
     const invoke = `invoke(addressFromStringValue(dapp2),"bar",[a],[AttachedPayment(byteVector, payment)])`;
     const invalidInvoke = `invoke("bar",[a],[AttachedPayment(byteVector, payment)])`;

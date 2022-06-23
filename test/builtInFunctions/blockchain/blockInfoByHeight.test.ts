@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('blockInfoByHeight',  () => {
+describe('blockInfoByHeight', () => {
 
     const blockInfoByHeight = `blockInfoByHeight(callerTestData)`;
 

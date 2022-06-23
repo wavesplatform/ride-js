@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('assetBalance',  () => {
+describe('assetBalance', () => {
 
     const address = random.getRandomAddress();
     const alias = random.getRandomAlias();
@@ -41,10 +41,10 @@ describe('assetBalance',  () => {
         [data.STDLIB_VERSION_6, data.GreaterV3ResultIntegerEntry, assetBalanceAtAliasArgBeforeFunc, alias, data.POSITIVE_TEST],
     ])('positive: Checking the address in a transfer transaction',
         (version, scriptResult, func, addressOrAlias, testType) => {
-        precondition = new GenerateContractForBuiltInFunctions(func);
-        const contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, func);
-        checkCompileResult(contract, testType);
-    });
+            precondition = new GenerateContractForBuiltInFunctions(func);
+            const contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, func);
+            checkCompileResult(contract, testType);
+        });
 
     test.each([
         [data.STDLIB_VERSION_3, data.RideV3Result, address, invalidFuncWithAddress, data.NEGATIVE_TEST],
@@ -59,9 +59,9 @@ describe('assetBalance',  () => {
         [data.STDLIB_VERSION_4, data.GreaterV3ResultIntegerEntry, alias, invalidFunc, data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, data.GreaterV3ResultIntegerEntry, alias, invalidFunc, data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_6, data.GreaterV3ResultIntegerEntry, alias, invalidFunc, data.NEGATIVE_TEST],
-        ])('negative: incorrect function args assetBalance',
+    ])('negative: incorrect function args assetBalance',
         (version, scriptResult, addressOrAlias, func, testType) => {
-        const contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, func);
-        checkCompileResult(contract, testType);
-    });
+            const contract = precondition.generateContractWithoutMatcher(version, scriptResult, addressOrAlias, func);
+            checkCompileResult(contract, testType);
+        });
 });

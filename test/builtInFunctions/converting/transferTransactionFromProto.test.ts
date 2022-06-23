@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('transferTransactionFromProto',  () => {
+describe('transferTransactionFromProto', () => {
 
     const transferTransactionFromProto = `transferTransactionFromProto(callerTestData)`;
     const transferTransactionFromProtoArgBeforeFunc = `callerTestData.transferTransactionFromProto()`;

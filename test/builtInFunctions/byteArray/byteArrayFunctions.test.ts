@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('byteArray functions',  () => {
+describe('byteArray functions', () => {
 
     const drop = `drop(callerTestData, ${random.getRandomInt()})`;
     const dropArgBeforeFunction = `callerTestData.drop(${random.getRandomInt()})`;
@@ -191,7 +191,7 @@ describe('byteArray functions',  () => {
         [data.STDLIB_VERSION_6, invalidTakeRightArgBeforeFunc, data.GreaterV3ResultBinaryEntry, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, scriptResult, testString, testType) => {
-        const contract = precondition.generateContractWithoutMatcher(version, scriptResult, testString, testFunction);
-        checkCompileResult(contract, testType);
-    });
+            const contract = precondition.generateContractWithoutMatcher(version, scriptResult, testString, testFunction);
+            checkCompileResult(contract, testType);
+        });
 });

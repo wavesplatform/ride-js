@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('toString & toUtf8String',  () => {
+describe('toString & toUtf8String', () => {
 
     const toString = `toString(callerTestData)`;
     const invalidToString = 'toString()';

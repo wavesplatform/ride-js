@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('toBytes',  () => {
+describe('toBytes', () => {
 
     const toBytes = `toBytes(callerTestData)`;
     const invalidToBytes = 'toBytes()';

@@ -1,4 +1,3 @@
-
 import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 
@@ -6,7 +5,7 @@ import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltIn
 import {checkCompileResult} from "../testResult";
 import {getRandomString} from "../../testData/random";
 
-describe('getString',  () => {
+describe('getString', () => {
     // getString
     const getString = `getString(callerTestData, ${getRandomString()})`;
     const getStringArgBeforeFunc = `callerTestData.getString(${getRandomString()})`;

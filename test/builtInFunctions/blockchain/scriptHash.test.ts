@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('scriptHash',  () => {
+describe('scriptHash', () => {
 
     const scriptHashFunction = `scriptHash(callerTestData)`;
     const scriptHashInvalidFunction = `scriptHash()`;
@@ -51,8 +51,8 @@ describe('scriptHash',  () => {
         [data.STDLIB_VERSION_5, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), invalidScriptHashArgBeforeFunc, data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_6, data.GreaterV3ResultBinaryEntry, random.getRandomAlias(), invalidScriptHashArgBeforeFunc, data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_6, data.GreaterV3ResultBinaryEntry, random.getRandomAddress(), invalidScriptHashArgBeforeFunc, data.NEGATIVE_TEST],
-    ])('check ride v%i scriptHash function compile',(version, scriptResult, addressOrAlias, func, testType) => {
-            const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias, func);
-            checkCompileResult(contract, testType);
+    ])('check ride v%i scriptHash function compile', (version, scriptResult, addressOrAlias, func, testType) => {
+        const contract = precondition.generateContractFromMatchingAndCase(version, scriptResult, addressOrAlias, func);
+        checkCompileResult(contract, testType);
     });
 });

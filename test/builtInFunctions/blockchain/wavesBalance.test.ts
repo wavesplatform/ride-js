@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('wavesBalance',  () => {
+describe('wavesBalance', () => {
 
     const wavesBalance = `wavesBalance(callerTestData)`;
     const invalidWavesBalance = `wavesBalance(callerTestData, callerTestData)`;

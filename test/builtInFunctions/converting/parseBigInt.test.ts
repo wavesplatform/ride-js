@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('parseBigInt ',  () => {
+describe('parseBigInt ', () => {
 
     const parseBigInt = `parseBigInt(callerTestData)`;
     const invalidParseBigInt = `parseBigInt()`;

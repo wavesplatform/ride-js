@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('addressFromPublicKey',  () => {
+describe('addressFromPublicKey', () => {
 
     const addressFromPublicKey = `addressFromPublicKey(callerTestData)`;
     const invalidAddressFromPublicKey = `addressFromPublicKey()`;

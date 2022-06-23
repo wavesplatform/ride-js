@@ -2,7 +2,7 @@ import * as data from "../../testData/data";
 import * as random from "../../testData/random";
 import {checkCompileResult} from "../testResult";
 
-describe('addressFromRecipient',  () => {
+describe('addressFromRecipient', () => {
 
     const addressFromRecipient = `addressFromRecipient(addressOrAlias)`;
     const addressFromRecipientArgBeforeFunc = `addressOrAlias.addressFromRecipient()`;

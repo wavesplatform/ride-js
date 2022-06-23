@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('isDataStorageUntouched',  () => {
+describe('isDataStorageUntouched', () => {
 
     const isDataStorageUntouched = `isDataStorageUntouched(callerTestData)`;
     const isDataStorageUntouchedArgBeforeFunc = `callerTestData.isDataStorageUntouched()`;

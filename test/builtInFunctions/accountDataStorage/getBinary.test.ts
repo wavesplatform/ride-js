@@ -5,7 +5,7 @@ import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltIn
 import {checkCompileResult} from "../testResult";
 import {getRandomString} from "../../testData/random";
 
-describe('getBinary',  () => {
+describe('getBinary', () => {
     // getBinary
     const getBinary = `getBinary(callerTestData, ${getRandomString()})`;
     const getBinaryArgBeforeFunc = `callerTestData.getBinary(${getRandomString()})`;

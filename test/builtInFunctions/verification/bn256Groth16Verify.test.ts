@@ -4,7 +4,7 @@ import * as random from "../../testData/random";
 import {GenerateContractForBuiltInFunctions} from "../GenerateContractForBuiltInFunctions";
 import {checkCompileResult} from "../testResult";
 
-describe('bn256Groth16Verify functions.',  () => {
+describe('bn256Groth16Verify functions.', () => {
 
     const bn256Groth16Verify = `bn256Groth16Verify(callerTestData, callerTestData, callerTestData)`;
     const bn256Groth16VerifyArgBeforeFunc = `callerTestData.bn256Groth16Verify(callerTestData, callerTestData)`;
@@ -27,10 +27,8 @@ describe('bn256Groth16Verify functions.',  () => {
         [data.STDLIB_VERSION_4, invalidn256Groth16Verify, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_5, invalidn256Groth16Verify, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_6, invalidn256Groth16Verify, random.getRandomByteVector(), data.NEGATIVE_TEST],
-        // Can't find a function 'bn256Groth16Verify' for ride v3
-        [data.STDLIB_VERSION_3, bn256Groth16Verify, random.getRandomByteVector(), data.NEGATIVE_TEST],
 
-        // positive bn256Groth16Verify tests
+        // positive bn256Groth16Verify tests argument before function
         [data.STDLIB_VERSION_4, bn256Groth16VerifyArgBeforeFunc, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_5, bn256Groth16VerifyArgBeforeFunc, random.getRandomByteVector(), data.POSITIVE_TEST],
         [data.STDLIB_VERSION_6, bn256Groth16VerifyArgBeforeFunc, random.getRandomByteVector(), data.POSITIVE_TEST],
@@ -43,6 +41,7 @@ describe('bn256Groth16Verify functions.',  () => {
         [data.STDLIB_VERSION_5, invalidBn256Groth16VerifyArgBeforeFunc, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_6, invalidBn256Groth16VerifyArgBeforeFunc, random.getRandomByteVector(), data.NEGATIVE_TEST],
         // Can't find a function 'bn256Groth16Verify' for ride v3
+        [data.STDLIB_VERSION_3, bn256Groth16Verify, random.getRandomByteVector(), data.NEGATIVE_TEST],
         [data.STDLIB_VERSION_3, bn256Groth16VerifyArgBeforeFunc, random.getRandomByteVector(), data.NEGATIVE_TEST],
     ])('check ride v%i function %s compiles or failed', (version, testFunction, testString, testType) => {
         const contract = precondition.generateOnlyMatcherContract(version, testString, testFunction);

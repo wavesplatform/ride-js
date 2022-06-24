@@ -10,7 +10,7 @@ describe('addressFromPublicKey', () => {
     const invalidAddressFromPublicKey = `addressFromPublicKey()`;
 
     const addressFromPublicKeyArgBeforeFunc = `callerTestData.addressFromPublicKey()`;
-    const invalidAddressFromPublicKeyArgBeforeFunc = `addressFromPublicKey()`;
+    const invalidAddressFromPublicKeyArgBeforeFunc = `callerTestData.addressFromPublicKey(callerTestData, 1)`;
 
     const precondition = new GenerateContractForBuiltInFunctions(addressFromPublicKey);
     precondition.setData("Address");

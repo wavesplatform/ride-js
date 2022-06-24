@@ -21,9 +21,10 @@ export class GenerateContractForBuiltInFunctions {
         func expression() = {
             let callerTestData = ${testData}
             let valueOrUnit = ${getFunction}
+            let throwMessage = "not ${this.dataType}"
             let val = match(valueOrUnit) {
               case b:${this.dataType} => b
-              case _ => throw("not ${this.dataType}")
+              case _ => throwMessage.throw()
             }
             ${caseForVersions}
         }`;

@@ -13,9 +13,9 @@ describe('getBinary', () => {
     const ownDataGetBinaryArgBeforeFunc = `${getRandomString()}.getBinary()`;
 
     // getBinaryValue
-    const getBinaryValue = `getBinaryValue(callerTestData, "LJKaSADfHH782gd")`;
-    const getBinaryValueArgBeforeFunc = `callerTestData.getBinaryValue("LJKaSADfHH782gd")`;
-    const ownDataGetBinaryValue = 'getBinaryValue("LJKaSADfHH127gd")';
+    const getBinaryValue = `getBinaryValue(callerTestData, ${getRandomString()})`;
+    const getBinaryValueArgBeforeFunc = `callerTestData.getBinaryValue(${getRandomString()})`;
+    const ownDataGetBinaryValue = `getBinaryValue(${getRandomString()})`;
     const ownDataGetBinaryValueArgBeforeFunc = `${getRandomString()}.getBinaryValue()`;
 
     const invalidGetBinary = `getBinary(callerTestData)`;

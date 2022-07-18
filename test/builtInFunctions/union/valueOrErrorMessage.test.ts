@@ -8,22 +8,51 @@ describe('valueOrErrorMessage functions',  () => {
 
     const valueOrErrorMessage = `valueOrErrorMessage(callerTestData, "error message")`;
     const invalidValueOrErrorMessage = `valueOrErrorMessage()`;
+    const valueOrErrorMessageArgBeforeFunc = `callerTestData.valueOrErrorMessage("error message")`;
+    const invalidValueOrErrorMessageArgBeforeFunc = `callerTestData.valueOrErrorMessage()`;
 
     const precondition = new GenerateContractForBuiltInFunctions(valueOrErrorMessage);
 
     test.each([
         // valueOrErrorMessage
-        [data.STDLIB_VERSION_3, valueOrErrorMessage, random.getRandomInt(), data.positiveTestType, "Int"],
-        [data.STDLIB_VERSION_4, valueOrErrorMessage, random.getRandomByteVector(), data.positiveTestType, "ByteVector"],
-        [data.STDLIB_VERSION_5, valueOrErrorMessage, random.getRandomStringArray(), data.positiveTestType, "String"],
+        [data.STDLIB_VERSION_3, valueOrErrorMessage, random.getRandomInt(), data.POSITIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_3, valueOrErrorMessage, random.getRandomAlias(), data.POSITIVE_TEST, "Alias"],
+        [data.STDLIB_VERSION_4, valueOrErrorMessage, random.getRandomByteVector(), data.POSITIVE_TEST, "ByteVector"],
+        [data.STDLIB_VERSION_4, valueOrErrorMessage, random.getRandomAddress(), data.POSITIVE_TEST, "Address"],
+        [data.STDLIB_VERSION_5, valueOrErrorMessage, random.getRandomString(), data.POSITIVE_TEST, "String"],
+        [data.STDLIB_VERSION_5, valueOrErrorMessage, true, data.POSITIVE_TEST, "Boolean"],
+        [data.STDLIB_VERSION_6, valueOrErrorMessage, random.getRandomAddress(), data.POSITIVE_TEST, "Address"],
+        [data.STDLIB_VERSION_6, valueOrErrorMessage, random.getRandomAlias(), data.POSITIVE_TEST, "Alias"],
         // invalid data valueOrErrorMessage
-        [data.STDLIB_VERSION_3, valueOrErrorMessage, random.getRandomAlias(), data.negativeTestType, "Int"],
-        [data.STDLIB_VERSION_4, valueOrErrorMessage, random.getRandomUnionArray(), data.negativeTestType, "Boolean"],
-        [data.STDLIB_VERSION_5, valueOrErrorMessage, random.getRandomAddress(), data.negativeTestType, "ByteVector"],
+        [data.STDLIB_VERSION_3, valueOrErrorMessage, null, data.NEGATIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_4, valueOrErrorMessage, undefined, data.NEGATIVE_TEST, "Boolean"],
+        [data.STDLIB_VERSION_5, valueOrErrorMessage, random.getRandomAddress(), data.NEGATIVE_TEST, "Alias"],
+        [data.STDLIB_VERSION_6, valueOrErrorMessage, random.getRandomAlias(), data.NEGATIVE_TEST, "ByteVector"],
         // invalid function valueOrErrorMessage
-        [data.STDLIB_VERSION_3, invalidValueOrErrorMessage, random.getRandomInt(), data.negativeTestType, "Int"],
-        [data.STDLIB_VERSION_4, invalidValueOrErrorMessage, random.getRandomByteVector(), data.negativeTestType, "ByteVector"],
-        [data.STDLIB_VERSION_5, invalidValueOrErrorMessage, random.getRandomStringArray(), data.negativeTestType, "String"],
+        [data.STDLIB_VERSION_3, invalidValueOrErrorMessage, random.getRandomInt(), data.NEGATIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_4, invalidValueOrErrorMessage, random.getRandomByteVector(), data.NEGATIVE_TEST, "ByteVector"],
+        [data.STDLIB_VERSION_5, invalidValueOrErrorMessage, random.getRandomString(), data.NEGATIVE_TEST, "String"],
+        [data.STDLIB_VERSION_6, invalidValueOrErrorMessage, random.getRandomString(), data.NEGATIVE_TEST, "String"],
+
+        // valueOrErrorMessage argument before function
+        [data.STDLIB_VERSION_3, valueOrErrorMessageArgBeforeFunc, random.getRandomInt(), data.POSITIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_3, valueOrErrorMessageArgBeforeFunc, random.getRandomAlias(), data.POSITIVE_TEST, "Alias"],
+        [data.STDLIB_VERSION_4, valueOrErrorMessageArgBeforeFunc, random.getRandomByteVector(), data.POSITIVE_TEST, "ByteVector"],
+        [data.STDLIB_VERSION_4, valueOrErrorMessageArgBeforeFunc, random.getRandomAddress(), data.POSITIVE_TEST, "Address"],
+        [data.STDLIB_VERSION_5, valueOrErrorMessageArgBeforeFunc, random.getRandomString(), data.POSITIVE_TEST, "String"],
+        [data.STDLIB_VERSION_5, valueOrErrorMessageArgBeforeFunc, true, data.POSITIVE_TEST, "Boolean"],
+        [data.STDLIB_VERSION_6, valueOrErrorMessageArgBeforeFunc, random.getRandomAddress(), data.POSITIVE_TEST, "Address"],
+        [data.STDLIB_VERSION_6, valueOrErrorMessageArgBeforeFunc, random.getRandomAlias(), data.POSITIVE_TEST, "Alias"],
+        // invalid data valueOrErrorMessage
+        [data.STDLIB_VERSION_3, valueOrErrorMessageArgBeforeFunc, null, data.NEGATIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_4, valueOrErrorMessageArgBeforeFunc, undefined, data.NEGATIVE_TEST, "Boolean"],
+        [data.STDLIB_VERSION_5, valueOrErrorMessageArgBeforeFunc, random.getRandomAddress(), data.NEGATIVE_TEST, "Alias"],
+        [data.STDLIB_VERSION_6, valueOrErrorMessageArgBeforeFunc, random.getRandomAlias(), data.NEGATIVE_TEST, "ByteVector"],
+        // invalid function valueOrErrorMessage
+        [data.STDLIB_VERSION_3, invalidValueOrErrorMessageArgBeforeFunc, random.getRandomInt(), data.NEGATIVE_TEST, "Int"],
+        [data.STDLIB_VERSION_4, invalidValueOrErrorMessageArgBeforeFunc, random.getRandomByteVector(), data.NEGATIVE_TEST, "ByteVector"],
+        [data.STDLIB_VERSION_5, invalidValueOrErrorMessageArgBeforeFunc, random.getRandomString(), data.NEGATIVE_TEST, "String"],
+        [data.STDLIB_VERSION_6, invalidValueOrErrorMessageArgBeforeFunc, random.getRandomString(), data.NEGATIVE_TEST, "String"],
     ])('check ride v%i function %s compiles or failed',
         (version, testFunction, randomData, testType, dataType) => {
             precondition.setData(dataType);

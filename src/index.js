@@ -1,6 +1,7 @@
 require('./interop');
 const crypto = require('@waves/ts-lib-crypto');
 const scalaJsCompiler = require('./lang-opt.js');
+const replJs = require('./repl-opt.js');
 
 function wrappedCompile(code, estimatorVersion = 2) {
     if (typeof code !== 'string') {
@@ -50,13 +51,13 @@ function wrappedCompile(code, estimatorVersion = 2) {
 
 function wrappedRepl(opts) {
     const repl = (opts != null)
-        ? scalaJsCompiler.repl(new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address))
-        : scalaJsCompiler.repl();
+        ? replJs.repl(new replJs.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address))
+        : replJs.repl();
 
     const wrapReconfigure = (repl) => {
         let reconfigureFn = repl.reconfigure.bind(repl);
         return (opts) => {
-            const settings = new scalaJsCompiler.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address);
+            const settings = new replJs.NodeConnectionSettings(opts.nodeUrl, opts.chainId.charCodeAt(0), opts.address);
             const newRepl = reconfigureFn(settings);
             newRepl.reconfigure = wrapReconfigure(newRepl);
             return newRepl;

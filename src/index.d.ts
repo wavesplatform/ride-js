@@ -79,11 +79,23 @@ export interface IFlattenedCompilationResult {
     error?: string
 }
 
-export function compile(code: string, estimatorVersion?: number, libraries?: Record<string, string>): ICompilationResult | ICompilationError;
+export function compile(
+    code: string,
+    estimatorVersion?: number,
+    needCompaction?: boolean,
+    removeUnusedCode?: boolean,
+    libraries?: Record<string, string>
+): ICompilationResult | ICompilationError;
 
 export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
 
-export function parseAndCompile(code: string, estimatorVersion?: number, lastInsertedCharPos?: number | undefined): IParseAndCompileResult | ICompilationError;
+export function parseAndCompile(
+    code: string,
+    estimatorVersion?: number,
+    needCompaction?: boolean,
+    removeUnusedCode?: boolean,
+    libs?: Record<string, string>
+): IParseAndCompileResult | ICompilationError;
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 

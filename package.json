@@ -1,12 +1,12 @@
 {
   "name": "@waves/ride-js",
   "version": "2.2.2-beta.7",
-  "description": "Js compiler for Ride - Waves smart contract language.",
+  "description": "Js compiler v1.4.6 for Ride - Waves smart contract language.",
   "main": "src/index.js",
   "typings": "src/index.d.ts",
   "scripts": {
     "build": "./node_modules/.bin/webpack --config webpack.config.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prepublishOnly": "npm run build",
     "getNewCompiler": "sh scripts/getNewCompiler.sh"
   },
@@ -33,14 +33,20 @@
   },
   "homepage": "https://github.com/wavesplatform/ride-js#readme",
   "devDependencies": {
+    "@types/jest": "^23.3.14",
     "chai": "^4.2.0",
     "copy-webpack-plugin": "^4.5.2",
-    "mocha": "^5.2.0",
+    "ts-jest": "^24.0.2",
+    "jest": "^24.0.2",
+    "ts-node": "^7.0.1",
+    "typed-ts-events": "^1.1.1",
     "webpack": "^4.16.0",
+    "typescript": "^3.7.2",
     "webpack-cli": "^3.0.8",
     "webpack-closure-compiler": "^2.1.6"
   },
   "dependencies": {
+    "@jest/globals": "^27.5.1",
     "@waves/ts-lib-crypto": "^1.4.3",
     "axios": "^0.19.0"
   }

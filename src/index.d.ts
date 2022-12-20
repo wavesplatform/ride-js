@@ -8,7 +8,6 @@ export interface ICompilationResult {
         verifierComplexity?: number
         callableComplexity?: Record<string, number>
         userFunctionsComplexity?: Record<string, number>
-        stateCallsComplexities?: Record<string, number>
     }
 }
 
@@ -64,7 +63,7 @@ export interface IVarDoc {
 export interface IScriptInfo {
     stdLibVersion: number,
     contentType: number,
-    scriptType: number,
+    scriptType: number
     imports: string[]
 }
 
@@ -88,23 +87,23 @@ export function compile(
     libraries?: Record<string, string>
 ): ICompilationResult | ICompilationError;
 
+export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
+
 export function parseAndCompile(
     code: string,
     estimatorVersion?: number,
     needCompaction?: boolean,
     removeUnusedCode?: boolean,
-    libraries?: Record<string, string>
+    libs?: Record<string, string>
 ): IParseAndCompileResult | ICompilationError;
-
-export function flattenCompilationResult(compiled: ICompilationResult | ICompilationError): IFlattenedCompilationResult
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 
-export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): TStructField[];
+export function getTypes(stdlibVersion?: number, isTokenContext?: boolean, isContract?: boolean): TStructField[];
 
-export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IVarDoc[];
+export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean, isContract?: boolean): IVarDoc[];
 
-export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): TFunction[];
+export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean, isContract?: boolean): TFunction[];
 
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
 
@@ -211,6 +210,7 @@ export interface ILet extends INode {
     type: 'LET'
     name: IName
     expr: TExpr
+    dec?: TDecl
 }
 
 export interface IScript extends Exclude<INode, 'resultType'> {
@@ -221,7 +221,7 @@ export interface IScript extends Exclude<INode, 'resultType'> {
 export interface IDApp extends Exclude<INode, 'resultType'> {
     type: 'DAPP'
     decList: (ILet | IFunc)[]
-    annFuncList: IAnnotatedFunc//todo fix
+    annFuncList: IAnnotatedFunc[]
 }
 
 export interface IAnnotatedFunc extends Exclude<INode, 'resultType'> {
@@ -232,8 +232,6 @@ export interface IAnnotatedFunc extends Exclude<INode, 'resultType'> {
 
 export interface IAnnotation extends Exclude<INode, 'resultType'> {
     type: 'ANNOTATION',
-    posStart: 80,
-    posEnd: 143,
     name: IName,
     argList: IName[]
 }
@@ -242,11 +240,16 @@ export interface IFunc extends INode {
     type: 'FUNC'
     name: IName
     expr: TExpr
-    argList: TArgument[],
+    argList: TArgument[]
+    body: IBlock | IFunctionCall
 }
 
-export type TArgument = { argName: IName, typeList: TArgumentType[] }
-export type TArgumentType = { typeName: IName, typeParam?: any }
+export type TArgument = { argName: IName, type: TArgumentType }
+export type TArgumentType = { typeName: IName, typeParam?: ITypeParam }
+
+export interface ITypeParam extends IPos {
+    value: { isUnion: boolean, typeList: TArgumentType[] }
+}
 
 export interface IFunctionCall extends IExprNode {
     type: 'FUNCTION_CALL'

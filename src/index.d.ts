@@ -99,11 +99,11 @@ export function parseAndCompile(
 
 export function scriptInfo(code: string): IScriptInfo | ICompilationError;
 
-export function getTypes(stdlibVersion?: number, isTokenContext?: boolean): TStructField[];
+export function getTypes(stdlibVersion?: number, isTokenContext?: boolean, isContract?: boolean): TStructField[];
 
-export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean): IVarDoc[];
+export function getVarsDoc(stdlibVersion?: number, isTokenContext?: boolean, isContract?: boolean): IVarDoc[];
 
-export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean): TFunction[];
+export function getFunctionsDoc(stdlibVersion?: number, isTokenContext?: boolean, isContract?: boolean): TFunction[];
 
 export function decompile(compiledCode: string): IDecompilationResult | IDecompilationError;
 
@@ -210,6 +210,7 @@ export interface ILet extends INode {
     type: 'LET'
     name: IName
     expr: TExpr
+    dec?: TDecl
 }
 
 export interface IScript extends Exclude<INode, 'resultType'> {

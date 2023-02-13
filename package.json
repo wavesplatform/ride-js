@@ -1,7 +1,7 @@
 {
   "name": "@waves/ride-js",
-  "version": "2.2.2-beta.7",
-  "description": "Js compiler v1.4.6 for Ride - Waves smart contract language.",
+  "version": "2.2.4",
+  "description": "Js compiler for Ride - Waves smart contract language.",
   "main": "src/index.js",
   "typings": "src/index.d.ts",
   "scripts": {

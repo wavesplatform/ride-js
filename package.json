@@ -33,21 +33,15 @@
   },
   "homepage": "https://github.com/wavesplatform/ride-js#readme",
   "devDependencies": {
-    "@types/jest": "^23.3.14",
-    "chai": "^4.2.0",
-    "copy-webpack-plugin": "^4.5.2",
-    "ts-jest": "^24.0.2",
-    "jest": "^24.0.2",
-    "ts-node": "^7.0.1",
-    "typed-ts-events": "^1.1.1",
-    "webpack": "^4.16.0",
-    "typescript": "^3.7.2",
-    "webpack-cli": "^3.0.8",
-    "webpack-closure-compiler": "^2.1.6"
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.1",
+    "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@jest/globals": "^27.5.1",
-    "@waves/ts-lib-crypto": "^1.4.3",
-    "axios": "^0.19.0"
+    "@waves/ride-lang": "^1.5.12-4010-snapshot.1.2",
+    "@waves/ride-repl": "^1.5.12-4010-snapshot.1.2",
+    "@waves/ts-lib-crypto": "^1.4.4-beta.1",
+    "axios": "^1.11.0"
   }
 }

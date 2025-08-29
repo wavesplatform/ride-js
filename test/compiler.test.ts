@@ -1,4 +1,4 @@
-import * as https from "https";
+ import * as https from "https";
 import * as data from "./testData/data";
 
 const compiler = require('../src');
@@ -147,6 +147,7 @@ func bar() = WriteSet([])`;
         algs.forEach((alg) => {
             const rsaVerify = `rsaVerify(${alg}, msg, sig, pk)`
             evaluate(rsaVerify).then(res => {
+                console.error(res)
                 expect('result' in res).toEqual(true)
             })
         })
@@ -156,8 +157,8 @@ func bar() = WriteSet([])`;
         const evaluate = compiler.repl().evaluate;
         const tests = [
             "pow(12, 1, 3456, 3, 2, DOWN)",
-            "pow(12, 1, 3456, 3, 2, UP)",
-            "pow(0, 1, 3456, 3, 2, UP)",
+            "pow(12, 1, 3456, 3, 2, HALFUP)",
+            "pow(0, 1, 3456, 3, 2, HALFUP)",
             "pow(20, 1, -1, 0, 4, DOWN)",
             "pow(-20, 1, -1, 0, 4, DOWN)",
             // "pow(0, 1, -1, 0, 4, DOWN)",//fixme
@@ -168,7 +169,7 @@ func bar() = WriteSet([])`;
             // "log(2,  0, 2, 9, 0, UP)",//fixme
             // "pow(2, -2, 2, 0, 5, UP)",//fixme
             // "log(2, -2, 2, 0, 5, UP)",//fixme
-            "pow(2, 0, 62, 0, 0, UP)",
+            "pow(2, 0, 62, 0, 0, HALFUP)",
             // "pow(2, 0, 63, 0, 0, UP)",//fixme
             "pow(10, 0, -8, 0, 8, HALFUP)",
             "pow(10, 0, -9, 0, 8, HALFUP)"
@@ -222,7 +223,7 @@ func bar() = WriteSet([])`;
 
     test.only('complexity', () => {
         const contract = `
-        {-# STDLIB_VERSION 3 #-}
+        {-# STDLIB_VERSION 6 #-}
 {-# CONTENT_TYPE DAPP #-}
 {-# SCRIPT_TYPE ACCOUNT #-}
 
@@ -232,18 +233,18 @@ func userfunc() = {
 
 @Callable(i)
 func asd() = {
-    WriteSet([DataEntry("d",
+    [BooleanEntry("d",
     ${Array.from({length: 100}, () =>
             "sigVerify(base58'', base58'', base58'')").join(' &&\n')
         }
-    )])
+    )]
 }
 `;
         const flattenResult = compiler.flattenCompilationResult(compiler.compile(contract))
         expect(typeof flattenResult.verifierComplexity).toEqual('number')
         expect(typeof flattenResult.callableComplexities).toEqual('object')
         expect(typeof flattenResult.userFunctionComplexities).toEqual('object')
-        expect(typeof flattenResult.error).toEqual('string')
+        expect(typeof flattenResult.error).toEqual('undefined')
         expect(typeof flattenResult.complexity).toEqual('number')
 
     })

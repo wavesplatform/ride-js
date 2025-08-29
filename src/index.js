@@ -1,7 +1,7 @@
 require('./interop');
 const crypto = require('@waves/ts-lib-crypto');
-const scalaJsCompiler = require('./lang-opt.js');
-const replJs = require('./repl-opt.js');
+const scalaJsCompiler = require('@waves/ride-lang');
+const replJs = require('@waves/ride-repl');
 
 function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, removeUnusedCode = false, libraries = {}) {
     if (typeof code !== 'string') {

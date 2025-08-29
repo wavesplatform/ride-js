@@ -1,0 +1,33 @@
+on:
+  pull_request:
+
+jobs:
+  publish-snapshots:
+    name: Publish snapshot packages
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'publish-snapshots') }}
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    env:
+      PR_NUMBER: ${{ github.event.number }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://npm.pkg.github.com'
+      - run: |
+          version=$VERSION-snapshot$PR_NUMBER.$RUN_NUMBER.$RUN_ATTEMPT
+          cd lang/js
+          npm version $version --no-git-tag-version
+          npm publish --provenance --access public --tag snapshot
+          cd ../../repl/js
+          npm version $version --no-git-tag-version
+          npm publish --provenance --access public --tag snapshot
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_NUMBER: ${{ github.run_number }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}

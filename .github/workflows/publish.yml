@@ -1,33 +1,50 @@
+name: Publish package
 on:
   pull_request:
+  push:
+    branches: [ 'master' ]
+  release:
+    types: [ published ]
 
+permissions:
+  contents: read
+  id-token: write
 jobs:
   publish-snapshots:
-    name: Publish snapshot packages
+    environment:
+      name: prod
+      url: ${{ steps.publish.outputs.url }}
+    name: Publish packages
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'publish-snapshots') }}
-    permissions:
-      contents: read
-      packages: write
-      attestations: write
-      id-token: write
-    env:
-      PR_NUMBER: ${{ github.event.number }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-          registry-url: 'https://npm.pkg.github.com'
-      - run: |
-          version=$VERSION-snapshot$PR_NUMBER.$RUN_NUMBER.$RUN_ATTEMPT
-          cd lang/js
-          npm version $version --no-git-tag-version
-          npm publish --provenance --access public --tag snapshot
-          cd ../../repl/js
-          npm version $version --no-git-tag-version
-          npm publish --provenance --access public --tag snapshot
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm i
+      - if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+        run: |
+          PACKAGE_NAME=$(jq --raw-output .name package.json)
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            PREID="${{ github.event.number }}-snapshot"
+          else
+            PREID="snapshot"
+          fi
+          npm version prerelease --preid=$PREID --no-git-tag-version
+          PREFIX=$(jq --raw-output .version package.json | sed 's/\.[0-9]\+$//')
+          NEXT=$(npm view $PACKAGE_NAME versions --json \
+            | jq --raw-output --arg prefix $PREFIX '[.[] | select(startswith($prefix))|capture("snapshot\\.(?<n>[0-9]+)").n|tonumber]|max + 1 // 0')
+          npm version $PREFIX.$NEXT --no-git-tag-version
+          echo "TAG=snapshot" >> $GITHUB_ENV
+      - if: ${{ github.event_name == 'release' }}
+        run: |
+          npm version $(echo ${{ github.release.tag_name }} | sed 's/^v//') --no-git-tag-version
+          echo "TAG=latest" >> $GITHUB_ENV
+      - run: npm test
+      - id: publish
+        run: |
+          npm run build
+          npm publish --provenance --access public --tag $TAG
+          echo "url=https://www.npmjs.com/package/@waves/ride-js/v/$(jq --raw-output .version package.json)" >> "$GITHUB_OUTPUT"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          RUN_NUMBER: ${{ github.run_number }}
-          RUN_ATTEMPT: ${{ github.run_attempt }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}

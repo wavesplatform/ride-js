@@ -7,8 +7,7 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "test": "jest",
-    "prepublishOnly": "npm run build",
-    "getNewCompiler": "sh scripts/getNewCompiler.sh"
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "/src",
@@ -34,14 +33,17 @@
   "homepage": "https://github.com/wavesplatform/ride-js#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
+    "copy-webpack-plugin": "^13.0.1",
     "jest": "^30.0.5",
     "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "@waves/ride-lang": "^1.5.12-4010-snapshot.1.2",
     "@waves/ride-repl": "^1.5.12-4010-snapshot.1.2",
-    "@waves/ts-lib-crypto": "^1.4.4-beta.1",
+    "@waves/ts-lib-crypto": "^1.4.5-snapshot.1",
     "axios": "^1.11.0"
   }
 }

@@ -48,6 +48,6 @@
   "dependencies": {
     "@jest/globals": "^27.5.1",
     "@waves/ts-lib-crypto": "^1.4.3",
-    "axios": "^0.19.0"
+    "axios": "^1.13.5"
   }
 }

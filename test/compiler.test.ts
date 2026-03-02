@@ -162,7 +162,6 @@ func bar() = WriteSet([])`;
         signatures.forEach(({alg, sig}) => {
             const rsaVerify = `rsaVerify(${alg}, msg, fromBase64String("${sig}"), pk)`
             evaluate(rsaVerify).then(res => {
-                console.error(`alg: ${alg}, res: ${JSON.stringify(res)}`)
                 expect('result' in res).toEqual(true)
             })
         })

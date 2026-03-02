@@ -104,4 +104,4 @@ const api = {
 }
 
 global.RideJS = api;
-module.exports = api;
+export default api;

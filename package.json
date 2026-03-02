@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsup src/index.js --format cjs,esm --dts",
     "prepublishOnly": "npm run build",
-    "test": "jest"
+    "test": "vitest"
   },
   "files": [
     "./dist/index.d.ts",
@@ -46,12 +46,9 @@
   },
   "homepage": "https://github.com/wavesplatform/ride-js#readme",
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "copy-webpack-plugin": "^13.0.1",
-    "jest": "^30.0.5",
-    "ts-jest": "^29.4.1",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@waves/ride-lang": "^1.6.1",
@@ -59,10 +56,5 @@
     "@waves/ts-lib-crypto": "^1.5.1-snapshot.2",
     "axios": "^1.13.5",
     "buffer": "^6.0.3"
-  },
-  "overrides": {
-    "serialize-javascript": "^7.0.3",
-    "test-exclude": "^8.0.0",
-    "glob": "^13.0.6"
   }
 }

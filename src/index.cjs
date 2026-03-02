@@ -1,4 +1,4 @@
-require('./interop');
+require('./interop.cjs');
 const crypto = require('@waves/ts-lib-crypto');
 const scalaJsCompiler = require('@waves/ride-lang');
 const replJs = require('@waves/ride-repl');
@@ -103,5 +103,5 @@ const api = {
     parseAndCompile: scalaJsCompiler.parseAndCompile
 }
 
-global.RideJS = api;
-export default api;
+global.RideJS = api
+module.exports = api

@@ -1,6 +1,6 @@
 import * as data from "../testData/data";
 
-const compiler = require('../../src');
+import compiler from '../../src/index.cjs';
 
 export const checkCompileResult = (contract, testType) => {
     const compiled = compiler.compile(contract);

@@ -1,6 +1,17 @@
 {
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "esModuleInterop": true
-  }
+    "compilerOptions":
+    {
+        "moduleResolution": "nodenext",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "checkJs": false,
+        "module": "nodenext",
+        "compilerOptions":
+        {
+            "types":
+            [
+                "vitest/globals"
+            ]
+        }
+    }
 }

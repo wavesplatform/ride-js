@@ -1,7 +1,7 @@
- import * as https from "https";
+import * as https from "https";
 import * as data from "./testData/data";
 
-const compiler = require('../src');
+import compiler from '../src/index.cjs';
 
 describe('Compiler', function () {
 

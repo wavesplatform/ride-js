@@ -1,6 +1,6 @@
 import * as data from "../../testData/data";
 
-const compiler = require('../../../src');
+import compiler from '../../../src/index.cjs';
 
 describe('binaryEntry',  () => {
 

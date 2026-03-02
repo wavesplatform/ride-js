@@ -38,13 +38,15 @@
     "ts-jest": "^29.4.1",
     "typescript": "^5.9.2",
     "webpack": "^5.101.3",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^6.0.1",
+    "node-polyfill-webpack-plugin": "^4.1.0"
   },
   "dependencies": {
     "@waves/ride-lang": "^1.6.1",
     "@waves/ride-repl": "^1.6.1",
     "@waves/ts-lib-crypto": "^1.5.1-snapshot.2",
-    "axios": "^1.13.5"
+    "axios": "^1.13.5",
+    "buffer": "^6.0.3"
   },
   "overrides": {
     "serialize-javascript":  "^7.0.3",

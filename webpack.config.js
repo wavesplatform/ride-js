@@ -1,5 +1,6 @@
 const path = require('path')
 const copy = require('copy-webpack-plugin')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 
 module.exports = {
@@ -12,10 +13,6 @@ module.exports = {
     //libraryTarget: 'commonjs'
   },
   plugins: [
-    // new copy([
-    //   { from: 'src/index.d.ts', to: 'index.d.ts' },
-    //   { from: 'package.json' },
-    //   { from: 'LICENSE' }
-    // ]),
+    new NodePolyfillPlugin()
   ]
 };

@@ -7,19 +7,26 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js",
-      "require": "./index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "scripts": {
-    "build": "npx tsup src/index.js --format cjs,esm --dts",
+    "build": "tsup src/index.js --format cjs,esm --dts",
+    "prepublishOnly": "npm run build",
     "test": "jest"
   },
   "files": [
-    "src/index.d.ts",
-    "src/index.js",
-    "src/interop.js"
+    "./dist/index.d.ts",
+    "./dist/index.d.cts",
+    "./dist/index.js",
+    "./dist/index.cjs"
   ],
   "repository": {
     "type": "git",

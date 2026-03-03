@@ -4,6 +4,7 @@ on:
     branches: [ 'master' ]
   release:
     types: [ published ]
+  pull_request: 
 
 permissions:
   contents: read
@@ -16,13 +17,13 @@ jobs:
     name: Publish snapshot packages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           registry-url: 'https://registry.npmjs.org'
           node-version: '>=24.7.0' # Trusted publishing requires npm CLI version 11.5.1 or later.
       - run: npm i
-      - if: ${{ github.event_name == 'push' }}
+      - if: ${{ github.event_name == 'push' || github.event_name == 'pull_request'}}
         run: |
           PACKAGE_NAME=$(jq --raw-output .name package.json)
           PREFIX=$(jq --raw-output .version package.json)-snapshot

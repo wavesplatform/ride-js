@@ -1,4 +1,3 @@
-require('./interop.cjs');
 import { encode64 } from 'node-forge/lib/util'
 import scalaJsCompiler from '@waves/ride-lang';
 import replJs from '@waves/ride-repl';
@@ -87,7 +86,7 @@ export const flattenCompilationResult = (compiled) => {
 export const compile = wrappedCompile;
 export const repl = wrappedRepl;
 export const contractLimits = scalaJsCompiler.contractLimits();
-export const version = scalaJsCompiler.nodeVersion() && version.version;
+export const version = scalaJsCompiler.nodeVersion;
 export const scriptInfo = scalaJsCompiler.scriptInfo;
 export const getTypes = scalaJsCompiler.getTypes;
 export const getVarsDoc = scalaJsCompiler.getVarsDoc;
@@ -115,4 +114,4 @@ const api = {
 }
 
 global.RideJS = api
-module.exports = api
+export default api;

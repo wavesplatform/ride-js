@@ -6,12 +6,9 @@
         "allowJs": true,
         "checkJs": false,
         "module": "nodenext",
-        "compilerOptions":
-        {
-            "types":
+        "types":
             [
                 "vitest/globals"
             ]
-        }
     }
 }

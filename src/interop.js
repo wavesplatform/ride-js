@@ -1,5 +1,5 @@
-const crypto = require('@waves/ts-lib-crypto');
-const axios = require('axios');
+import crypto from '@waves/ts-lib-crypto';
+import axios from'axios';
 
 global.base58Encode = function (bytes) {
     return crypto.base58Encode(new Uint8Array(bytes))

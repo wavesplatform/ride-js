@@ -18,7 +18,7 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.js --format cjs,esm --dts",
+    "build": "tsup src/index.js --format cjs,esm --dts --shims --clean",
     "prepublishOnly": "npm run build",
     "test": "vitest"
   },

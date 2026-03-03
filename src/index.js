@@ -1,13 +1,13 @@
-require('./interop');
-const crypto = require('@waves/ts-lib-crypto');
-const scalaJsCompiler = require('@waves/ride-lang');
-const replJs = require('@waves/ride-repl');
+import './interop.js';
+import * as crypto from '@waves/ts-lib-crypto';
+import * as scalaJsCompiler from '@waves/ride-lang';
+import * as replJs from '@waves/ride-repl';
 
 function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, removeUnusedCode = false, libraries = {}) {
     if (typeof code !== 'string') {
         return {
             error: 'Type error: contract should be string'
-        }
+        };
     }
     try {
         const result = scalaJsCompiler.compile(code, estimatorVersion, needCompaction, removeUnusedCode, libraries);
@@ -39,13 +39,13 @@ function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, remo
                     userFunctionComplexities,
                     globalVariableComplexities
                 }
-            }
+            };
         }
     } catch (e) {
-        console.log(e)
+        console.log(e);
         return typeof e === 'object' ?
             {error: e.message} :
-            {error: e}
+            {error: e};
     }
 }
 
@@ -61,12 +61,12 @@ function wrappedRepl(opts) {
             const newRepl = reconfigureFn(settings);
             newRepl.reconfigure = wrapReconfigure(newRepl);
             return newRepl;
-        }
+        };
     };
 
     repl.reconfigure = wrapReconfigure(repl);
 
-    return repl
+    return repl;
 }
 
 const flattenCompilationResult = (compiled) => {
@@ -76,32 +76,42 @@ const flattenCompilationResult = (compiled) => {
             const bytes = new Uint8Array(compiled.result);
             const base64 = crypto.base64Encode(bytes);
             result = {...compiled, base64};
-            result.result && delete result.result
+            result.result && delete result.result;
         }
     } else {
-        result = compiled.result
+        result = compiled.result;
     }
-    return result
-}
+    return result;
+};
+
+export const compile = wrappedCompile;
+export const repl = wrappedRepl;
+export const decompile = scalaJsCompiler.decompile;
+export const scriptInfo = scalaJsCompiler.scriptInfo;
+export const getTypes = scalaJsCompiler.getTypes;
+export const getVarsDoc = scalaJsCompiler.getVarsDoc;
+export const getFunctionsDoc = scalaJsCompiler.getFunctionsDoc;
+export const parseAndCompile = scalaJsCompiler.parseAndCompile;
+export {flattenCompilationResult};
 
 const api = {
-    compile: wrappedCompile,
-    repl: wrappedRepl,
+    compile,
+    repl,
     get contractLimits() {
-        return scalaJsCompiler.contractLimits()
+        return scalaJsCompiler.contractLimits();
     },
     get version() {
         const version = scalaJsCompiler.nodeVersion();
-        return version && version.version
+        return version && version.version;
     },
-    scriptInfo: scalaJsCompiler.scriptInfo,
-    getTypes: scalaJsCompiler.getTypes,
-    getVarsDoc: scalaJsCompiler.getVarsDoc,
-    getFunctionsDoc: scalaJsCompiler.getFunctionsDoc,
-    decompile: scalaJsCompiler.decompile,
+    scriptInfo,
+    getTypes,
+    getVarsDoc,
+    getFunctionsDoc,
+    decompile,
     flattenCompilationResult,
-    parseAndCompile: scalaJsCompiler.parseAndCompile
-}
+    parseAndCompile
+};
 
-global.RideJS = api;
+globalThis.RideJS = api;
 export default api;

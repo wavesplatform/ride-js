@@ -1,7 +1,7 @@
 import * as https from "https";
 import * as data from "./testData/data";
 
-import compiler from '../src/index.cjs';
+import compiler from '../src/index.js';
 
 describe('Compiler', function () {
 

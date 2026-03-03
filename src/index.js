@@ -1,7 +1,7 @@
 require('./interop.cjs');
-const crypto = require('@waves/ts-lib-crypto');
-const scalaJsCompiler = require('@waves/ride-lang');
-const replJs = require('@waves/ride-repl');
+import { encode64 } from 'node-forge/lib/util'
+import scalaJsCompiler from '@waves/ride-lang';
+import replJs from '@waves/ride-repl';
 
 function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, removeUnusedCode = false, libraries = {}) {
     if (typeof code !== 'string') {
@@ -30,7 +30,7 @@ function wrappedCompile(code, estimatorVersion = 3, needCompaction = false, remo
             return {
                 result: {
                     bytes,
-                    base64: crypto.base64Encode(bytes),
+                    base64: base64Encode(bytes),
                     size: bytes.byteLength,
                     ast,
                     complexity,
@@ -69,12 +69,12 @@ function wrappedRepl(opts) {
     return repl
 }
 
-const flattenCompilationResult = (compiled) => {
+export const flattenCompilationResult = (compiled) => {
     let result = {};
     if (compiled.error) {
         if (compiled.result) {
             const bytes = new Uint8Array(compiled.result);
-            const base64 = crypto.base64Encode(bytes);
+            const base64 = base64Encode(bytes);
             result = {...compiled, base64};
             result.result && delete result.result
         }
@@ -83,6 +83,17 @@ const flattenCompilationResult = (compiled) => {
     }
     return result
 }
+
+export const compile = wrappedCompile;
+export const repl = wrappedRepl;
+export const contractLimits = scalaJsCompiler.contractLimits();
+export const version = scalaJsCompiler.nodeVersion() && version.version;
+export const scriptInfo = scalaJsCompiler.scriptInfo;
+export const getTypes = scalaJsCompiler.getTypes;
+export const getVarsDoc = scalaJsCompiler.getVarsDoc;
+export const getFunctionsDoc = scalaJsCompiler.getFunctionsDoc;
+export const decompile = scalaJsCompiler.decompile;
+export const parseAndCompile = scalaJsCompiler.parseAndCompile;
 
 const api = {
     compile: wrappedCompile,

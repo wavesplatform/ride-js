@@ -1,4 +1,4 @@
-import compiler from '../src/index.cjs';
+import compiler from '../src/index.js';
 const getRide = require('./utils.cjs').getRide;
 
 describe('Sandbox Test', function () {

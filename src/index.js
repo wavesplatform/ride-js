@@ -103,5 +103,4 @@ const api = {
     parseAndCompile: scalaJsCompiler.parseAndCompile
 }
 
-global.RideJS = api;
 module.exports = api;

@@ -148,3 +148,5 @@ $RECYCLE.BIN/
 dist/
 .idea
 .run
+
+package-lock.json

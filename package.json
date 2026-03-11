@@ -10,9 +10,9 @@
     "prepublishOnly": "npm run build"
   },
   "files": [
-    "/src",
-    "/dist",
-    "!/src/.DS_Store"
+    "/src/*.js",
+    "/src/*.ts",
+    "/dist"
   ],
   "repository": {
     "type": "git",
@@ -33,19 +33,18 @@
   "homepage": "https://github.com/wavesplatform/ride-js#readme",
   "devDependencies": {
     "@types/jest": "^30.0.0",
-    "copy-webpack-plugin": "^13.0.1",
-    "jest": "^30.0.5",
-    "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2",
-    "webpack": "^5.101.3",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3",
+    "webpack": "^5.105.4",
     "webpack-cli": "^6.0.1",
     "node-polyfill-webpack-plugin": "^4.1.0"
   },
   "dependencies": {
     "@waves/ride-lang": "^1.6.1",
     "@waves/ride-repl": "^1.6.1",
-    "@waves/ts-lib-crypto": "^1.5.1-snapshot.2",
-    "axios": "^1.13.5",
+    "@waves/ts-lib-crypto": "^1.5.1",
+    "axios": "^1.13.6",
     "buffer": "^6.0.3"
   },
   "overrides": {
